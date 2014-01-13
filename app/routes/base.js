@@ -9,7 +9,7 @@ var _ = require('lodash');
 
 
 
-module.exports = function(modelName, resourcePath, app){
+module.exports = function(modelName, resourcePath, app, queryFilter){
 
   var Model = require('../models/'+modelName);
 
@@ -17,9 +17,26 @@ module.exports = function(modelName, resourcePath, app){
    * Handle GET requests (return single items, or lists of items)
    */
   function get(req, res, next) {
-    var conds = {};
     if (req.params.id) {
-      Model.findById(req.params.id, function(err, result) {
+      return getItem(req, res, next);
+    } else {
+      return getItemsList(req,res,next);
+    }
+  }
+
+/**
+ * Get a single item
+ */
+  function getItem(req, res, next){
+    var item = Model.findById(req.params.id);
+
+
+    if(queryFilter){
+      queryFilter(item, req);
+    }
+
+
+    item.exec(function(err, result) {
         if (err) {
           return next(new restify.ResourceNotFoundError("Can't find that item"));
         }
@@ -30,25 +47,24 @@ module.exports = function(modelName, resourcePath, app){
           return next(new restify.ResourceNotFoundError("Can't find that item"));
         }
       });
+  }
 
-    } else {
 
-      // make this a search id there is a query string
-      if(Object.keys(req.query).length){
-        conds = _.mapValues(req.query, function(itm){
-          return new RegExp(itm, "i");
-        });
-      }
-
-      Model.find(conds,function(err, results) {
-        if (err) {
-          return next(new restify.RestError("Can't process your request"));
-        }
-        res.send(200, results);
-        next();
-      });
+/**
+ * Get a list of items
+ */
+  function getItemsList(req,res,next){
+    var items = Model.find();
+    if(queryFilter){
+      queryFilter(items, req);
     }
-
+    items.exec(function(err, results) {
+      if (err) {
+        return next(new restify.RestError("Can't process your request"));
+      }
+      res.send(200, results);
+      next();
+    });
   }
 
 
@@ -67,7 +83,8 @@ module.exports = function(modelName, resourcePath, app){
     doc = new Model(req.body);
     doc.save(function(err, itm, num){
         if(err){
-          return next(new restify.InvalidContentError(err));
+          // console.log(err);
+          return next(new restify.InvalidContentError(err.toString()));
         }
         res.header("location",resourcePath+"/"+itm._id);
         res.send(201);
@@ -117,15 +134,25 @@ module.exports = function(modelName, resourcePath, app){
 
   }
 
+  // assuming that if the app is available we should initialise the app with the routes
+  if(app){
+    app.get(resourcePath+'/:id?', get);
+    app.get(resourcePath+'', get);
+    app.post(resourcePath+'', post);
+    app.put(resourcePath+'/:id', put);
+    app.del(resourcePath+'/:id', del);
+  }
 
 
-  app.get(resourcePath+'/:id?', get);
-  app.get(resourcePath+'', get);
-  app.post(resourcePath+'', post);
-  app.put(resourcePath+'/:id', put);
-  app.del(resourcePath+'/:id', del);
 
-
+  // return the methods 
+  return {
+    get: get, 
+    getItemsList: getItemsList,
+    getItem: getItem,
+    post: post,
+    put: put,
+    del:del
+  };
 
 };
-
