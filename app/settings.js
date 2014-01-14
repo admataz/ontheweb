@@ -1,4 +1,8 @@
 'use strict'
+var nconf = require('nconf');
+
+
+ nconf.argv();
 
 var config = {
   'db': {
@@ -10,10 +14,13 @@ var config = {
   },
   'http': {
     'name': 'OnTheWeb',
-    'port': 8001,
-    'url' : 'localhost'
+    'port': 8001
   }
 
 };
 
-module.exports = config;
+nconf.defaults(config);
+
+// console.log(nconf.get());
+
+module.exports = nconf.get();

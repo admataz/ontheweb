@@ -4,7 +4,8 @@
   "description": "Web Service to collect, compile and retrieve items with urls from the web ",
   "main": "app/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
   },
   "author": "Adam Davis",
   "license": "MIT",
@@ -29,5 +30,9 @@
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
     "matchdep": "~0.3.0"
+  },
+  "subdomain": "ontheweb",
+  "engines": {
+    "node": "0.10.x"
   }
 }
