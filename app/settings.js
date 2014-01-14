@@ -1,7 +1,7 @@
 'use strict'
 var nconf = require('nconf');
 
-nconf.argv();
+nconf.argv().env();
 
 var config = {
     'db_name': 'OnTheWeb',
