@@ -22,6 +22,6 @@ function queryFilter(item, req){
 }
 
 module.exports = function(app) {
-  require('./base')('WebItem', 'webitem', app, queryFilter);
+  require('./base')('webitem', 'webitem', app, queryFilter);
 };
 

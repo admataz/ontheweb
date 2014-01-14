@@ -14,5 +14,5 @@ function queryFilter(item){
 
 
 module.exports = function(app) {
-  require('./base')('ItemCollection', 'itemcollection', app, queryFilter);
+  require('./base')('itemcollection', 'itemcollection', app, queryFilter);
 };

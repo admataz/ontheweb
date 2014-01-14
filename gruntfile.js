@@ -12,6 +12,7 @@ module.exports = function(grunt) {
 
 		bookmarklet: {
 			generate: {
+				// js: ['http://ontheweb.jit.su/docs/public/js/bookmarklet.js'],
 				js: ['http://localhost:8001/docs/public/js/bookmarklet.js'],
 				jsIds: ['bookmarkletjs'],
 				// css: ['http://static.jquery.com/files/rocker/css/reset.css'],

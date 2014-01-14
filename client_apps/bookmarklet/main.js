@@ -24,7 +24,8 @@ define(['lib/reqwest/reqwest'],function(reqwest) {
 
 
   reqwest({
-    url: 'http://localhost:8001/webitem',
+    url: 'http://ontheweb.jit.su/webitem',
+    // url: 'http://localhost:8001/webitem',
     method: 'post',
     type: 'json',
     processData: false,

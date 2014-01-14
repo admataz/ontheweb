@@ -28,5 +28,5 @@ var theSchema = new Schema(fields);
 theSchema.plugin(timestamps);
 theSchema.plugin(uniqueValidator, { message: 'You have already saved this web item' });
 
-module.exports = mongoose.model('WebItem', theSchema);
+module.exports = mongoose.model('webitem', theSchema);
 
