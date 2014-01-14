@@ -44,5 +44,5 @@ default:
 }));
 
 
-server.listen(config.http.port);
+server.listen(config.http_port);
 module.exports = server;

@@ -3,9 +3,9 @@ var mongoose = require('mongoose'),
   config = require('../settings');
 
 
-var port = (config.db.port.length > 0) ? ":" + config.db.port : '';
-var login = (config.db.user.length > 0) ? config.db.user + ":" + config.db.pw + "@" : '';
-var uristring =  "mongodb://" + login + config.db.host + port + "/" + config.db.name;
+var port = (config.db_port.length > 0) ? ":" + config.db_port : '';
+var login = (config.db_user.length > 0) ? config.db_user + ":" + config.db_pw + "@" : '';
+var uristring =  "mongodb://" + login + config.db_host + port + "/" + config.db_name;
 
 var mongoOptions = { db: { safe: true } };
 
