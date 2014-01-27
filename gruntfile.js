@@ -5,8 +5,8 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		watch: {
 			gruntfile: {
-				files: ['./client_apps/**/*.js', '!./client_apps/bower_components/**/*'],
-				tasks: ['bookmarklet:generate', 'requirejs:bookmarklet']
+				files: ['./client_apps/**/*.js', './client_apps/**/*.scss', '!./client_apps/bower_components/**/*'],
+				tasks: ['bookmarklet:generate', 'requirejs:bookmarklet', 'sass:dist']
 			}
 		},
 
@@ -14,8 +14,10 @@ module.exports = function(grunt) {
 			generate: {
 				// js: ['http://ontheweb.jit.su/docs/public/js/bookmarklet.js'],
 				js: ['http://localhost:8001/docs/public/js/bookmarklet.js'],
-				jsIds: ['bookmarkletjs'],
-				// css: ['http://static.jquery.com/files/rocker/css/reset.css'],
+				jsIds: ['webItemBookmarkletScript'],
+				// css: ['http://ontheweb.jit.su/docs/public/js/bookmarklet.css'],
+				css: ['http://localhost:8001/docs/public/js/bookmarklet.css'],
+				cssIds: ['webItemBookmarkletStyle'],
 				// body: './client/src/bookmarklet/stub.js',
 				out: './public/js/bookmarklet_stub.txt',
 				amdify: false,
@@ -34,7 +36,16 @@ module.exports = function(grunt) {
 		// 		}]
 		// 	}
 		// },
-
+		sass: {                                 
+        dist: {     
+        	options: {
+                outputStyle: 'compressed'
+            },
+            files: {                        
+                './public/js/bookmarklet.css': './client_apps/bookmarklet/main.scss'     
+            }
+        }
+    },
 
 		concurrent: {
 			dev: {
@@ -89,6 +100,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-nodemon');
 	grunt.loadNpmTasks('grunt-bookmarklet-thingy');
 	grunt.loadNpmTasks('grunt-concurrent');
+	grunt.loadNpmTasks('grunt-sass');
 
 	// Default task
 	grunt.registerTask('default', ['concurrent:dev']);

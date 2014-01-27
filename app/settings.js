@@ -13,8 +13,8 @@ var config = {
     'http_port': 8001
   };
 
+
 nconf.defaults(config);
 
-// console.log(nconf.get());
 
 module.exports = nconf.get();

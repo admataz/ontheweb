@@ -20,6 +20,8 @@ var fields = {
   dateCollected: {type: Date},
   datePosted: {type: Date},
   dateLastValidated: {type: Date},
+  comment: {type: String},
+  tags: {type: String},
   status: {type: Boolean, defaut: false}
 };
 

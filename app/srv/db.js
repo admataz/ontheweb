@@ -7,7 +7,12 @@ var port = (config.db_port.length > 0) ? ":" + config.db_port : '';
 var login = (config.db_user.length > 0) ? config.db_user + ":" + config.db_pw + "@" : '';
 var uristring =  "mongodb://" + login + config.db_host + port + "/" + config.db_name;
 
-var mongoOptions = { db: { safe: true } };
+var mongoOptions = {
+  // db: config.db_name,
+  // server: config.db_host,
+  user: config.db_user,
+  pass: config.db_pw
+};
 
 // Connect to Database
 mongoose.connect(uristring, mongoOptions, function (err, res) {

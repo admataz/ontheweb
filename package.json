@@ -1,6 +1,6 @@
 {
   "name": "ontheweb",
-  "version": "0.0.1-7",
+  "version": "0.0.1-12",
   "description": "Web Service to collect, compile and retrieve items with urls from the web ",
   "main": "app/index.js",
   "scripts": {
@@ -29,7 +29,8 @@
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
-    "matchdep": "~0.3.0"
+    "matchdep": "~0.3.0",
+    "grunt-sass": "~0.10.0"
   },
   "subdomain": "ontheweb",
   "engines": {
