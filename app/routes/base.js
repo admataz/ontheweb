@@ -59,10 +59,14 @@ module.exports = function(modelName, resourcePath, app, queryFilter){
       queryFilter(items, req);
     }
     items.exec(function(err, results) {
+      var ret = {};
       if (err) {
         return next(new restify.RestError("Can't process your request"));
       }
-      res.send(200, results);
+
+      ret[modelName] = results;
+
+      res.send(200, ret);
       next();
     });
   }

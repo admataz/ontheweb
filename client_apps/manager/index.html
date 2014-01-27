@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    </head>
+    <body>
+        <header>
+          Web Items List
+        </header>
+        <section id="main">
+          
+         <script type="text/x-handlebars" data-template-name="webitem">
+         <table>
+            <thead>
+              <tr>
+                <th>URL</th>
+                <th>Title</th>
+                <th>Excerpt</th>
+                <th>Comment</th>
+                <th>Tags</th>
+                <th>Date added</th>
+              </tr>
+            </thead>
+
+            
+
+<tbody>
+          {{#each}}
+            <tr>
+              <td>{{url}}</td>
+              <td>{{title}}</td>
+              <td>{{content}}</td>
+              <td>{{comment}}</td>
+              <td>{{tags}}</td>
+              <td>{{createdAt}}</td>
+            </tr>
+          {{/each}}
+
+
+          </tbody>
+
+          </table>
+          </script>
+
+
+        </section>
+        <footer>
+          
+        </footer>
+
+        <script src="../bower_components/jquery/jquery.js"></script>
+        <script src="../bower_components/handlebars/handlebars.js"></script>
+        <script src="../bower_components/ember/ember.js"></script>
+        <script src="../bower_components/ember-data/ember-data.js"></script>
+        <script src="js/application.js"></script>
+        <script src="js/router.js"></script>
+        <script src="js/models/webitem.js"></script>
+    </body>
+</html>
