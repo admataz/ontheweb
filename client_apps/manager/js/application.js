@@ -3,9 +3,6 @@
  */
 window.Webitemsapp = Ember.Application.create();
 
-// Webitemsapp.ApplicationAdapter = DS.FixtureAdapter.extend({
-//   primaryKey:  '_id'
-// });
 
 Webitemsapp.ApplicationAdapter = DS.RESTAdapter.extend({
   host: 'http://localhost:8001'
