@@ -170,7 +170,7 @@ define(['lib/reqwest/reqwest', 'lib/bonzo/bonzo', 'lib/qwery/qwery', 'lib/bean/b
     webItem.tags = $('#webItemBookmarkletTags').attr('value');
     var req = reqwest({
       // url: 'http://ontheweb.jit.su/webitem',
-      url: 'http://localhost:8001/webitems',
+      url: 'http://localhost:8001/webitem',
       method: 'post',
       type: 'json',
       processData: false,

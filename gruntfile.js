@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 		watch: {
 			gruntfile: {
 				files: ['./client_apps/**/*.js', './client_apps/**/*.scss', '!./client_apps/bower_components/**/*'],
-				tasks: ['bookmarklet:generate', 'requirejs:bookmarklet', 'sass:dist', 'uglify:admin_ember', 'copy:admin_ember']
+				tasks: ['bookmarklet:generate', 'requirejs:bookmarklet', 'sass:dist']
 			}
 		},
 
@@ -25,37 +25,17 @@ module.exports = function(grunt) {
 			}
 		},
 
-		uglify: {
-			admin_ember: {
-				options:{
-					beautify:false
-				},
-				files: [{
-					src: ['client_apps/bower_components/jquery/jquery.js',
-						'client_apps/bower_components/handlebars/handlebars.js',
-						'client_apps/bower_components/ember/ember.js',
-						'client_apps/bower_components/ember-data/ember-data.js'],
-					dest: 'admin/js/ember.js'
-					},
-					{
-						src: ['client_apps/manager/js/**/*.js'],
-						dest: 'admin/js/app.js'
-					}
-					]
-			}
-		},
-		copy: {
-			admin_ember: {
-				files: {
-					'admin/index.html': 'client_apps/manager/index.html'
-				}
-				
-			}
-
-
-		},
-
-
+		// uglify: {
+		// 	dev: {
+		// 		options:{
+		// 			beautify:true
+		// 		},
+		// 		files: [{
+		// 			src: ['client_apps/bower_components/reqwest/reqwest.js', 'client_apps/bookmarklet/main.js'],
+		// 			dest: 'public/js/bookmarklet.js'
+		// 		}]
+		// 	}
+		// },
 		sass: {                                 
         dist: {     
         	options: {
@@ -121,7 +101,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-bookmarklet-thingy');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-sass');
-	grunt.loadNpmTasks('grunt-contrib-copy');
 
 	// Default task
 	grunt.registerTask('default', ['concurrent:dev']);

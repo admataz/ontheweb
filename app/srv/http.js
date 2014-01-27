@@ -26,26 +26,21 @@ var server = restify.createServer({
 
 });
 
-
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser({
   mapParams: false
 }));
 
 server.use(restify.jsonp());
-server.use(restify.bodyParser());
-server.use( restify.CORS( {origins: ['*']}) );
+
 server.use(restify.fullResponse());
+server.use(restify.bodyParser());
 
 
-server.get(/\/static\/?.*/, restify.serveStatic({
+server.get(/\/docs\/public\/?.*/, restify.serveStatic({
   directory: 'public',
-  default:'index.html'
-}));
-
-server.get(/\/manage\/?.*/, restify.serveStatic({
-  directory: 'admin',
-  default:'index.html'
+default:
+  'index.html'
 }));
 
 
