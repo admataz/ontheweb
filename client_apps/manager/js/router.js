@@ -3,22 +3,25 @@
  */
 
 Webitemsapp.Router.reopen({
-  rootURL: '/manager/'
+  rootURL: '/admin/'
 });
 
+
 Webitemsapp.Router.map(function(){
-  this.resource('webitem',{path: '/'});
+  this.resource('webitems');
+  this.resource('webitem', {path:'webitem/:_id'});
 
 })
 
-Webitemsapp.WebitemRoute = Ember.Route.extend({
+
+Webitemsapp.WebitemsRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('webitem');
   }
 })
 
-// WebItems.WebitemsRoute = Ember.Route.extend({
-//   model: function() {
-//     return this.store.find('webitems');
-//   }
-// });
+Webitemsapp.WebitemRoute = Ember.Route.extend({
+  model: function(params) {
+    return this.store.find('webitem', params._id);
+  }
+})
