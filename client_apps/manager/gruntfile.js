@@ -5,25 +5,12 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		watch: {
 			gruntfile: {
-				files: ['./client_apps/**/*.js', './client_apps/**/*.scss', '!./client_apps/bower_components/**/*'],
-				tasks: ['bookmarklet:generate', 'requirejs:bookmarklet', 'sass:dist']
+				files: ['./src/**/*.js', './src/**/*.scss', '!./bower_components/**/*'],
+				tasks: ['requirejs:manager', 'sass:dist']
 			}
 		},
 
-		bookmarklet: {
-			generate: {
-				// js: ['http://ontheweb.jit.su/docs/public/js/bookmarklet.js'],
-				js: ['http://localhost:8001/docs/public/js/bookmarklet.js'],
-				jsIds: ['webItemBookmarkletScript'],
-				// css: ['http://ontheweb.jit.su/docs/public/js/bookmarklet.css'],
-				css: ['http://localhost:8001/docs/public/js/bookmarklet.css'],
-				cssIds: ['webItemBookmarkletStyle'],
-				// body: './client/src/bookmarklet/stub.js',
-				out: './public/js/bookmarklet_stub.txt',
-				amdify: false,
-				timestamp: false
-			}
-		},
+		
 
 		// uglify: {
 		// 	dev: {
@@ -31,7 +18,7 @@ module.exports = function(grunt) {
 		// 			beautify:true
 		// 		},
 		// 		files: [{
-		// 			src: ['client_apps/bower_components/reqwest/reqwest.js', 'client_apps/bookmarklet/main.js'],
+		// 			src: ['src/bower_components/reqwest/reqwest.js', 'src/bookmarklet/main.js'],
 		// 			dest: 'public/js/bookmarklet.js'
 		// 		}]
 		// 	}
@@ -42,43 +29,33 @@ module.exports = function(grunt) {
                 outputStyle: 'compressed'
             },
             files: {                        
-                './public/js/bookmarklet.css': './client_apps/bookmarklet/main.scss'     
+                './dist/css/webitemsmanager.css': './src/main.scss'     
             }
         }
     },
 
 		concurrent: {
 			dev: {
-				tasks: ['nodemon', 'watch'],
+				tasks: ['watch'],
 				options: {
 					logConcurrentOutput: true
 				}
 			}
 		},
-		nodemon: {
-			dev: {
-				options: {
-					nodeArgs: ['--debug'],
-					env: {
-						PORT: '8001'
-					}
-				}
-			}
-		},
 
 		requirejs: {
-			bookmarklet: {
+			manager: {
 				options: {
-					mainConfigFile: "client_apps/bookmarklet/config-require.js",
+					mainConfigFile: "src/config-require.js",
 					name: "lib/almond/almond",
-					include: ["client_apps/bookmarklet/main"],
-					insertRequire: ["client_apps/bookmarklet/main"],
+					include: ["src/main"],
+					insertRequire: ["src/main"],
 					baseUrl: "./",
 					paths: {
-						"lib": "./client_apps/bower_components",
+						"lib": "./bower_components",
 					},
 
-					out: "public/js/bookmarklet.js",
+					out: "dist/js/webitemsmanager.js",
 					optimize: "uglify2",
 					generateSourceMaps: false,
 					preserveLicenseComments: false,
@@ -87,9 +64,7 @@ module.exports = function(grunt) {
 			}
 		},
 
-		clean: {
-			dist: ['dist/pega_cookie_machine/*', 'dist/**/*.html']
-		}
+
 
 	});
 
@@ -98,7 +73,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-nodemon');
-	grunt.loadNpmTasks('grunt-bookmarklet-thingy');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-sass');
 
