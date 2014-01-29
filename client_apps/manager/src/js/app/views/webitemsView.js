@@ -3,10 +3,10 @@ define(['backbone','backgrid', 'backgrid-paginator', 'app/collections/webitems']
 
 
   var columns = [{
-    name: "_id", 
-    label: "ID", 
+    name: "updatedAt", 
+    label: "Updated", 
     editable: false,
-    cell: "string"  
+    cell: "date"  
      }, {
     name: "title",
     label: "Title",

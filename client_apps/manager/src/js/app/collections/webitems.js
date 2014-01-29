@@ -15,7 +15,7 @@ define(['backbone','underscore','app/models/webitem', 'backbone-pageable'], func
     },
 
   state: {
-    pageSize: 3
+    pageSize: 30
   },
 
     parseState: function (resp, queryParams, state, options) {

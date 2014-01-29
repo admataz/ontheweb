@@ -5,7 +5,7 @@
 require ('mongoose-pagination');
 
 function queryFilter(item, req){
-  var pg = 1, num = 20, sort_by='createdAt', order='desc'; //, q, searchfields;
+  var pg = 1, num = 20, sort_by='updatedAt', order='desc'; //, q, searchfields;
   var sortobj = {};
 
   if(req.query.page){
@@ -20,11 +20,10 @@ function queryFilter(item, req){
     if(req.query.order){
       order = req.query.order;
     }
-    sortobj[sort_by] = order;
-
-    item.sort(sortobj);
+    
   }
-
+    sortobj[sort_by] = order;
+    item.sort(sortobj);
 
 
   item.paginate(pg,num);
