@@ -5,14 +5,28 @@
 require ('mongoose-pagination');
 
 function queryFilter(item, req){
-  var pg = 1, num = 20; //, q, searchfields;
-  
-  if(req.query.pg){
-    pg = req.query.pg;
+  var pg = 1, num = 20, sort_by='createdAt', order='desc'; //, q, searchfields;
+  var sortobj = {};
+
+  if(req.query.page){
+    pg = req.query.page;
   }
-  if(req.query.num){
-    num = req.query.num;
+  if(req.query.per_page){
+    num = req.query.per_page;
   }
+  if(req.query.sort_by){
+    sort_by = req.query.sort_by;
+
+    if(req.query.order){
+      order = req.query.order;
+    }
+    sortobj[sort_by] = order;
+
+    item.sort(sortobj);
+  }
+
+
+
   item.paginate(pg,num);
 
   //do search query

@@ -50,17 +50,17 @@ var paginator = new Backgrid.Extension.Paginator({
 
   // Used to multiple windowSize to yield a number of pages to slide,
   // in the case the number is 5
-  slideScale: 0.5, // Default is 0.5
+  slideScale: 1, // Default is 0.5
 
   // Whether sorting should go back to the first page
-  goBackFirstOnSort: false, // Default is true
+  goBackFirstOnSort: true, // Default is true
 
   collection: data
 });
 
 
 data.fetch();
-grid.$el.append(paginator.render().el);
+grid.$el.after(paginator.render().el);
 
 
 

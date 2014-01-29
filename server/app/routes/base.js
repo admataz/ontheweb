@@ -55,15 +55,44 @@ module.exports = function(modelName, resourcePath, app, queryFilter){
  */
   function getItemsList(req,res,next){
     var items = Model.find();
+    var countquery;
+
     if(queryFilter){
       queryFilter(items, req);
     }
+
+    // 
+
+
     items.exec(function(err, results) {
+      var ret = {};
+      var itemsdata;
       if (err) {
         return next(new restify.RestError("Can't process your request"));
       }
-      res.send(200, results);
-      next();
+      
+      //store the results in a local var
+      itemsdata = results;
+      
+      //clear the sort options - will break count
+      items.options={};
+
+      //get the count
+      countquery = items.count();
+
+      countquery.exec(function(err, count){
+          if (err) {
+            return next(new restify.RestError("Can't process your request"));
+          }
+
+          ret.total_items = count;
+          ret[modelName] = itemsdata;
+
+          res.send(200, ret);
+          next();
+      });
+      
+
     });
   }
 
