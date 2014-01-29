@@ -20,13 +20,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
 require.config({
+    baseUrl: 'js',
     paths: {
         "lib": "../bower_components",
         "app": "app",
         "handlebars.runtime": "../bower_components/handlebars/handlebars.runtime.amd",
         "template":"./templates/template",
         "jquery":"../bower_components/jquery/jquery",
-        "lodash":"../bower_components/lodash/dist/lodash",
+        "lodash":"../bower_components/lodash/dist/lodash.underscore",
         "backbone":"../bower_components/backbone/backbone",
         "schema":"../bower_components/Backbone.Schema/src/backbone/schema",
         "globalize":"../bower_components/globalize/lib/globalize"

@@ -1,0 +1,31 @@
+<h1>Web Items List</h1>
+<table>
+            <thead>
+              <tr>
+                <th>URL</th>
+                <th>Title</th>
+                <th>Excerpt</th>
+                <th>Comment</th>
+                <th>Tags</th>
+                <th>Date added</th>
+              </tr>
+            </thead>
+
+            
+
+<tbody>
+          {{#each }}
+            <tr>
+              <td>{{url}}</td>
+              <td>{{title}}</td>
+              <td>{{content}}</td>
+              <td>{{comment}}</td>
+              <td>{{tags}}</td>
+              <td>{{createdAt}}</td>
+            </tr>
+          {{/each }}
+
+
+          </tbody>
+
+          </table>

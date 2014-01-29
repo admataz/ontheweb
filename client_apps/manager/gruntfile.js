@@ -4,12 +4,42 @@ module.exports = function(grunt) {
 	// Project configuration
 	grunt.initConfig({
 		watch: {
-			gruntfile: {
-				files: ['./src/**/*.js', './src/**/*.scss', '!./bower_components/**/*'],
-				tasks: ['requirejs:manager', 'sass:dist']
-			}
+			js: {
+				files: ['gruntfile.js', './src/js/**/*.js', './src/scss/**/*.scss', '!./src/bower_components/**/*'],
+				tasks: [ 'sass:dev']
+			},
+			hbs: {
+				files: 'src/js/app/templates/**/*.hbs',
+				tasks: ['shell:handlebars']
+			},
+			jshint: {
+				files: ['src/app/js/**/*.js'],
+				tasks: ['jshint']
+			},
 		},
 
+		copy:{
+			dist: {
+				files:
+				[
+					{
+						expand: true,
+						cwd: 'src',
+						src: ['**/*.html','!bower_components/**/*'],
+						dest: 'dist'
+					}
+				]
+			}
+
+		},
+		shell: {
+			handlebars: {
+				options: {
+					stdout: true
+				},
+				command: "handlebars src/js/app/templates -f src/js/app/templates/template.js -a true -e hbs"
+			}
+		},
 		
 
 		// uglify: {
@@ -23,15 +53,25 @@ module.exports = function(grunt) {
 		// 		}]
 		// 	}
 		// },
+		// 
 		sass: {                                 
-        dist: {     
+        dist: {
         	options: {
                 outputStyle: 'compressed'
             },
             files: {                        
-                './dist/css/webitemsmanager.css': './src/main.scss'     
+                './dist/css/webitemsmanager.css': './src/scss/**/*.scss'     
             }
-        }
+        }, 
+        dev: {
+        	options: {
+                sourceComments: 'map'
+            },
+            files: {                        
+                './src/css/webitemsmanager.css': './src/scss/**/*.scss'     
+            }
+        }, 
+
     },
 
 		concurrent: {
@@ -44,15 +84,23 @@ module.exports = function(grunt) {
 		},
 
 		requirejs: {
-			manager: {
+			dist: {
 				options: {
-					mainConfigFile: "src/config-require.js",
+					mainConfigFile: "src/js/require-config.js",
 					name: "lib/almond/almond",
-					include: ["src/main"],
-					insertRequire: ["src/main"],
+					include: ["src/js/app/main"],
+					insertRequire: ["src/js/app/main"],
 					baseUrl: "./",
 					paths: {
-						"lib": "./bower_components",
+						"lib": "src/bower_components",
+						"app": "src/js/app",
+		        "handlebars.runtime": "src/bower_components/handlebars/handlebars.runtime.amd",
+		        "template":"src/app/templates/template",
+		        "jquery":"src/bower_components/jquery/jquery",
+		        "lodash":"src/bower_components/lodash/dist/lodash",
+		        "backbone":"src/bower_components/backbone/backbone",
+		        "schema":"src/bower_components/Backbone.Schema/src/backbone/schema",
+		        "globalize":"src/bower_components/globalize/lib/globalize"
 					},
 
 					out: "dist/js/webitemsmanager.js",
@@ -64,18 +112,20 @@ module.exports = function(grunt) {
 			}
 		},
 
-
+		processhtml: {
+			dist: {
+			  files: {
+				'dist/index.html': ['dist/index.html']
+			  }
+			}
+		  },
 
 	});
 
-	// These plugins provide necessary tasks
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-nodemon');
-	grunt.loadNpmTasks('grunt-concurrent');
-	grunt.loadNpmTasks('grunt-sass');
+	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
 
 	// Default task
 	grunt.registerTask('default', ['concurrent:dev']);
+	grunt.registerTask('build', ['requirejs:dist', 'sass:dist', 'copy:dist', 'processhtml:dist']);
 };
