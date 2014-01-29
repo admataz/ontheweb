@@ -41,6 +41,15 @@ module.exports = function(grunt) {
 			}
 		},
 		
+		nodemon: {
+			dev: {
+				script: 'server.js',
+				options: {
+					nodeArgs: ['--debug']
+				}
+			}
+		},
+		
 
 		// uglify: {
 		// 	dev: {
@@ -60,23 +69,23 @@ module.exports = function(grunt) {
                 outputStyle: 'compressed'
             },
             files: {                        
-                './dist/css/webitemsmanager.css': './src/scss/**/*.scss'     
+                './dist/css/webitemsmanager.css': './src/scss/main.scss'     
             }
         }, 
         dev: {
         	options: {
-                sourceComments: 'map'
+                sourceComments: 'map',
+                sourceMap: 'webitemsmanager.css.map'
             },
             files: {                        
-                './src/css/webitemsmanager.css': './src/scss/**/*.scss'     
+                './src/css/webitemsmanager.css': './src/scss/main.scss'	
             }
-        }, 
-
+        },
     },
 
 		concurrent: {
 			dev: {
-				tasks: ['watch'],
+				tasks: ['watch', 'nodemon:dev'],
 				options: {
 					logConcurrentOutput: true
 				}
@@ -92,15 +101,23 @@ module.exports = function(grunt) {
 					insertRequire: ["src/js/app/main"],
 					baseUrl: "./",
 					paths: {
-						"lib": "src/bower_components",
-						"app": "src/js/app",
-		        "handlebars.runtime": "src/bower_components/handlebars/handlebars.runtime.amd",
-		        "template":"src/app/templates/template",
-		        "jquery":"src/bower_components/jquery/jquery",
-		        "lodash":"src/bower_components/lodash/dist/lodash",
-		        "backbone":"src/bower_components/backbone/backbone",
-		        "schema":"src/bower_components/Backbone.Schema/src/backbone/schema",
-		        "globalize":"src/bower_components/globalize/lib/globalize"
+						"lib": "./src/bower_components",
+		        "app": "./src/js/app",
+		        "handlebars.runtime": "./src/bower_components/handlebars/handlebars.runtime.amd",
+		        "template": "./src/js/app/templates/template",
+		        "jquery": "./src/bower_components/jquery/jquery",
+		        "lodash": "./src/bower_components/lodash/dist/lodash.underscore",
+		        "backbone": "./src/bower_components/backbone/backbone",
+		        "bootstrap": "./src/bower_components/sass-bootstrap/dist/js/bootstrap",
+		        "backgrid": "./src/bower_components/backgrid/lib/backgrid",
+		        "backgrid-filter": "./src/bower_components/backgrid-filter/backgrid-filter",
+		        "backgrid-moment-cell": "./src/bower_components/backgrid-moment-cell/backgrid-moment-cell",
+		        "backgrid-paginator": "./src/bower_components/backgrid-paginator/backgrid-paginator",
+		        "backgrid-select-all": "./src/bower_components/backgrid-select-all/backgrid-select-all",
+		        "backgrid-select2-cell": "./src/bower_components/backgrid-select2-cell/backgrid-select2-cell",
+		        "backgrid-text-cell": "./src/bower_components/backgrid-text-cell/backgrid-text-cell",
+		        "schema": "./src/bower_components/Backbone.Schema/src/backbone/schema",
+		        "globalize": "./src/bower_components/globalize/lib/globalize"
 					},
 
 					out: "dist/js/webitemsmanager.js",

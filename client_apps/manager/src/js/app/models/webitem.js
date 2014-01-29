@@ -2,7 +2,7 @@
  * 
  */
 
-define(['backbone','lodash'], function(Backbone, _){
+define(['backbone','underscore'], function(Backbone, _){
 
   return Backbone.Model.extend({
     idAttribute: '_id'

@@ -1,30 +1,30 @@
 
 var app, router;
 
-require(['jquery','backbone'],function($,Backbone){
+require(['jquery','backbone','bootstrap', 'app/views/webitemsView'],function($,Backbone){
   
 
   function init() {
-    app = {
-      loadData: loadData
-    };
-    _.extend(app, Backbone.Events);
-    router = new Router({
-      app: app
-    });
-    app.listenTo(router, 'router:newURL', routeURL);
+    // app = {
+    //   loadData: loadData
+    // };
+    // _.extend(app, Backbone.Events);
+    // router = new Router({
+    //   app: app
+    // });
+    // app.listenTo(router, 'router:newURL', routeURL);
 
-    //doing this early so clicking tags is disbaled until data is loaded
+    // //doing this early so clicking tags is disbaled until data is loaded
   
-    initInterfaces();
+    // initInterfaces();
   
-    initListeners();
+    // initListeners();
 
-    Backbone.history.start({
-      pushState: true,
-      silent: true,
-      root: 'news-media'
-    });
+    // Backbone.history.start({
+    //   pushState: true,
+    //   silent: true,
+    //   root: 'news-media'
+    // });
   }
 
 
