@@ -1,8 +1,13 @@
 
 var app, router;
 
-require(['jquery','backbone','bootstrap', 'app/views/webitemsView'],function($,Backbone){
-  
+require(['bootstrap', 'app/views/webitemsView', 'app/ui/sortable', 'app/ui/resizable'],function(){
+     $(function(){
+        // $('#testdiv ul').sortable();
+        // $('#testdiv2').resizable();
+
+    });
+
 
   function init() {
     // app = {

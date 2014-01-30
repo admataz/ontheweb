@@ -81,7 +81,27 @@ require.config({
         "schema": {
             deps: ["backbone", "globalize"],
             exports: "Backbone.Schema"
-
+        },
+        "lib/jquery-ui/ui/jquery.ui.core": {
+            deps: ["jquery"],
+            exports: "jQuery"
+        },
+        "lib/jquery-ui/ui/jquery.ui.widget": {
+            deps: ["jquery"],
+            exports: "jQuery"
+        },
+        "lib/jquery-ui/ui/jquery.ui.mouse": {
+            deps: ["jquery"],
+            exports: "jQuery"
+        },
+        "lib/jquery-ui/ui/jquery.ui.sortable": {
+            deps: ["jquery"],
+            exports: "jQuery"
+        },
+        "lib/jquery-ui/ui/jquery.ui.resizable": {
+            deps: ["jquery"],
+            exports: "jQuery"
         }
+
     }
 });

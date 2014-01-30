@@ -137,9 +137,13 @@ module.exports = function(modelName, resourcePath, app, queryFilter){
       return next(new restify.InvalidHeaderError("Content-Type must be application/json"));
     }
 
+    // don't send the id  - MongoDB will complain as it is immutable
+    // this feels like a bit of a hack - there must be a better way? 
+    delete req.body._id;
+
     Model.findByIdAndUpdate(req.params.id, req.body, function(err, result){
         if(err){
-          return next(new restify.ResourceNotFoundError("Item id missing - can't make updates"));
+          return next(new restify.RestError(err.toString()));
         }
         res.header("location",resourcePath+"/"+result._id);
         res.send(200);

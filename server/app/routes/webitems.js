@@ -5,7 +5,7 @@
 require ('mongoose-pagination');
 
 function queryFilter(item, req){
-  var pg = 1, num = 20, sort_by='updatedAt', order='desc'; //, q, searchfields;
+  var pg = 1, num = 20, sort_by='updatedAt', order='desc', q, searchfields;
   var sortobj = {};
 
   if(req.query.page){
@@ -22,16 +22,18 @@ function queryFilter(item, req){
     }
     
   }
-    sortobj[sort_by] = order;
-    item.sort(sortobj);
+
+  sortobj[sort_by] = order;
+  item.sort(sortobj);
 
 
   item.paginate(pg,num);
 
-  //do search query
-  // if(req.query.q){
-  //   q =  new RegExp(req.query.q, "i");
-  // }
+  // do search query
+  if(req.query.q){
+    q =  new RegExp(req.query.q, "i");
+    item.or([{title:q}, {content:q}, {url:q}, {comment:q}, {tags:q}] );
+  }
 }
 
 module.exports = function(app) {
