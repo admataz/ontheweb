@@ -1,6 +1,6 @@
 {
   "name": "ontheweb",
-  "version": "0.0.1-12",
+  "version": "0.0.1-14",
   "description": "Web Service to collect, compile and retrieve items with urls from the web ",
   "main": "app/index.js",
   "scripts": {
