@@ -37,7 +37,7 @@ server.use(restify.fullResponse());
 server.use(restify.bodyParser());
 
 
-server.get(/\/docs\/public\/?.*/, restify.serveStatic({
+server.get(/\/public?.*/, restify.serveStatic({
   directory: 'public',
 default:
   'index.html'

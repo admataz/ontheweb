@@ -6,26 +6,41 @@ module.exports = function(grunt) {
 		watch: {
 			gruntfile: {
 				files: ['./src/**/*.js', './src/**/*.scss', '!./bower_components/**/*'],
-				tasks: ['bookmarklet:generate', 'requirejs:bookmarklet', 'sass:dist']
+				tasks: ['bookmarklet:dev', 'requirejs:dev', 'sass:dev']
 			}
 		},
 
 		bookmarklet: {
-			generate: {
-				// js: ['http://ontheweb.jit.su/docs/public/js/bookmarklet.js'],
+			dev: {
 				js: ['http://localhost:8001/bookmarklet.js'],
 				jsIds: ['webItemBookmarkletScript'],
-				// css: ['http://ontheweb.jit.su/docs/public/js/bookmarklet.css'],
 				css: ['http://localhost:8001/bookmarklet.css'],
 				cssIds: ['webItemBookmarkletStyle'],
-				// body: './client/src/bookmarklet/stub.js',
 				out: './dist/bookmarklet_stub.txt',
 				amdify: false,
 				timestamp: false
+			},
+			dist: {
+				js: ['http://ontheweb.jit.su/public/bookmarklet/bookmarklet.js'],
+				jsIds: ['webItemBookmarkletScript'],
+				css: ['http://ontheweb.jit.su/public/bookmarklet/bookmarklet.css'],
+				cssIds: ['webItemBookmarkletStyle'],
+				out: '../../server/public/bookmarklet/bookmarklet.txt',
+				amdify: false,
+				timestamp: false
 			}
+
 		},
 		sass: {                                 
         dist: {     
+        	options: {
+                outputStyle: 'compressed'
+            },
+            files: {                        
+                '../../server/public/bookmarklet/bookmarklet.css': './src/main.scss'     
+            }
+        },
+        dev: {     
         	options: {
                 outputStyle: 'compressed'
             },
@@ -36,7 +51,7 @@ module.exports = function(grunt) {
     },
 
 		requirejs: {
-			bookmarklet: {
+			dev: {
 				options: {
 					mainConfigFile: "src/config-require.js",
 					name: "lib/almond/almond",
@@ -48,6 +63,24 @@ module.exports = function(grunt) {
 					},
 
 					out: "dist/bookmarklet.js",
+					optimize: "uglify2",
+					generateSourceMaps: false,
+					preserveLicenseComments: false,
+					wrap: true
+				}
+			},
+			dist: {
+				options: {
+					mainConfigFile: "src/config-require.js",
+					name: "lib/almond/almond",
+					include: ["src/main"],
+					insertRequire: ["src/main"],
+					baseUrl: "./",
+					paths: {
+						"lib": "./bower_components",
+					},
+
+					out: "../../server/public/bookmarklet/bookmarklet.js",
 					optimize: "uglify2",
 					generateSourceMaps: false,
 					preserveLicenseComments: false,
@@ -83,4 +116,5 @@ module.exports = function(grunt) {
 
 	// Default task
 	grunt.registerTask('default', ['concurrent:dev']);
+	grunt.registerTask('build', ['bookmarklet:dist', 'requirejs:dist', 'sass:dist']);
 };

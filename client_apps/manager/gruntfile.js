@@ -29,6 +29,17 @@ module.exports = function(grunt) {
 						dest: 'dist'
 					}
 				]
+			}, 
+			server:{
+				files: 
+				[
+				{
+					expand: true,
+					cwd: 'dist',
+					src: ['**/*.*'],
+					dest: '../../server/admin'
+				}
+				]
 			}
 
 		},
@@ -145,5 +156,5 @@ module.exports = function(grunt) {
 
 	// Default task
 	grunt.registerTask('default', ['concurrent:dev']);
-	grunt.registerTask('build', ['requirejs:dist', 'sass:dist', 'copy:dist', 'processhtml:dist']);
+	grunt.registerTask('build', ['requirejs:dist', 'sass:dist', 'copy:dist', 'processhtml:dist', 'copy:server']);
 };
