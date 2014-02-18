@@ -18,7 +18,10 @@
     "mongoose-unique-validator": "~0.3.0",
     "mongoose-validate": "0.0.5",
     "lodash": "~2.4.1",
-    "mongoose-pagination": "~1.0.0"
+    "mongoose-pagination": "~1.0.0",
+    "fbgraph": "~0.2.9",
+    "googleapis": "~0.6.1",
+    "mtwitter": "~1.5.2"
   },
   "devDependencies": {
     "grunt-bookmarklet-thingy": "~0.2.0",

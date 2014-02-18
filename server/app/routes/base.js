@@ -126,7 +126,7 @@ module.exports = function(modelName, resourcePath, app, queryFilter){
    */
   function put(req, res, next) {
     if (!req.params.id) {
-      return next(new restify.InvalidParameterError("Item id missing - can't make updates"));
+      return next(new restify.MissingParameterError("Item id missing - can't make updates"));
     }
 
     if(!req.body){
@@ -157,7 +157,7 @@ module.exports = function(modelName, resourcePath, app, queryFilter){
    */
   function del(req, res, next) {
     if (!req.params.id) {
-      return next(new restify.InvalidParameterError("Item id missing - can't make updates"));
+      return next(new restify.MissingParameterError("Item id missing - can't make updates"));
     }
     Model.findByIdAndRemove(req.params.id, function(err, result){
       res.send(200);

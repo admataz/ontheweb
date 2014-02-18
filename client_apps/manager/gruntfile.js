@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 		watch: {
 			js: {
 				files: ['gruntfile.js', './src/js/**/*.js', './src/scss/**/*.scss', '!./src/bower_components/**/*'],
-				tasks: [ 'sass:dev']
+				tasks: ['sass:dev']
 			},
 			hbs: {
 				files: 'src/js/app/templates/**/*.hbs',
@@ -18,28 +18,22 @@ module.exports = function(grunt) {
 			},
 		},
 
-		copy:{
+		copy: {
 			dist: {
-				files:
-				[
-					{
-						expand: true,
-						cwd: 'src',
-						src: ['**/*.html','!bower_components/**/*'],
-						dest: 'dist'
-					}
-				]
-			}, 
-			server:{
-				files: 
-				[
-				{
+				files: [{
+					expand: true,
+					cwd: 'src',
+					src: ['**/*.html', '!bower_components/**/*'],
+					dest: 'dist'
+				}]
+			},
+			server: {
+				files: [{
 					expand: true,
 					cwd: 'dist',
 					src: ['**/*.*'],
 					dest: '../../server/admin'
-				}
-				]
+				}]
 			}
 
 		},
@@ -51,7 +45,7 @@ module.exports = function(grunt) {
 				command: "handlebars src/js/app/templates -f src/js/app/templates/template.js -a true -e hbs"
 			}
 		},
-		
+
 		nodemon: {
 			dev: {
 				script: 'server.js',
@@ -60,7 +54,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		
 
 		// uglify: {
 		// 	dev: {
@@ -74,25 +67,25 @@ module.exports = function(grunt) {
 		// 	}
 		// },
 		// 
-		sass: {                                 
-        dist: {
-        	options: {
-                outputStyle: 'compressed'
-            },
-            files: {                        
-                './dist/css/webitemsmanager.css': './src/scss/main.scss'     
-            }
-        }, 
-        dev: {
-        	options: {
-                sourceComments: 'map',
-                sourceMap: 'webitemsmanager.css.map'
-            },
-            files: {                        
-                './src/css/webitemsmanager.css': './src/scss/main.scss'	
-            }
-        },
-    },
+		sass: {
+			dist: {
+				options: {
+					outputStyle: 'compressed'
+				},
+				files: {
+					'./dist/css/webitemsmanager.css': './src/scss/main.scss'
+				}
+			},
+			dev: {
+				options: {
+					sourceComments: 'map',
+					sourceMap: 'webitemsmanager.css.map'
+				},
+				files: {
+					'./src/css/webitemsmanager.css': './src/scss/main.scss'
+				}
+			},
+		},
 
 		concurrent: {
 			dev: {
@@ -113,23 +106,23 @@ module.exports = function(grunt) {
 					baseUrl: "src/js",
 					paths: {
 						"lib": "../bower_components",
-		        "app": "app",
-		        "handlebars.runtime": "../bower_components/handlebars/handlebars.runtime.amd",
-		        "template": "./templates/template",
-		        "jquery": "../bower_components/jquery/jquery",
-		        "underscore": "../bower_components/lodash/dist/lodash.underscore",
-		        "backbone": "../bower_components/backbone/backbone",
-		        "backbone-pageable": "../bower_components/backbone-pageable/lib/backbone-pageable",
-		        "bootstrap": "../bower_components/sass-bootstrap/dist/js/bootstrap",
-		        "backgrid": "../bower_components/backgrid/lib/backgrid",
-		        "backgrid-filter": "../bower_components/backgrid-filter/backgrid-filter",
-		        "backgrid-moment-cell": "../bower_components/backgrid-moment-cell/backgrid-moment-cell",
-		        "backgrid-paginator": "../bower_components/backgrid-paginator/backgrid-paginator",
-		        "backgrid-select-all": "../bower_components/backgrid-select-all/backgrid-select-all",
-		        "backgrid-select2-cell": "../bower_components/backgrid-select2-cell/backgrid-select2-cell",
-		        "backgrid-text-cell": "../bower_components/backgrid-text-cell/backgrid-text-cell",
-		        "schema": "../bower_components/Backbone.Schema/src/backbone/schema",
-		        "globalize": "../bower_components/globalize/lib/globalize"
+						"app": "app",
+						"handlebars.runtime": "../bower_components/handlebars/handlebars.runtime.amd",
+						"template": "./templates/template",
+						"jquery": "../bower_components/jquery/jquery",
+						"underscore": "../bower_components/lodash/dist/lodash.underscore",
+						"backbone": "../bower_components/backbone/backbone",
+						"backbone-pageable": "../bower_components/backbone-pageable/lib/backbone-pageable",
+						"bootstrap": "../bower_components/sass-bootstrap/dist/js/bootstrap",
+						"backgrid": "../bower_components/backgrid/lib/backgrid",
+						"backgrid-filter": "../bower_components/backgrid-filter/backgrid-filter",
+						"backgrid-moment-cell": "../bower_components/backgrid-moment-cell/backgrid-moment-cell",
+						"backgrid-paginator": "../bower_components/backgrid-paginator/backgrid-paginator",
+						"backgrid-select-all": "../bower_components/backgrid-select-all/backgrid-select-all",
+						"backgrid-select2-cell": "../bower_components/backgrid-select2-cell/backgrid-select2-cell",
+						"backgrid-text-cell": "../bower_components/backgrid-text-cell/backgrid-text-cell",
+						"schema": "../bower_components/Backbone.Schema/src/backbone/schema",
+						"globalize": "../bower_components/globalize/lib/globalize"
 					},
 
 					out: "dist/js/webitemsmanager.js",
@@ -143,16 +136,15 @@ module.exports = function(grunt) {
 
 		processhtml: {
 			dist: {
-			  files: {
-				'dist/index.html': ['dist/index.html']
-			  }
+				files: {
+					'dist/index.html': ['dist/index.html']
+				}
 			}
-		  },
+		},
 
 	});
 
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-
 
 	// Default task
 	grunt.registerTask('default', ['concurrent:dev']);

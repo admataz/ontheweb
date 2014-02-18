@@ -10,6 +10,7 @@ module.exports = function (app) {
   require('./webitems')(app);
   require('./itemcollection')(app);
   require('./admin')(app);
+  require('./feedsource')(app);
 
 
 
