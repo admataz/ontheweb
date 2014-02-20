@@ -1,12 +1,10 @@
+require(['jquery', 'backbone', 'app/app'],function($, Backbone, App){
 
-var app, router;
 
-require(['bootstrap', 'app/views/webitemsView', 'app/ui/sortable', 'app/ui/resizable'],function(){
-     $(function(){
-        // $('#testdiv ul').sortable();
-        // $('#testdiv2').resizable();
 
-    });
+  $(function(){
+    
+  });
 
 
   function init() {
@@ -20,9 +18,9 @@ require(['bootstrap', 'app/views/webitemsView', 'app/ui/sortable', 'app/ui/resiz
     // app.listenTo(router, 'router:newURL', routeURL);
 
     // //doing this early so clicking tags is disbaled until data is loaded
-  
+
     // initInterfaces();
-  
+
     // initListeners();
 
     // Backbone.history.start({
@@ -30,11 +28,11 @@ require(['bootstrap', 'app/views/webitemsView', 'app/ui/sortable', 'app/ui/resiz
     //   silent: true,
     //   root: 'news-media'
     // });
-  }
+}
 
 
-  init();
+    // init();
 
-  return app;
+  // return app;
 });
 

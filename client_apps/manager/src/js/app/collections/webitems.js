@@ -1,10 +1,8 @@
-define(['backbone','underscore','app/models/webitem', 'backbone-pageable'], function(Backbone, _, model){
+define(['backbone', 'underscore', 'app/models/webitem', 'backbone-pageable'], function(Backbone, _, model) {
 
   return Backbone.PageableCollection.extend({
     model: model,
     url: 'http://localhost:8001/webitem',
-
-    
 
     queryParams: {
 
@@ -14,15 +12,17 @@ define(['backbone','underscore','app/models/webitem', 'backbone-pageable'], func
       pageSize: "per_page"
     },
 
-  state: {
-    pageSize: 30
-  },
-
-    parseState: function (resp, queryParams, state, options) {
-      return {totalRecords: resp.total_items};
+    state: {
+      pageSize: 30
     },
 
-    parseRecords: function (resp, options) {
+    parseState: function(resp, queryParams, state, options) {
+      return {
+        totalRecords: resp.total_items
+      };
+    },
+
+    parseRecords: function(resp, options) {
       return resp.webitem;
     }
   });

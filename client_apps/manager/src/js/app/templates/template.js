@@ -1,46 +1,36 @@
 define(['handlebars.runtime'], function(Handlebars) {
   Handlebars = Handlebars["default"];  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+templates['layout'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<nav id=\"mainNav\" class=\"navbar navbar-default\" role=\"navigation\">\n     \n</nav>\n\n\n\n<div id=\"ontheweb-container\"></div>    \n   \n\n";
+  });
+templates['mainnav'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<ul class=\"nav nav-pills\">\n  <li><a href=\"#\">Home</a></li>\n  <li><a href=\"collect\">Collect</a></li>\n  <li><a href=\"webitems\">Web Items</a></li>\n</ul>";
+  });
+templates['social_media_collect'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<form action=\"#\">\n  <select name=\"platform\" id=\"platform\">\n    <option value=\"twitter\">Twitter</option>\n    <option value=\"facebook\">Facebook</option>\n    <option value=\"googleplus\">Google+</option>\n  </select> \n\n  <input type=\"text\" name=\"q\" value=\"\">\n\n  <label for=\"channel-search\">Platform Search</label>\n  <input type=\"radio\" name=\"channel\" value=\"search\" id=\"channel-search\">\n\n  <label for=\"channel-user\">Specific user or facebook page</label>\n  <input type=\"radio\" name=\"channel\" value=\"user\" id=\"channel-user\">\n\n\n\n  <input type=\"submit\" name=\"submit\" value=\"go\">\n\n\n</form>\n\n\n<h3>Results</h3>\n\n<div id=\"results\">\n  \n  \n</div>";
+  });
 templates['webitems'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
-
-function program1(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n            <tr>\n              <td>";
-  if (stack1 = helpers.url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.url); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</td>\n              <td>";
-  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.title); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</td>\n              <td>";
-  if (stack1 = helpers.content) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.content); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</td>\n              <td>";
-  if (stack1 = helpers.comment) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.comment); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</td>\n              <td>";
-  if (stack1 = helpers.tags) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.tags); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</td>\n              <td>";
-  if (stack1 = helpers.createdAt) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.createdAt); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</td>\n            </tr>\n          ";
-  return buffer;
-  }
 
-  buffer += "<h1>Web Items List</h1>\n<table>\n            <thead>\n              <tr>\n                <th>URL</th>\n                <th>Title</th>\n                <th>Excerpt</th>\n                <th>Comment</th>\n                <th>Tags</th>\n                <th>Date added</th>\n              </tr>\n            </thead>\n\n            \n\n<tbody>\n          ";
-  stack1 = helpers.each.call(depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n\n\n          </tbody>\n\n          </table>";
-  return buffer;
+
+  return "<div>\n<div id=\"itemsgrid\"></div>\n</div>";
   });
 return templates;
 });

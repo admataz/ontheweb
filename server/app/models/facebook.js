@@ -4,10 +4,6 @@ var config = require('../settings');
 graph.setAccessToken(getAuthToken());
 
 
-function getPagePosts(page_id, cb){
-
-}
-
 function getUserPosts(user_id, cb){
   graph.get(user_id+"/feed", function(err, item) {
     if (err) {
@@ -50,16 +46,17 @@ function getAuthToken(){
 
 module.exports = {
   query: function(obj, cb) {
-    if(['page','search', 'user', 'group'].indexOf(obj.channel) === -1){
+    if(['search', 'user'].indexOf(obj.channel) === -1){
       cb(new Error('No valid facebook channel requested'));
     }
 
+    // search for users and pages works the same way in the API
     if (obj.channel === 'user') {
-      getUserPosts(obj.user_id, cb);
+      getUserPosts(obj.q, cb);
     }
 
     if (obj.channel === 'search') {
-      getSearchResults(obj, cb);
+      getSearchResults(obj.q, cb);
     }
 
 

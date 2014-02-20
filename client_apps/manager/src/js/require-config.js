@@ -25,7 +25,7 @@ require.config({
         "lib": "../bower_components",
         "app": "app",
         "handlebars.runtime": "../bower_components/handlebars/handlebars.runtime.amd",
-        "template": "./templates/template",
+        "template": "./app/templates/template",
         "jquery": "../bower_components/jquery/jquery",
         "underscore": "../bower_components/lodash/dist/lodash.underscore",
         "backbone": "../bower_components/backbone/backbone",
@@ -54,28 +54,28 @@ require.config({
             deps: ["backbone", "underscore"],
             exports: "Backgrid"
         },
-        "backgrid-filter" : {
-            deps:["backgrid"],
+        "backgrid-filter": {
+            deps: ["backgrid"],
             exports: "Backgrid.Extension"
         },
-        "backgrid-moment-cell" : {
-            deps:["backgrid"],
+        "backgrid-moment-cell": {
+            deps: ["backgrid"],
             exports: "Backgrid.Extension"
         },
-        "backgrid-paginator" : {
-            deps:["backgrid"],
+        "backgrid-paginator": {
+            deps: ["backgrid"],
             exports: "Backgrid.Extension"
         },
-        "backgrid-select-all" : {
-            deps:["backgrid"],
+        "backgrid-select-all": {
+            deps: ["backgrid"],
             exports: "Backgrid.Extension"
         },
-        "backgrid-select2-cell" : {
-            deps:["backgrid"],
+        "backgrid-select2-cell": {
+            deps: ["backgrid"],
             exports: "Backgrid.Extension"
         },
-        "backgrid-text-cell" : {
-            deps:["backgrid"],
+        "backgrid-text-cell": {
+            deps: ["backgrid"],
             exports: "Backgrid.Extension"
         },
         "schema": {

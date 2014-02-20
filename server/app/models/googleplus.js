@@ -27,7 +27,7 @@ function getUserPosts(user_id, cb){
 function getSearchResults( query, cb){
   request.get({
     'uri': apiURL+'activities',
-    'qs': {'key': config.google_api_key, 'query':query.q, 'maxResults':20, 'orderBy':'recent'},
+    'qs': {'key': config.google_api_key, 'query':query, 'maxResults':20, 'orderBy':'recent'},
     'json': true
   }, function(err, response, body) {
     if (err) {
@@ -45,16 +45,16 @@ function getSearchResults( query, cb){
 
 module.exports = {
   query: function(obj, cb) {
-    if(['search', 'user', 'comments'].indexOf(obj.channel) === -1){
+    if(['search', 'user'].indexOf(obj.channel) === -1){
       cb(new Error('No valid Google+ channel requested'));
     }
 
     if (obj.channel === 'user') {
-      getUserPosts(obj.user_id, cb);
+      getUserPosts(obj.q, cb);
     }
 
     if (obj.channel === 'search') {
-      getSearchResults(obj, cb);
+      getSearchResults(obj.q, cb);
     }
 
 
