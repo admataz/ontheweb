@@ -1,4 +1,4 @@
-define(['backbone', '../ui/basegrid', '../collections/webitems', 'template', '../events'], function(Backbone, Backgrid, WebItemsCollection, Template, Events) {
+define(['backbone', '../ui/basegrid', '../collections/webItems', 'template', '../events'], function(Backbone, Backgrid, WebItemsCollection, Template, Events) {
   var app = {};
 
   var columns = [{
@@ -42,7 +42,9 @@ define(['backbone', '../ui/basegrid', '../collections/webitems', 'template', '..
   ];
 
   return Backbone.View.extend({
-    template: Template.webitems,
+    
+    template: Template.webItemsList,
+    
     initialize: function() {
       this.listenTo(Events, 'view:changed', this.onViewChanged, this);
       // console.log(Events);
@@ -54,21 +56,14 @@ define(['backbone', '../ui/basegrid', '../collections/webitems', 'template', '..
       this.listenTo(this.data, "backgrid:edited", function(evt) {
         console.log(evt);
       });
-      this.render();
+      this.init();
     },
 
-    onViewChanged: function(newView) {
-      console.log(newView);
-      if (newView === 'WebItemsView') {
-        this.render();
-      }
-    },
+    
 
-    render: function() {
+    init: function() {
 
-      // var display = this.template();
       this.setElement(this.template());
-
       this.$("#itemsgrid").append(this.grid.render().el);
 
       var paginator = new Backgrid.Extension.Paginator({
@@ -89,9 +84,16 @@ define(['backbone', '../ui/basegrid', '../collections/webitems', 'template', '..
       this.$("#itemsgrid").before(serverSideFilter.render().el);
       this.data.fetch();
 
-      // console.log($('#ontheweb-container'));
-      $('#ontheweb-container').replaceWith(this.$el);
+
     },
+
+
+    render: function(){
+      // console.log($('#ontheweb-container'));
+      $('#ontheweb-container').empty();
+      $('#ontheweb-container').append(this.$el);
+    }
+
   });
 
 });
