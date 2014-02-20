@@ -1,37 +1,46 @@
-<form action="#" id="collectForm">
+<form action="#" id="collectForm" role="form" class="form-inline">
+  <div class="form-group">
+
+<div class="checkbox">
   
-<div style="padding:0 10px;display:inline-block; width:200px; text-align:right;">
-  <label for="channel-search">Do a search</label>
+  <label for="channel-search">search
   <input type="radio" name="channel" value="search" id="channel-search" checked="checked">
+  </label>
   
-  <div>or <label for="channel-user">List user's posts</label>
-  <input type="radio" name="channel" value="user" id="channel-user">
+  <label for="channel-user">user's posts
+  <input type="radio" name="channel" value="user" id="channel-user"></label>
+  
   </div>
 
 </div>
 
-<label for="platform">on</label>
-  <select name="platform" id="platform">
+</div>
+
+<div class="form-group">
+  <select name="platform" id="platform"  class="form-control">
     <option value="twitter">Twitter</option>
     <option value="facebook">Facebook</option>
     <option value="googleplus">Google+</option>
   </select> 
-
-for
-  <input type="text" name="q" value="" placeholder="username or search term">
-
-  
+</div>
 
 
-  <input type="submit" name="submit" value="go">
+<div class="form-group">
 
+  <div class="input-group">
+      <input type="text" name="q" value="" class="form-control" placeholder="username or search term">
+      <span class="input-group-btn">
+        <input type="submit" value="Go" name="submitgo" class="btn btn-default" />
+      </span>
+    </div>
+</div>
 
 </form>
 
 
 <h3>Results</h3>
 
-<div id="results">
+<div id="collect-items-results">
   
   
 </div>

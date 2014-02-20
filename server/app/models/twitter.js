@@ -12,11 +12,12 @@ var twit = new Twitter({
 function normaliseResults(itm,i){
       var newObj = {};
       newObj.url = 'http://twitter.com/'+itm.user.screen_name+'/status/'+itm.id_str;
-      newObj.title = 'Tweet by '+itm.user.name;
+      newObj.title = 'Tweet by '+itm.user.name +'(@'+itm.user.screen_name+')';
       newObj.content = itm.text;
       newObj.imageUrl = '';
       newObj.geotags = itm.geo;
       newObj.authorName = itm.user.name;
+      newObj.usernameID = '@'+itm.user.screen_name;
       newObj.authorProfileUrl = 'http://twitter.com/'+itm.user.screen_name;
       newObj.authorAvatarUrl = itm.user.profile_image_url;
       newObj.sourceSiteName = 'Twitter';

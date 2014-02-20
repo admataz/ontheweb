@@ -1,4 +1,4 @@
-define(['backbone', '../ui/basegrid', '../collections/webItems', 'template', '../events'], function(Backbone, Backgrid, WebItemsCollection, Template, Events) {
+define(['backbone', '../ui/basegrid', '../collections/webItems', 'template'], function(Backbone, Backgrid, WebItemsCollection, Template) {
   var app = {};
 
   var columns = [{
@@ -46,16 +46,18 @@ define(['backbone', '../ui/basegrid', '../collections/webItems', 'template', '..
     template: Template.webItemsList,
     
     initialize: function() {
-      this.listenTo(Events, 'view:changed', this.onViewChanged, this);
-      // console.log(Events);
+      
       this.data = new WebItemsCollection();
+
       this.grid = new Backgrid.Grid({
         columns: columns,
         collection: this.data
       });
+
       this.listenTo(this.data, "backgrid:edited", function(evt) {
         console.log(evt);
       });
+
       this.init();
     },
 

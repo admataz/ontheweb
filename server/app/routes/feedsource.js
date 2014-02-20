@@ -18,17 +18,17 @@ module.exports = function(app) {
    * query to account for the different interfaces for each API and more complex searches and queries - is this what middleware for?
    * 
    */
-  app.get('socialmedia/:platform', function(req, res, next){
+  app.get('socialmedia', function(req, res, next){
 
-    if (!req.params.platform) {
+    if (!req.query.platform) {
       return next(new restify.MissingParameterError("Social media platform id missing - can't make query"));
     }
     
-    if(config.socialmedia_platforms.indexOf(req.params.platform) === -1) {
+    if(config.socialmedia_platforms.indexOf(req.query.platform) === -1) {
       return next(new restify.InvalidArgumentError("Social media platform not valid  - should be activated in config, and relevant routers should exist"));
     }
 
-    var platform = require('../models/'+req.params.platform);
+    var platform = require('../models/'+req.query.platform);
 
     platform.query(req.query, function queryPlatform(err, result){
       if(err){

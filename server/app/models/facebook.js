@@ -4,25 +4,70 @@ var config = require('../settings');
 graph.setAccessToken(getAuthToken());
 
 
+function normaliseResults(itm,i){
+
+
+
+      var newObj = {};
+      newObj.url = 'http://facebook.com/'+itm.id.replace('_','/posts/');
+      newObj.title = itm.name;
+      newObj.content = itm.message;
+      newObj.imageUrl = '';
+      // newObj.geotags = itm.geo;
+      newObj.authorName = itm.from.name;
+      newObj.usernameID = itm.from.id;
+      newObj.authorProfileUrl = 'http://facebook.com/'+itm.from.id;
+      newObj.authorAvatarUrl = 'http://graph.facebook.com/'+itm.from.id+'/picture?type=square';
+      newObj.sourceSiteName = 'Facebook';
+      newObj.sourceSiteUrl = 'http://facebook.com';
+      newObj.sourceSiteLogoUrl = '';
+      // newObj.inReplyTo = itm.in_reply_to_status_id;
+      newObj.dateCollected = new Date();
+      newObj.datePosted = itm.created_time;
+      newObj.dateLastValidated = new Date();
+      newObj.comment = '';
+      newObj.tags = '';
+      newObj.status = 0;
+
+
+      if(itm.picture){
+        newObj.imageUrl = itm.picture;
+      }
+
+      return newObj;
+
+    }
+
+
 function getUserPosts(user_id, cb){
-  graph.get(user_id+"/feed", function(err, item) {
+  graph.get(user_id+"/feed", function(err, result) {
     if (err) {
       cb(err);
       return;
     }
-    cb(null, item);
+
+    result.data = result.data.map(normaliseResults);
+    cb(null, result.data);
+
   });
 }
 
+
 function getSearchResults( query, cb){
-  graph.search(query, function(err, item) {
+  graph.search({type:"post",q:query}, function(err, result) {
     if (err) {
       cb(err);
       return;
     }
-    cb(null, item);
+    result.data = result.data.map(normaliseResults);
+
+
+
+    cb(null, result.data);
   });
 }
+
+
 
 /**
  * compile an auth token
