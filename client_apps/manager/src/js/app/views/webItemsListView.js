@@ -55,7 +55,7 @@ define(['backbone', '../ui/basegrid', '../collections/webItems', 'template'], fu
       });
 
       this.listenTo(this.data, "backgrid:edited", function(evt) {
-        console.log(evt);
+        // console.log(evt);
       });
 
       this.init();

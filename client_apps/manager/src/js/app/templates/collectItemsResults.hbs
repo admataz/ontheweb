@@ -1,13 +1,13 @@
-<form action='#'>
+<form action='#' id="resultsForm">
 <div class="form-group">
-  <button class="btn btn-default" type="button">Save selected</button>
+  <input type="submit" class="btn btn-default" value="Save selected" />
 </form>
 <div class="list-group">
 {{#each items}}
 <div class="list-group-item media">
   <label for="result-{{@index}}">
   <div  class="pull-left">  
-   <input type="checkbox" name="webitem" value="{{@index}}" id="result-{{@index}}" />
+   <input type="checkbox" name="webitem[{{@index}}]" value="{{@index}}" id="result-{{@index}}" />
     <img src="{{authorAvatarUrl}}"  class="media-object">
   </div>
   </label>
@@ -15,11 +15,20 @@
   <div class="media-body">
   <h4 class="media-heading">{{title}}</h4>
   {{{content}}}
+  
+  {{#if imageUrl}}
+  <p><img src="{{imageUrl}}"></p>
+  {{/if}}
+
+  
   </div>
+
+  
 
   <div class="postdata">
     <a href="{{url}}">original</a> posted at {{datePosted}} by <a href="{{authorProfileUrl}}">{{authorName}} ({{usernameID}})</a> on <a href="{{sourceSiteUrl}}">{{sourceSiteName}}</a>
   </div>
+
 </div>
 {{/each}}
 </div>

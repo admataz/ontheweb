@@ -18,7 +18,9 @@ function program1(depth0,data) {
   var buffer = "", stack1, stack2;
   buffer += "\n<div class=\"list-group-item media\">\n  <label for=\"result-"
     + escapeExpression(((stack1 = ((stack1 = data),stack1 == null || stack1 === false ? stack1 : stack1.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">\n  <div  class=\"pull-left\">  \n   <input type=\"checkbox\" name=\"webitem\" value=\""
+    + "\">\n  <div  class=\"pull-left\">  \n   <input type=\"checkbox\" name=\"webitem["
+    + escapeExpression(((stack1 = ((stack1 = data),stack1 == null || stack1 === false ? stack1 : stack1.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "]\" value=\""
     + escapeExpression(((stack1 = ((stack1 = data),stack1 == null || stack1 === false ? stack1 : stack1.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" id=\"result-"
     + escapeExpression(((stack1 = ((stack1 = data),stack1 == null || stack1 === false ? stack1 : stack1.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -34,7 +36,10 @@ function program1(depth0,data) {
   if (stack2 = helpers.content) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = (depth0 && depth0.content); stack2 = typeof stack2 === functionType ? stack2.call(depth0, {hash:{},data:data}) : stack2; }
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n  </div>\n\n  <div class=\"postdata\">\n    <a href=\"";
+  buffer += "\n  \n  ";
+  stack2 = helpers['if'].call(depth0, (depth0 && depth0.imageUrl), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\n\n  \n  </div>\n\n  \n\n  <div class=\"postdata\">\n    <a href=\"";
   if (stack2 = helpers.url) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = (depth0 && depth0.url); stack2 = typeof stack2 === functionType ? stack2.call(depth0, {hash:{},data:data}) : stack2; }
   buffer += escapeExpression(stack2)
@@ -62,11 +67,21 @@ function program1(depth0,data) {
   if (stack2 = helpers.sourceSiteName) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = (depth0 && depth0.sourceSiteName); stack2 = typeof stack2 === functionType ? stack2.call(depth0, {hash:{},data:data}) : stack2; }
   buffer += escapeExpression(stack2)
-    + "</a>\n  </div>\n</div>\n";
+    + "</a>\n  </div>\n\n</div>\n";
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n  <p><img src=\"";
+  if (stack1 = helpers.imageUrl) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = (depth0 && depth0.imageUrl); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"></p>\n  ";
   return buffer;
   }
 
-  buffer += "<form action='#'>\n<div class=\"form-group\">\n  <button class=\"btn btn-default\" type=\"button\">Save selected</button>\n</form>\n<div class=\"list-group\">\n";
+  buffer += "<form action='#' id=\"resultsForm\">\n<div class=\"form-group\">\n  <input type=\"submit\" class=\"btn btn-default\" value=\"Save selected\" />\n</form>\n<div class=\"list-group\">\n";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</div>\n</form>\n";
@@ -78,7 +93,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<nav id=\"mainNav\" class=\"navbar navbar-default\" role=\"navigation\">\n     \n</nav>\n\n\n\n<div id=\"ontheweb-container\"></div>    \n   \n\n";
+  return "\n<nav id=\"mainNav\" class=\"navbar navbar-default\" role=\"navigation\"></nav>\n<div id=\"ontheweb-container\"></div>    \n   \n\n";
   });
 templates['mainNav'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
