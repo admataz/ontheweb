@@ -1,8 +1,10 @@
-define(['app/views/BaseView', 'underscore', 'jquery', 'template'], function(BaseView, _, $, AppTemplate) {
+define(['app/views/BaseView', 'underscore', 'jquery', 'template'], function(BaseView, _, $, Template) {
 
 
   return BaseView.extend({
-    template: AppTemplate.collectItemsResults,
+    
+    template: Template['collect/searchResults'],
+
     el: '#collect-items-results',
 
     events: {

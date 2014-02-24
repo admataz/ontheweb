@@ -1,8 +1,8 @@
-define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './webItemsSearchResultsView', 'template', 'underscore', 'jquery'], function(config, BaseView, WebItems, WebItemsSearchResultsView, Template, _, $) {
+define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searchResults', 'template', 'underscore', 'jquery'], function(config, BaseView, WebItems, SearchResults, Template, _, $) {
 
   return BaseView.extend({
 
-    template: Template.collateItems,
+    template: Template['collate/index'],
     el: '#ontheweb-container',
 
     collection: new WebItems(),
@@ -21,7 +21,7 @@ define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './webIt
       this.$el.empty();
       this.$el.append(this.template());
 
-      this.resultsView = new WebItemsSearchResultsView();
+      this.resultsView = new SearchResults();
 
     },
 

@@ -1,8 +1,8 @@
-define(['./BaseView', 'template', './mainNavView', 'underscore'], function(BaseView, AppTemplate, MainNav, _) {
+define(['./BaseView', 'template', './mainNavView'], function(BaseView, Template, MainNav) {
 
   return BaseView.extend({
-
-    template: AppTemplate.layout,
+    
+    template: Template['global/layout'],
 
     el: '#ontheweb-adminapp',
 
@@ -14,7 +14,7 @@ define(['./BaseView', 'template', './mainNavView', 'underscore'], function(BaseV
       this.$el.append(this.template());
       new MainNav();
     }
-
+    
   });
 
 });

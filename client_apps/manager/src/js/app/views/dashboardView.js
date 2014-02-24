@@ -1,5 +1,5 @@
 define(['./BaseView'], function(BaseView){
 
-  return new BaseView.extend({});
+  return BaseView.extend({});
 
 });

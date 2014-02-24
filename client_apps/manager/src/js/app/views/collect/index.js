@@ -1,11 +1,13 @@
-define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 'app/collections/collectItemResults', './collectItemsResultsView'], function(config, BaseView, _, $, AppTemplate, CollectItemResults, CollectItemsResultsView) {
+define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 'app/collections/collectItemResults', './searchResults'], function(config, BaseView, _, $, Template, CollectItemResults, SearchResults) {
   return BaseView.extend({
-    template: AppTemplate.collectItems,
+
+    template: Template['collect/index'],
+
     el: '#ontheweb-container',
+
     collection: new CollectItemResults(),
 
     initialize: function() {
-      // this.render();
       this.listenTo(this.pubSub, 'collectItems:save', _.bind(this.onSaveSelection, this));
     },
 
@@ -16,7 +18,7 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
     render: function() {
       this.$el.empty();
       this.$el.append(this.template());
-      this.resultsView = new CollectItemsResultsView();
+      this.resultsView = new SearchResults();
 
     },
 

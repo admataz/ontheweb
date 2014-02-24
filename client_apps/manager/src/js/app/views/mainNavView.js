@@ -1,23 +1,28 @@
-define(['./BaseView', 'template', 'app/events'],function(BaseView, AppTemplate, Events){
+define(['./BaseView', 'template'], function(BaseView, Template) {
 
   return BaseView.extend({
-    template: AppTemplate.mainNav,
+
+    template: Template['global/mainNav'],
+
     el: '#mainNav',
+
     events: {
       'click a': 'onclick'
     },
-    initialize: function(){
+
+    initialize: function() {
       this.render();
 
     },
-    render: function(){
+
+    render: function() {
       this.$el.append(this.template());
     },
-    onclick: function(evt){
+
+    onclick: function(evt) {
       evt.preventDefault();
       this.pubSub.trigger("nav:clicked", this.$(evt.target).attr('href'));
     }
-
 
   });
 });

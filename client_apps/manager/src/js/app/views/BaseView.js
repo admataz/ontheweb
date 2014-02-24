@@ -1,6 +1,6 @@
 
 
-define(['backbone', 'underscore', '../events'], function(Backbone, _, Events){
+define(['backbone', 'underscore', 'app/events'], function(Backbone, _, Events){
 
   return Backbone.View.extend({
     constructor: function() {

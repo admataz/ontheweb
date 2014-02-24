@@ -43,7 +43,7 @@ define(['app/views/BaseView', 'app/ui/basegrid', 'app/collections/webItems', 'te
 
   return BaseView.extend({
 
-    template: Template.webItemsList,
+    template: Template['webitems/index'],
 
     initialize: function() {
 

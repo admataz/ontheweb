@@ -2,7 +2,7 @@ define(['app/views/BaseView', 'template', 'underscore', 'jquery'], function(Base
 
   return BaseView.extend({
     el: '#collate-items .results-panel',
-    template: Template.webItemsSearchResults,
+    template: Template['collate/searchResults'],
 
     initialize: function() {
 
