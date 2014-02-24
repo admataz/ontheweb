@@ -1,4 +1,4 @@
-define(['./BaseView', '../ui/basegrid', '../collections/webItems', 'template'], function(BaseView, Backgrid, WebItemsCollection, Template) {
+define(['app/views/BaseView', 'app/ui/basegrid', 'app/collections/webItems', 'template'], function(BaseView, Backgrid, WebItemsCollection, Template) {
   var app = {};
 
   var columns = [{
@@ -42,11 +42,11 @@ define(['./BaseView', '../ui/basegrid', '../collections/webItems', 'template'], 
   ];
 
   return BaseView.extend({
-    
+
     template: Template.webItemsList,
-    
+
     initialize: function() {
-      
+
       this.data = new WebItemsCollection();
 
       this.grid = new Backgrid.Grid({
@@ -60,8 +60,6 @@ define(['./BaseView', '../ui/basegrid', '../collections/webItems', 'template'], 
 
       this.init();
     },
-
-    
 
     init: function() {
 
@@ -86,11 +84,9 @@ define(['./BaseView', '../ui/basegrid', '../collections/webItems', 'template'], 
       this.$("#itemsgrid").before(serverSideFilter.render().el);
       this.data.fetch();
 
-
     },
 
-
-    render: function(){
+    render: function() {
       this.data.fetch();
       // console.log($('#ontheweb-container'));
       $('#ontheweb-container').empty();

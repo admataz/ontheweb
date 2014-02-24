@@ -37,9 +37,9 @@ define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/vi
     // we can get more specific for a view if required
     var views = {
       'index': 'app/views/dashboardView',
-      'webitems': 'app/views/webItemsListView',
-      'collect': 'app/views/collectItemsView',
-      'collate': 'app/views/collateItemsView'
+      'webitems': 'app/views/webitems/index',
+      'collect': 'app/views/collect/index',
+      'collate': 'app/views/colalte/index'
     };
 
 
@@ -61,7 +61,7 @@ define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/vi
     }
 
     if(whichview ==='webitems'){
-      require(['app/views/webItemsListView'], function(TheView) {
+      require(['app/views/webitems/index'], function(TheView) {
         loadedStates[whichview] = new TheView();
         currentState = loadedStates[whichview];
         currentState.render();
@@ -69,7 +69,7 @@ define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/vi
     }
 
     if(whichview ==='collect'){
-      require(['app/views/collectItemsView'], function(TheView) {
+      require(['app/views/collect/index'], function(TheView) {
         loadedStates[whichview] = new TheView();
         currentState = loadedStates[whichview];
 
@@ -82,7 +82,7 @@ define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/vi
     }
 
     if(whichview ==='collate'){
-      require(['app/views/collateItemsView'], function(TheView) {
+      require(['app/views/collate/index'], function(TheView) {
         loadedStates[whichview] = new TheView();
         currentState = loadedStates[whichview];
         currentState.render();
