@@ -1,4 +1,4 @@
-define(['backbone', '../ui/basegrid', '../collections/webItems', 'template'], function(Backbone, Backgrid, WebItemsCollection, Template) {
+define(['./BaseView', '../ui/basegrid', '../collections/webItems', 'template'], function(BaseView, Backgrid, WebItemsCollection, Template) {
   var app = {};
 
   var columns = [{
@@ -41,7 +41,7 @@ define(['backbone', '../ui/basegrid', '../collections/webItems', 'template'], fu
 
   ];
 
-  return Backbone.View.extend({
+  return BaseView.extend({
     
     template: Template.webItemsList,
     
@@ -91,6 +91,7 @@ define(['backbone', '../ui/basegrid', '../collections/webItems', 'template'], fu
 
 
     render: function(){
+      this.data.fetch();
       // console.log($('#ontheweb-container'));
       $('#ontheweb-container').empty();
       $('#ontheweb-container').append(this.$el);

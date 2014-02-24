@@ -1,6 +1,6 @@
-define(['backbone', 'template', './mainNavView', 'underscore'], function(Backbone, AppTemplate, MainNav, _) {
+define(['./BaseView', 'template', './mainNavView', 'underscore'], function(BaseView, AppTemplate, MainNav, _) {
 
-  return Backbone.View.extend({
+  return BaseView.extend({
 
     template: AppTemplate.layout,
 

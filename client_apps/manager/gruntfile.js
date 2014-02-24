@@ -101,14 +101,14 @@ module.exports = function(grunt) {
 				options: {
 					mainConfigFile: "src/js/require-config.js",
 					name: "lib/almond/almond",
-					include: ["app/main"],
+					include: ["../require.config.dist", "app/main"],
 					insertRequire: ["app/main"],
 					baseUrl: "src/js",
 					paths: {
 						"lib": "../bower_components",
 						"app": "app",
 						"handlebars.runtime": "../bower_components/handlebars/handlebars.runtime.amd",
-						"template": "./templates/template",
+						"template": "./app/templates/template",
 						"jquery": "../bower_components/jquery/jquery",
 						"underscore": "../bower_components/lodash/dist/lodash.underscore",
 						"backbone": "../bower_components/backbone/backbone",
@@ -129,6 +129,7 @@ module.exports = function(grunt) {
 					optimize: "uglify2",
 					generateSourceMaps: false,
 					preserveLicenseComments: false,
+					findNestedDependencies:true,
 					wrap: true
 				}
 			}

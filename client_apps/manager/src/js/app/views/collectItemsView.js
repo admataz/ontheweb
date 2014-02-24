@@ -1,4 +1,4 @@
-define(['./BaseView', 'underscore', 'jquery', 'template', '../collections/collectItemResults', './collectItemsResultsView'], function(BaseView, _, $, AppTemplate, CollectItemResults, CollectItemsResultsView) {
+define(['app/config', './BaseView', 'underscore', 'jquery', 'template', '../collections/collectItemResults', './collectItemsResultsView'], function(config, BaseView, _, $, AppTemplate, CollectItemResults, CollectItemsResultsView) {
   return BaseView.extend({
     template: AppTemplate.collectItems,
     el: '#ontheweb-container',
@@ -6,14 +6,14 @@ define(['./BaseView', 'underscore', 'jquery', 'template', '../collections/collec
 
     initialize: function() {
       // this.render();
+      this.listenTo(this.pubSub,'collectItems:save',_.bind(this.onSaveSelection,this));
     },
-
+    
     events: {
       'submit #collectForm': 'onFormSubmitted'
     },
 
     render: function() {
-      this.listenTo(this.pubSub,'collectItems:save',_.bind(this.onSaveSelection,this));
       this.$el.empty();
       this.$el.append(this.template());
       this.resultsView = new CollectItemsResultsView();
@@ -21,16 +21,13 @@ define(['./BaseView', 'underscore', 'jquery', 'template', '../collections/collec
     },
 
     onSaveSelection: function(data){
-      console.log(data);
       
-      this.collection.setURL('http://localhost:8001/webitem');
+      this.collection.setURL( config.api.url+'webitem');
 
       var models = _.map(data,_.bind(function(itm){
-        // console.log(this.collection);
         return this.collection.at(itm).save();
       },this));
 
-      console.log(models);
 
     },
 
@@ -44,8 +41,7 @@ define(['./BaseView', 'underscore', 'jquery', 'template', '../collections/collec
       }, {});
 
       this.current_results = [];
-      // TODO: make this externally configurable 
-      this.collection.setURL('http://localhost:8001/socialmedia?'+$.param(data));
+      this.collection.setURL( config.api.url+'socialmedia?'+$.param(data));
       this.collection.reset();
       this.collection.fetch({
         success: _.bind(function(collection, response, options){

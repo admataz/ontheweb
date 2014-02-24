@@ -1,8 +1,9 @@
-define(['backbone', 'underscore', 'app/models/webitem', 'backbone-pageable'], function(Backbone, _, model) {
+define(['app/config', 'backbone', 'underscore', 'app/models/webitem', 'backbone-pageable'], function(config, Backbone, _, model) {
+
 
   return Backbone.PageableCollection.extend({
     model: model,
-    url: 'http://localhost:8001/webitem',
+    url: config.api.url+'webitem',
 
     queryParams: {
 

@@ -16,7 +16,7 @@ var fields = {
   sourceSiteName: {type: String},
   sourceSiteUrl: {type: String},
   sourceSiteLogoUrl: {type: String},
-  inReplyTo: Schema.ObjectId,
+  inReplyTo: {type: String},
   dateCollected: {type: Date},
   datePosted: {type: Date},
   dateLastValidated: {type: Date},

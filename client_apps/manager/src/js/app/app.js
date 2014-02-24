@@ -9,7 +9,7 @@
  *
  */
 
-define(['backbone', 'underscore', './events', 'app/router', 'app/views/layoutView'], function(Backbone, _, Events, AppRouter, LayoutView) {
+define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/views/layoutView'], function(config, Backbone, _, Events, AppRouter, LayoutView) {
 
   var app = _.extend({}, Backbone.Events);
 
@@ -36,31 +36,67 @@ define(['backbone', 'underscore', './events', 'app/router', 'app/views/layoutVie
     // for now I'm going to simply map the incoming ID to a View Object - it's like we usually use routing
     // we can get more specific for a view if required
     var views = {
-      'index': 'app/views/dashboard',
+      'index': 'app/views/dashboardView',
       'webitems': 'app/views/webItemsListView',
       'collect': 'app/views/collectItemsView',
       'collate': 'app/views/collateItemsView'
     };
 
 
-
+// Don't repeat oureselves
     if(loadedStates[whichview]){
       currentState = loadedStates[whichview];
       currentState.render();
       return;
     }
 
+
+
+    if(whichview ==='index'){
+      require(['app/views/dashboardView'], function(TheView) {
+        loadedStates[whichview] = new TheView();
+        currentState = loadedStates[whichview];
+        currentState.render();
+      });
+    }
+
+    if(whichview ==='webitems'){
+      require(['app/views/webItemsListView'], function(TheView) {
+        loadedStates[whichview] = new TheView();
+        currentState = loadedStates[whichview];
+        currentState.render();
+      });
+    }
+
+    if(whichview ==='collect'){
+      require(['app/views/collectItemsView'], function(TheView) {
+        loadedStates[whichview] = new TheView();
+        currentState = loadedStates[whichview];
+
+        // attaching this here to see if it helps  - can't attach it to the initialiser - 
+        // TO: this feels messy - the question is how can I access properties defined in the super constructor as initialisers? 
+        loadedStates[whichview].listenTo(Events,'collectItems:save',_.bind(loadedStates[whichview].onSaveSelection,loadedStates[whichview]));
+
+        currentState.render();
+      });
+    }
+
+    if(whichview ==='collate'){
+      require(['app/views/collateItemsView'], function(TheView) {
+        loadedStates[whichview] = new TheView();
+        currentState = loadedStates[whichview];
+        currentState.render();
+      });
+    }
+
     
-    // Do the actual require
-    require([views[whichview]], function(TheView) {
-      loadedStates[whichview] = new TheView();
-      currentState = loadedStates[whichview];
-      currentState.render();
-    });
 
 
 
   }
+
+
+
 
 
 
@@ -71,7 +107,8 @@ define(['backbone', 'underscore', './events', 'app/router', 'app/views/layoutVie
 
 // Start the Backbone history
   Backbone.history.start({
-    pushState: true
+    pushState: true,
+    root: config.admin.path
   });
 
 
