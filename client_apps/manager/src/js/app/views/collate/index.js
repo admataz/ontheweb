@@ -1,28 +1,16 @@
-define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searchResults', 'template', 'underscore', 'jquery'], function(config, BaseView, WebItems, SearchResults, Template, _, $) {
+define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searchResultItem', 'template', 'underscore', 'jquery'], function(config, BaseView, WebItems, SearchResultsItem, Template, _, $) {
 
   return BaseView.extend({
-
     template: Template['collate/index'],
-    el: '#ontheweb-container',
-
     collection: new WebItems(),
 
     initialize: function() {
       this.added_items = [];
-      this.render();
       this.listenTo(this.pubSub, 'webitem:selected', _.bind(this.onItemSelected, this));
     },
 
     events: {
       'submit #searchItems': 'onFormSubmitted'
-    },
-
-    render: function() {
-      this.$el.empty();
-      this.$el.append(this.template());
-
-      this.resultsView = new SearchResults();
-
     },
 
     onFormSubmitted: function(evt) {
@@ -41,19 +29,24 @@ define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searc
         data: {
           q: data.q
         },
-        success: _.bind(function(collection, response, options) {
-          this.current_results = response;
-          this.resultsView.render({
-            items: response.webitem
-          });
-        }, this)
+        success: _.bind(this.onCollectionLoaded, this)
       });
       this.pubSub.trigger("seachForm:submit", data);
       evt.preventDefault();
     },
 
+    onCollectionLoaded: function(collection, response, options) {
+      collection.each(_.bind(this.addItemView,this));
+    },
+
     onItemSelected: function(id) {
       console.log(this.collection.at(id));
+    },
+
+
+    addItemView: function(model){
+      var view = this.insertView('.results-panel', new SearchResultsItem({model:model}));
+      view.render();
     }
 
   });

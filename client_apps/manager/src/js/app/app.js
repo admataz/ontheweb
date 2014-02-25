@@ -9,15 +9,20 @@
  *
  */
 
-define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/views/layoutView'], function(config, Backbone, _, Events, AppRouter, LayoutView) {
+define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/views/layoutView'], function(config, Backbone, _,  Events, AppRouter, LayoutView) {
 
-  var app = _.extend({}, Backbone.Events);
+  var app, layout, router, loadedStates, currentState;
 
-  var layout = new LayoutView();
-  var router = new AppRouter();
-  var loadedStates={};
-  var currentState = null;
+  // Backbone.Layout.configure({manage:true});
 
+  app = _.extend({}, Backbone.Events);
+  layout = new LayoutView();
+  router = new AppRouter();
+  loadedStates={};
+  currentState = null;
+
+
+  layout.render();
 
 
 /**
@@ -35,20 +40,20 @@ define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/vi
   function loadView(whichview) {
     // for now I'm going to simply map the incoming ID to a View Object - it's like we usually use routing
     // we can get more specific for a view if required
-    var views = {
-      'index': 'app/views/dashboardView',
-      'webitems': 'app/views/webitems/index',
-      'collect': 'app/views/collect/index',
-      'collate': 'app/views/colalte/index'
-    };
+    // var views = {
+    //   'index': 'app/views/dashboardView',
+    //   'webitems': 'app/views/webitems/index',
+    //   'collect': 'app/views/collect/index',
+    //   'collate': 'app/views/colalte/index'
+    // };
 
 
 // Don't repeat oureselves
-    if(loadedStates[whichview]){
-      currentState = loadedStates[whichview];
-      currentState.render();
-      return;
-    }
+    // if(loadedStates[whichview]){
+    //   currentState = loadedStates[whichview];
+    //   currentState.render();
+    //   return;
+    // }
 
 
 
@@ -75,7 +80,7 @@ define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/vi
 
         // attaching this here to see if it helps  - can't attach it to the initialiser - 
         // TO: this feels messy - the question is how can I access properties defined in the super constructor as initialisers? 
-        loadedStates[whichview].listenTo(Events,'collectItems:save',_.bind(loadedStates[whichview].onSaveSelection,loadedStates[whichview]));
+        // loadedStates[whichview].listenTo(Events,'collectItems:save',_.bind(loadedStates[whichview].onSaveSelection,loadedStates[whichview]));
 
         currentState.render();
       });
@@ -83,9 +88,15 @@ define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/vi
 
     if(whichview ==='collate'){
       require(['app/views/collate/index'], function(TheView) {
-        loadedStates[whichview] = new TheView();
-        currentState = loadedStates[whichview];
-        currentState.render();
+        // console.log(layout);
+        // console.log($('#ontheweb-container'));
+        var v = new TheView();
+        layout.setView('#ontheweb-container', v);
+        v.render();
+
+        // loadedStates[whichview] = new TheView();
+        // currentState = loadedStates[whichview];
+        // currentState.render();
       });
     }
 

@@ -1,32 +1,46 @@
 define(['handlebars.runtime'], function(Handlebars) {
   Handlebars = Handlebars["default"];  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
-templates['collate/index'] = template(function (Handlebars,depth0,helpers,partials,data) {
+templates['collate/collectionPreview'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "<div id=\"collate-items\">\n\n<div class=\"row\">\n  <div class=\"col-md-12\">\n  <div class=\"search-panel \">\n      \n      <form action=\"#\" id=\"searchItems\" role=\"form\" class=\"form-inline\">\n      \n      <div class=\"form-group\">\n        <label for=\"platform-twitter-option\"><input type=\"checkbox\" name=\"platform-twitter\" value=\"1\" id=\"platform-twitter-option\">Twitter</label>\n        <label for=\"platform-facebook-option\"><input type=\"checkbox\" name=\"platform-facebook\" value=\"1\" id=\"platform-facebook-option\">Facebook</label>\n        <label for=\"platform-googleplus-option\"><input type=\"checkbox\" name=\"platform-googleplus\" value=\"1\" id=\"platform-googleplus-option\">Google+</label>\n        <label for=\"platform-www-option\"><input type=\"checkbox\" name=\"platform-www\" value=\"1\" id=\"platform-www-option\">General Web capture</label>\n      </div>\n\n\n      <div class=\"form-group\">\n        <div class=\"input-group\">\n          <input type=\"text\" name=\"q\" value=\"\" class=\"form-control\" placeholder=\"username or search term\">\n          <span class=\"input-group-btn\">\n            <input type=\"submit\" value=\"Go\" name=\"submitgo\" class=\"btn btn-default\" />\n          </span>\n        </div>\n      </div>\n    \n    </form>\n  \n  </div>\n</div>\n</div>\n\n\n\n<div class=\"row\">\n  <div class=\"col-xs-6\">  \n    <div class=\"results-panel\"></div>\n  </div>\n  <div class=\"col-xs-6\">\n    <div class=\"collate-panel\">Drag your results here</div>\n  </div>\n</div>\n\n</div>";
-  });
-templates['collate/searchResults'] = template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var stack1, self=this;
 
 function program1(depth0,data) {
   
-  var buffer = "", stack1, helper;
-  buffer += "\n<div class=\"list-group-item media\" data-itemid=\""
+  
+  return "\n\n\n";
+  }
+
+function program3(depth0,data) {
+  
+  
+  return "\n  Add items from the search results panel\n";
+  }
+
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { return stack1; }
+  else { return ''; }
+  });
+templates['collate/index'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "";
+
+
+  buffer += "<div id=\"collate-items\">\n\n<div class=\"row\">\n  <div class=\"col-md-12\">\n  <p>Find items you have alredy collected</p>\n \n  <div class=\"search-panel \">\n      \n      <form action=\"#\" id=\"searchItems\" role=\"form\" class=\"form-inline\">\n      \n      <div class=\"form-group\">\n        <label for=\"platform-twitter-option\"><input type=\"checkbox\" name=\"platform-twitter\" value=\"1\" id=\"platform-twitter-option\"> Twitter</label>\n        <label for=\"platform-facebook-option\"><input type=\"checkbox\" name=\"platform-facebook\" value=\"1\" id=\"platform-facebook-option\"> Facebook</label>\n        <label for=\"platform-googleplus-option\"><input type=\"checkbox\" name=\"platform-googleplus\" value=\"1\" id=\"platform-googleplus-option\"> Google+</label>\n        <label for=\"platform-www-option\"><input type=\"checkbox\" name=\"platform-www\" value=\"1\" id=\"platform-www-option\"> General Web capture</label>\n      </div>\n\n\n      <div class=\"form-group\">\n        <div class=\"input-group\">\n          <input type=\"text\" name=\"q\" value=\"\" class=\"form-control\" placeholder=\"username or search term\">\n          <span class=\"input-group-btn\">\n            <input type=\"submit\" value=\"Go\" name=\"submitgo\" class=\"btn btn-default\" />\n          </span>\n        </div>\n      </div>\n    \n    </form>\n  \n  </div>\n\n\n</div>\n</div>\n\n\n\n<div class=\"row\">\n  <div class=\"col-xs-6\">  \n    <div class=\"results-panel\"></div>\n  </div>\n  <div class=\"col-xs-6\">\n    <div class=\"collate-panel\"></div>\n  </div>\n</div>\n\n\n</div>";
+  return buffer;
+  });
+templates['collate/searchResultItem'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"list-group-item media\" data-itemid=\""
     + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">\n  <label for=\"result-"
     + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">\n  <div  class=\"pull-left\">  \n   <input type=\"checkbox\" name=\"webitem["
-    + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "]\" value=\""
-    + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" id=\"result-"
-    + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" />\n    <img src=\"";
+    + "\">\n  <div  class=\"pull-left\">  \n    <img src=\"";
   if (helper = helpers.authorAvatarUrl) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.authorAvatarUrl); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -34,14 +48,11 @@ function program1(depth0,data) {
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h6>\n  ";
+    + "</h6>\n  <small>";
   if (helper = helpers.content) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.content); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n  ";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.imageUrl), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n  </div>\n  <div class=\"postdata\">\n    <a href=\"";
+  buffer += "</small>\n  </div>\n  \n  <div class=\"postdata\">\n    <a href=\"";
   if (helper = helpers.url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -69,24 +80,29 @@ function program1(depth0,data) {
   if (helper = helpers.sourceSiteName) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.sourceSiteName); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\n  </div>\n\n</div>\n";
+    + "</a>\n  </div>\n\n</div>";
   return buffer;
-  }
-function program2(depth0,data) {
+  });
+templates['collate/searchResults'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", self=this;
+
+function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\n  <p><img src=\"";
-  if (helper = helpers.imageUrl) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.imageUrl); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\"></p>\n  ";
+  buffer += "\n";
+  if (helper = helpers.item) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.item); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n";
   return buffer;
   }
 
-  buffer += "<form action='#' id=\"resultsForm\">\n<div class=\"form-group\">\n  <input type=\"submit\" class=\"btn btn-default\" value=\"Save selected\" />\n</form>\n<div class=\"list-group\">\n";
+  buffer += "<div class=\"list-group\">\n";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</div>\n</form>\n";
+  buffer += "\n</div>\n";
   return buffer;
   });
 templates['collect/index'] = template(function (Handlebars,depth0,helpers,partials,data) {

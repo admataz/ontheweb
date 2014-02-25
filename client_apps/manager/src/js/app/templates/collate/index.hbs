@@ -2,15 +2,17 @@
 
 <div class="row">
   <div class="col-md-12">
+  <p>Find items you have alredy collected</p>
+ {{!-- the search form --}}
   <div class="search-panel ">
       
       <form action="#" id="searchItems" role="form" class="form-inline">
       
       <div class="form-group">
-        <label for="platform-twitter-option"><input type="checkbox" name="platform-twitter" value="1" id="platform-twitter-option">Twitter</label>
-        <label for="platform-facebook-option"><input type="checkbox" name="platform-facebook" value="1" id="platform-facebook-option">Facebook</label>
-        <label for="platform-googleplus-option"><input type="checkbox" name="platform-googleplus" value="1" id="platform-googleplus-option">Google+</label>
-        <label for="platform-www-option"><input type="checkbox" name="platform-www" value="1" id="platform-www-option">General Web capture</label>
+        <label for="platform-twitter-option"><input type="checkbox" name="platform-twitter" value="1" id="platform-twitter-option"> Twitter</label>
+        <label for="platform-facebook-option"><input type="checkbox" name="platform-facebook" value="1" id="platform-facebook-option"> Facebook</label>
+        <label for="platform-googleplus-option"><input type="checkbox" name="platform-googleplus" value="1" id="platform-googleplus-option"> Google+</label>
+        <label for="platform-www-option"><input type="checkbox" name="platform-www" value="1" id="platform-www-option"> General Web capture</label>
       </div>
 
 
@@ -26,18 +28,21 @@
     </form>
   
   </div>
+{{!-- /the search form --}}
+
 </div>
 </div>
 
 
-
+{{!-- the results --}}
 <div class="row">
   <div class="col-xs-6">  
     <div class="results-panel"></div>
   </div>
   <div class="col-xs-6">
-    <div class="collate-panel">Drag your results here</div>
+    <div class="collate-panel"></div>
   </div>
 </div>
+{{!-- /the results --}}
 
 </div>

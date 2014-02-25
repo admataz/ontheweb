@@ -40,6 +40,7 @@ require.config({
         "jquery": "../bower_components/jquery/jquery",
         "underscore": "../bower_components/lodash/dist/lodash.underscore",
         "backbone": "../bower_components/backbone/backbone",
+        "layoutmanager": "../bower_components/layoutmanager/backbone.layoutmanager", 
         "backbone-pageable": "../bower_components/backbone-pageable/lib/backbone-pageable",
         "bootstrap": "../bower_components/sass-bootstrap/dist/js/bootstrap",
         "backgrid": "../bower_components/backgrid/lib/backgrid",

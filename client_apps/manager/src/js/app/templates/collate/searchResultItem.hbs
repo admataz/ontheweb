@@ -1,0 +1,16 @@
+<div class="list-group-item media" data-itemid="{{@index}}">
+  <label for="result-{{@index}}">
+  <div  class="pull-left">  
+    <img src="{{authorAvatarUrl}}"  class="media-object">
+  </div>
+  </label>
+  <div class="media-body">
+  <h6 class="media-heading">{{title}}</h6>
+  <small>{{{content}}}</small>
+  </div>
+  
+  <div class="postdata">
+    <a href="{{url}}">original</a> posted at {{datePosted}} by <a href="{{authorProfileUrl}}">{{authorName}} ({{usernameID}})</a> on <a href="{{sourceSiteUrl}}">{{sourceSiteName}}</a>
+  </div>
+
+</div>

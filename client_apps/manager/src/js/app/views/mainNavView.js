@@ -4,20 +4,20 @@ define(['./BaseView', 'template'], function(BaseView, Template) {
 
     template: Template['global/mainNav'],
 
-    el: '#mainNav',
+    // el: '',
 
     events: {
       'click a': 'onclick'
     },
 
-    initialize: function() {
-      this.render();
+    // initialize: function() {
+    //   this.render();
 
-    },
+    // },
 
-    render: function() {
-      this.$el.append(this.template());
-    },
+    // render: function() {
+    //   this.$el.append(this.template());
+    // },
 
     onclick: function(evt) {
       evt.preventDefault();

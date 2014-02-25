@@ -1,4 +1,4 @@
-define(['app/views/BaseView', 'template', 'underscore', 'jquery'], function(BaseView, Template, _, $) {
+define(['app/views/BaseView', 'template', './searchResultItem', 'underscore', 'jquery','bootstrap'], function(BaseView, Template, SearchResultItem, _, $) {
 
   return BaseView.extend({
     el: '#collate-items .results-panel',
@@ -9,19 +9,21 @@ define(['app/views/BaseView', 'template', 'underscore', 'jquery'], function(Base
     },
 
     render: function(data) {
-      this.$el.empty();
-      this.$el.append(this.template(data));
+      var items = [];
+      var output = '';
+      var itemObj = new SearchResultItem();
 
-      var addlink = $('<a href="#">add</a>');
-      var pubsub = this.pubSub;
-      addlink.on('click', function(evt) {
-        var index = ($(this).parent().data('itemid'));
-        pubsub.trigger("webitem:selected", index);
-        evt.preventDefault();
+      items = _.map(data, function(item){
+        return  itemObj.render(item);
       });
 
-      this.$('.list-group-item').append(addlink);
 
+      this.$el.empty();
+
+      output= this.template({items:items});
+      console.log(items);
+
+      this.$el.append(output);
     },
 
   });
