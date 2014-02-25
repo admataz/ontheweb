@@ -1,0 +1,19 @@
+<div class="list-group-item media" data-itemid="{{cid}}">
+  <label for="result-{{cid}}">
+  <div  class="pull-left">  
+   <input type="checkbox" name="webitem[{{cid}}]" value="{{cid}}" id="result-{{cid}}" />
+    <img src="{{atts.authorAvatarUrl}}"  class="media-object">
+  </div>
+  </label>
+  <div class="media-body">
+  <h6 class="media-heading">{{atts.title}}</h6>
+  {{{atts.content}}}
+  {{#if atts.imageUrl}}
+  <p><img src="{{atts.imageUrl}}"></p>
+  {{/if}}
+  </div>
+  <div class="postdata">
+    <a href="{{atts.url}}">original</a> posted at {{atts.datePosted}} by <a href="{{atts.authorProfileUrl}}">{{atts.authorName}} ({{atts.usernameID}})</a> on <a href="{{sourceSiteUrl}}">{{atts.sourceSiteName}}</a>
+  </div>
+
+</div>
