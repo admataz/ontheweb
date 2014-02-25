@@ -3,7 +3,7 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
 
     template: Template['collect/index'],
 
-    el: '#ontheweb-container',
+    // el: '#ontheweb-container',
 
     collection: new CollectItemResults(),
 
@@ -15,25 +15,21 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
       'submit #collectForm': 'onFormSubmitted'
     },
 
-    render: function() {
-      this.$el.empty();
-      this.$el.append(this.template());
-      this.resultsView = new SearchResults();
+    // render: function() {
+    //   this.$el.empty();
+    //   this.$el.append(this.template());
+    //   this.resultsView = new SearchResults();
 
-    },
+    // },
 
     onSaveSelection: function(data) {
-
       this.collection.setURL(config.api.url + 'webitem');
-
       var models = _.map(data, _.bind(function(itm) {
         return this.collection.at(itm).save();
       }, this));
-
     },
 
     onFormSubmitted: function(evt) {
-
       var theform = evt.target;
       var arr = $(theform).serializeArray();
       var data = _(arr).reduce(function(acc, field) {

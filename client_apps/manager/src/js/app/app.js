@@ -33,6 +33,12 @@ define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/vi
     loadView(nav);
   }
 
+  function onViewLoaded(TheView) {
+      var v = new TheView();
+      layout.setView('#ontheweb-container', v);
+      v.render();
+    }
+
 
 /**
  * Load a view
@@ -58,47 +64,21 @@ define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/vi
 
 
     if(whichview ==='index'){
-      require(['app/views/dashboardView'], function(TheView) {
-        loadedStates[whichview] = new TheView();
-        currentState = loadedStates[whichview];
-        currentState.render();
-      });
+      require(['app/views/dashboardView'], onViewLoaded);
     }
 
     if(whichview ==='webitems'){
-      require(['app/views/webitems/index'], function(TheView) {
-        loadedStates[whichview] = new TheView();
-        currentState = loadedStates[whichview];
-        currentState.render();
-      });
+      require(['app/views/webitems/index'], onViewLoaded);
     }
 
     if(whichview ==='collect'){
-      require(['app/views/collect/index'], function(TheView) {
-        loadedStates[whichview] = new TheView();
-        currentState = loadedStates[whichview];
-
-        // attaching this here to see if it helps  - can't attach it to the initialiser - 
-        // TO: this feels messy - the question is how can I access properties defined in the super constructor as initialisers? 
-        // loadedStates[whichview].listenTo(Events,'collectItems:save',_.bind(loadedStates[whichview].onSaveSelection,loadedStates[whichview]));
-
-        currentState.render();
-      });
+      require(['app/views/collect/index'], onViewLoaded);
     }
 
     if(whichview ==='collate'){
-      require(['app/views/collate/index'], function(TheView) {
-        // console.log(layout);
-        // console.log($('#ontheweb-container'));
-        var v = new TheView();
-        layout.setView('#ontheweb-container', v);
-        v.render();
-
-        // loadedStates[whichview] = new TheView();
-        // currentState = loadedStates[whichview];
-        // currentState.render();
-      });
+      require(['app/views/collate/index'], onViewLoaded);
     }
+
 
     
 

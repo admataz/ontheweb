@@ -25,6 +25,7 @@ define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searc
       // TODO: add the platform filters to the query on the server (and here)
       this.current_results = [];
       this.collection.reset();
+      this.$('.results-panel').empty();
       this.collection.fetch({
         data: {
           q: data.q

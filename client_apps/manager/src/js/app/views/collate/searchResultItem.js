@@ -4,9 +4,17 @@ define(['app/views/BaseView', 'template'], function(BaseView, Template) {
 
     template: Template['collate/searchResultItem'],
 
-    initialize: function() {
+    events: {
+      'click .postdata a': 'onShowPostData'
+    },
+
+    onShowPostData: function(evt){
+      evt.preventDefault();
+      console.log($(evt.target).attr('href'));
 
     },
+
+
 
 
 
