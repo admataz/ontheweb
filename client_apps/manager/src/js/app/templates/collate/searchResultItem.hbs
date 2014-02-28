@@ -1,10 +1,13 @@
 <div class="list-group-item media" data-itemid="{{_id}}">
+  
   <h6 class="media-heading">{{title}}</h6>
+  
   <div  class="pull-left">  
     <img src="{{authorAvatarUrl}}"  class="media-object">
   </div>
+  
   <div class="media-body">
-  <small>{{{linkify content}}}</small>
+    <small>{{{linkify content}}}</small>
   </div>
   
   <a class="more-info-button" href="{{url}}">post info</a>
@@ -14,11 +17,12 @@
 
 
   {{#if imageUrl}}
-   <a class="reveal-media-button" href="{{imageUrl}}">media</a>
+  <a class="reveal-media-button" href="{{imageUrl}}">media</a>
   <div class="mediadata">
-  <p><img src="{{imageUrl}}" width="100%"></p>
+    <p><img src="{{imageUrl}}" width="100%"></p>
   </div>
   {{/if}}
-  </div>
+
 
 </div>
+

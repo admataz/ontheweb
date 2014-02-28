@@ -1,4 +1,4 @@
-define(['app/views/BaseView', 'template', 'underscore', 'jquery','helpers'], function(BaseView, Template, _, $) {
+define(['app/views/BaseView', 'template', 'underscore', 'jquery'], function(BaseView, Template, _, $) {
 
   return BaseView.extend({
 

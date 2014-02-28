@@ -1,51 +1,42 @@
-<form action="#" id="collectForm" role="form" class="form-inline">
-  <div class="form-group">
+<div id="collect-items">
 
-<div class="checkbox">
-  
-  <label for="channel-search">
-  <input type="radio" name="channel" value="search" id="channel-search" checked="checked"> search all ||
-  </label>
-  
-  <label for="channel-user">
-  <input type="radio" name="channel" value="user" id="channel-user"> user's posts
-  </label>
-  
+
+<div class="row">
+  <div class="col-md-12">
+  <p>Find items on the web.</p>
+</div>
+</div>
+
+
+{{!-- the results --}}
+<div class="row">
+  <div class="col-xs-6 ">
+  {{!-- <h4 class="step one">1. Search for your saved items</h4>   --}}
+    {{!-- the search form --}}
+  <div class="search-panel ">
+    
+  </div>
+{{!-- /the search form --}}
+  {{!-- <h4 class="step two">2. Add items to the collection</h4> --}}
+    
   </div>
 
-</div>
+  <div class="col-xs-6">
+    {{!-- <h4 class="step three">3. Give the collection a name and save it</h4> --}}
+    <div class="save-panel">
 
-</div>
-
-<div class="form-group">
-  <select name="platform" id="platform"  class="form-control">
-    <option value="twitter">Twitter</option>
-    <option value="facebook">Facebook</option>
-    <option value="googleplus">Google+</option>
-  </select> 
-</div>
-
-
-<div class="form-group">
-
-  <div class="input-group">
-      <input type="text" name="q" value="" class="form-control" placeholder="username or search term">
-      <span class="input-group-btn">
-        <input type="submit" value="Go" name="submitgo" class="btn btn-default" />
-      </span>
     </div>
+    
+  </div>
 </div>
 
-</form>
+
+<div class="row dd-panels">
+  <div class="col-xs-6"><div class="results-panel  well  well-sm"></div></div>
+  <div class="col-xs-6"><div class="selected-panel well  well-sm"></div></div>
+</div>
 
 
-<form action='#' id="resultsForm">
-<h3>Results</h3>
-<div class="form-group">
-  <input type="submit" class="btn btn-default" value="Save selected" />
+{{!-- /the results --}}
+
 </div>
-<div id="collect-items-results">
-  
-  
-</div>
-</form>
