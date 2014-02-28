@@ -1,48 +1,42 @@
 <div id="collate-items">
 
+
 <div class="row">
   <div class="col-md-12">
-  <p>Find items you have alredy collected</p>
- {{!-- the search form --}}
-  <div class="search-panel ">
-      
-      <form action="#" id="searchItems" role="form" class="form-inline">
-      
-      <div class="form-group">
-        <label for="platform-twitter-option"><input type="checkbox" name="platform-twitter" value="1" id="platform-twitter-option"> Twitter</label>
-        <label for="platform-facebook-option"><input type="checkbox" name="platform-facebook" value="1" id="platform-facebook-option"> Facebook</label>
-        <label for="platform-googleplus-option"><input type="checkbox" name="platform-googleplus" value="1" id="platform-googleplus-option"> Google+</label>
-        <label for="platform-www-option"><input type="checkbox" name="platform-www" value="1" id="platform-www-option"> General Web capture</label>
-      </div>
-
-
-      <div class="form-group">
-        <div class="input-group">
-          <input type="text" name="q" value="" class="form-control" placeholder="username or search term">
-          <span class="input-group-btn">
-            <input type="submit" value="Go" name="submitgo" class="btn btn-default" />
-          </span>
-        </div>
-      </div>
-    
-    </form>
-  
-  </div>
-{{!-- /the search form --}}
-
+  <p>Find items you have already collected from the web and compile them into groups.</p>
 </div>
 </div>
 
 
 {{!-- the results --}}
 <div class="row">
-  <div class="col-xs-6">  
-    <div class="results-panel"></div>
+  <div class="col-xs-6 ">
+  {{!-- <h4 class="step one">1. Search for your saved items</h4>   --}}
+    {{!-- the search form --}}
+  <div class="search-panel ">
+    
   </div>
+{{!-- /the search form --}}
+  {{!-- <h4 class="step two">2. Add items to the collection</h4> --}}
+    
+  </div>
+
   <div class="col-xs-6">
-    <div class="collate-panel"></div>
+    {{!-- <h4 class="step three">3. Give the collection a name and save it</h4> --}}
+    <div class="save-panel">
+
+    </div>
+    
   </div>
 </div>
+
+
+<div class="row dd-panels">
+  <div class="col-xs-6"><div class="results-panel  well  well-sm"></div></div>
+  <div class="col-xs-6"><div class="selected-panel well  well-sm"></div></div>
+</div>
+
+
 {{!-- /the results --}}
 
 </div>

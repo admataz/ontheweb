@@ -37,6 +37,7 @@ require.config({
         "app": "app",
         "handlebars.runtime": "../bower_components/handlebars/handlebars.runtime.amd",
         "template": "./app/templates/template",
+        "helpers": "./app/templates/helpers",
         "jquery": "../bower_components/jquery/jquery",
         "underscore": "../bower_components/lodash/dist/lodash.underscore",
         "backbone": "../bower_components/backbone/backbone",
@@ -112,6 +113,18 @@ require.config({
         },
         "lib/jquery-ui/ui/jquery.ui.resizable": {
             deps: ["jquery"],
+            exports: "jQuery"
+        },
+        "lib/jquery-ui/ui/jquery.ui.droppable": {
+            deps: ["jquery"],
+            exports: "jQuery"
+        },
+        "lib/jquery-ui/ui/jquery.ui.draggable": {
+            deps: ["jquery"],
+            exports: "jQuery"
+        },
+        "lib/jquery.layout/dist/jquery.layout-latest": {
+            deps: ["jquery", "lib/jquery-ui/ui/jquery.ui.core"],
             exports: "jQuery"
         }
 

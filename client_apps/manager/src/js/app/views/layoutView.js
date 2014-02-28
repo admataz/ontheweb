@@ -7,12 +7,20 @@ define(['./BaseView', 'template', './mainNavView'], function(BaseView, Template,
     el: '#ontheweb-adminapp',
 
     initialize: function() {
-      // this.render();
+      this.on('afterRender', this.onAfterRender);
     },
+
 
     
     views: {
       '#mainNav' : new MainNav()
+    },
+
+
+    onAfterRender: function(view){
+      
+
+      
     }
     
   });

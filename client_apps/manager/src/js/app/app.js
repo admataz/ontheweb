@@ -9,7 +9,7 @@
  *
  */
 
-define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/views/layoutView'], function(config, Backbone, _,  Events, AppRouter, LayoutView) {
+define(['app/config','backbone', 'underscore', './events', 'app/router', 'app/views/layoutView', 'bootstrap'], function(config, Backbone, _,  Events, AppRouter, LayoutView) {
 
   var app, layout, router, loadedStates, currentState;
 

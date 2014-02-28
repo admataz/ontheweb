@@ -1,68 +1,42 @@
-define(['app/views/BaseView', 'template'], function(BaseView, Template) {
+define(['app/views/BaseView', 'template', 'underscore', 'jquery','helpers'], function(BaseView, Template, _, $) {
 
   return BaseView.extend({
 
     template: Template['collate/searchResultItem'],
 
-    events: {
-      'click .postdata a': 'onShowPostData'
+    initialize: function() {
+      this.on('afterRender', _.bind(this.onAfterRender, this));
+      this.on('beforeRender', _.bind(this.onBeforeRender, this));
     },
 
-    onShowPostData: function(evt){
-      evt.preventDefault();
-      console.log($(evt.target).attr('href'));
+   
+   
+
+    onBeforeRender: function(view){
+      // console.log(view);
+      // view.options.model.set( { content : this.linkify(view.options.model.get('content')) });
 
     },
+    onAfterRender: function(view) {
+      this.$('.more-info-button').on('click', _.bind(function(evt) {
+        evt.preventDefault();
+        this.$('.postdata').toggle();
+      }, this));
 
-
-
-
-
-/**
- * should a render function return a result or always look after the writing to the DOM? 
- * This one returns a DOM element - leaving it to the parent view to touch the DOM
- * @return {[type]} [description]
- */
-    ssrender: function(data) {
-
-      return {item:this.template(data)};
-
-      /*
-       var pubsub = this.pubSub;
+       this.$('.reveal-media-button').on('click', _.bind(function(evt) {
+        evt.preventDefault();
+        this.$('.mediadata').toggle();
+      }, this));
       
+      this.$('.postdata').hide();
+      this.$('.mediadata').hide();
 
-      var addlink = $('<a href="#">add</a>');
-      addlink.on('click', function(evt) {
-        var index = ($(this).parent().data('itemid'));
-        pubsub.trigger("webitem:selected", index);
-        evt.preventDefault();
-      });
+      // this.$('.add-this-item-button').on('click', _.bind(this.onAddButtonClicked, this));
+    },
 
-
-      var moreinfolink = $('<button>info</button>');
-
-
-      this.$('.list-group-item').append(addlink);
-      var t = this.$('.list-group-item');
-
-      t.append(moreinfolink);
-
-      moreinfolink.on('click', function(evt){
-        $(this).popover({
-          html: true,
-          content: $('.postdata',$(this).parent()).html()
-        });
-
-
-        console.log($('.postdata',$(this).parent()).html());
-        evt.preventDefault();
-
-      });
-     
-      $('button',t).popover('show');
-
-       */
-
+    onAddButtonClicked: function(evt) {
+      this.pubSub.trigger('collate:addItem', this);
+      evt.preventDefault();
     }
 
   });

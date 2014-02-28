@@ -27,6 +27,7 @@ module.exports = function(grunt) {
 					dest: 'dist'
 				}]
 			},
+			
 			server: {
 				files: [{
 					expand: true,
@@ -81,9 +82,10 @@ module.exports = function(grunt) {
 					sourceComments: 'map',
 					sourceMap: 'webitemsmanager.css.map'
 				},
-				files: {
-					'./src/css/webitemsmanager.css': './src/scss/main.scss'
-				}
+				files: [{
+					src: ['./src/scss/main.scss'],
+					dest: './src/css/webitemsmanager.css'
+				}]
 			},
 		},
 
@@ -109,6 +111,7 @@ module.exports = function(grunt) {
 						"app": "app",
 						"handlebars.runtime": "../bower_components/handlebars/handlebars.runtime.amd",
 						"template": "./app/templates/template",
+						"helpers": "./app/templates/helpers",
 						"jquery": "../bower_components/jquery/jquery",
 						"underscore": "../bower_components/lodash/dist/lodash.underscore",
 						"backbone": "../bower_components/backbone/backbone",
