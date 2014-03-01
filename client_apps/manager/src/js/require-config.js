@@ -45,7 +45,9 @@ require.config({
         "backbone-pageable": "../bower_components/backbone-pageable/lib/backbone-pageable",
         "bootstrap": "../bower_components/sass-bootstrap/dist/js/bootstrap",
         "schema": "../bower_components/Backbone.Schema/src/backbone/schema",
-        "globalize": "../bower_components/globalize/lib/globalize"
+        "globalize": "../bower_components/globalize/lib/globalize",
+        "sifter": "../bower_components/sifter/sifter",
+        "microplugin": "../bower_components/microplugin/src/microplugin"
     },
     shim: {
         "backbone": {
