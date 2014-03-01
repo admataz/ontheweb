@@ -34,6 +34,10 @@ function normaliseResults(itm,i){
         newObj.imageUrl = itm.picture;
       }
 
+      if(!newObj.title){
+        newObj.title = 'Facebook post by '+ itm.from.name;
+      }
+
       return newObj;
 
     }
