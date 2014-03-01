@@ -1,21 +1,28 @@
-
-
-define(['backbone', 'underscore', 'app/events', 'layoutmanager'], function(Backbone, _, Events, LayoutManager){
-
-
-
+define(['backbone', 'underscore', 'app/events', 'layoutmanager', 'jquery'], function(Backbone, _, Events, LayoutManager, $) {
 
   return Backbone.View.extend({
-    manage:true,
+    
+    manage: true,
+    
     constructor: function() {
-      if(arguments.length){
+      if (arguments.length) {
         this.pubSub = arguments[0].pubSub || Events;
       } else {
         this.pubSub = Events;
       }
-      Backbone.View.apply(this,arguments);
+      Backbone.View.apply(this, arguments);
+    },
+
+
+    formToData: function(formObj) {
+      var arr = $(formObj).serializeArray();
+      var data = _(arr).reduce(function(acc, field) {
+        acc[field.name] = field.value;
+        return acc;
+      }, {});
+
+      return data;
     }
   });
-
 
 });

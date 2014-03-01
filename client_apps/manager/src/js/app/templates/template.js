@@ -36,7 +36,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "      <form action=\"#\" id=\"saveCollection\" role=\"form\" class=\"form-inline\">\n    \n      <div class=\"form-group\">\n        <div class=\"input-group\">\n          <input type=\"text\" name=\"q\" value=\"\" class=\"form-control\" placeholder=\"Collection Name\">\n          <span class=\"input-group-btn\">\n            <input type=\"submit\" value=\"Save\" name=\"submitgo\" class=\"btn btn-default\" />\n          </span>\n        </div>\n      </div>\n    \n    </form>\n";
+  return "<form action=\"#\" id=\"saveCollection\" role=\"form\" class=\"form-inline\">\n  <div class=\"form-group\">\n  <select name=\"saveTo\"   class=\"form-control\">\n    <option value=\"\">No Item Collection</option>\n    <option value=\"new\">New Item Collection</option>\n  </select>\n  </div>\n  \n  <div class=\"form-group\">\n    <div class=\"input-group\">\n      <input type=\"text\" name=\"collectionName\" value=\"\" class=\"form-control\" placeholder=\"Collection Name\">\n      <span class=\"input-group-btn\">\n        <input type=\"submit\" value=\"Save\" name=\"submitgo\" class=\"btn btn-default\" />\n      </span>\n    </div>\n  </div>\n\n</form>\n";
   });
 templates['collate/searchForm'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -156,7 +156,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<form action='#' id=\"resultsForm\">\n<h3>Results</h3>\n<div class=\"form-group\">\n  <input type=\"submit\" class=\"btn btn-default\" value=\"Save selected\" data-loading-text=\"Saving...\" class=\"btn btn-primary\" id=\"save-items-btn\" />\n</div>\n<div id=\"collect-items-results\">\n  \n  \n</div>\n</form>";
+  return "<form action='#' id=\"resultsForm\">\n\n\n<div class=\"form-group\"  id=\"saveTo-formgroup\">\n  <select name=\"saveTo\"   class=\"form-control\" id=\"saveTo-selector\">\n    <option value=\"\">No Item Collection</option>\n    <option value=\"new\">New Item Collection</option>\n  </select>\n  </div>\n\n<div class=\"form-group\" id=\"collectionName-formgroup\">\n  <div class=\"input-group\">\n    <input type=\"text\" name=\"collectionName\" value=\"\" class=\"form-control\" placeholder=\"Collection Name\">\n    \n  </div>\n</div>\n\n<div class=\"form-group\">\n  <input type=\"submit\" class=\"btn btn-default\" value=\"Save items\" data-loading-text=\"Saving...\" class=\"btn btn-primary\" id=\"save-items-btn\" />\n</div>\n<div id=\"collect-items-results\">\n  \n  \n</div>\n</form>";
   });
 templates['collect/searchForm'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -164,7 +164,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<form action=\"#\" id=\"collectForm\" role=\"form\" class=\"form-inline\">\n  <div class=\"form-group\">\n\n<div class=\"checkbox\">\n  \n  <label for=\"channel-search\">\n  <input type=\"radio\" name=\"channel\" value=\"search\" id=\"channel-search\" checked=\"checked\"> search all ||\n  </label>\n  \n  <label for=\"channel-user\">\n  <input type=\"radio\" name=\"channel\" value=\"user\" id=\"channel-user\"> user's posts\n  </label>\n  \n  </div>\n\n</div>\n\n</div>\n\n<div class=\"form-group\">\n  <select name=\"platform\" id=\"platform\"  class=\"form-control\">\n    <option value=\"twitter\">Twitter</option>\n    <option value=\"facebook\">Facebook</option>\n    <option value=\"googleplus\">Google+</option>\n  </select> \n</div>\n\n\n<div class=\"form-group\">\n\n  <div class=\"input-group\">\n      <input type=\"text\" name=\"q\" value=\"\" class=\"form-control\" placeholder=\"username or search term\">\n      <span class=\"input-group-btn\">\n        <input type=\"submit\" value=\"Go\" name=\"submitgo\" class=\"btn btn-default\" />\n      </span>\n    </div>\n</div>\n\n</form>";
+  return "<form action=\"#\" id=\"collectForm\" role=\"form\" class=\"form-inline\">\n  <div class=\"form-group\">\n    <div class=\"checkbox\">\n      <label for=\"channel-search\">\n        <input type=\"radio\" name=\"channel\" value=\"search\" id=\"channel-search\" checked=\"checked\"> search all ||\n      </label>\n      <label for=\"channel-user\">\n        <input type=\"radio\" name=\"channel\" value=\"user\" id=\"channel-user\"> user's posts\n      </label>\n    </div>\n  </div>\n</div>\n\n<div class=\"form-group\">\n  <select name=\"platform\" id=\"platform\"  class=\"form-control\">\n    <option value=\"twitter\">Twitter</option>\n    <option value=\"facebook\">Facebook</option>\n    <option value=\"googleplus\">Google+</option>\n  </select> \n</div>\n\n\n<div class=\"form-group\">\n\n  <div class=\"input-group\">\n    <input type=\"text\" name=\"q\" value=\"\" class=\"form-control\" placeholder=\"username or search term\">\n    <span class=\"input-group-btn\">\n      <input type=\"submit\" value=\"Go\" name=\"submitgo\" class=\"btn btn-default\" />\n    </span>\n  </div>\n</div>\n\n</form>";
   });
 templates['collect/searchResultItem'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -192,7 +192,7 @@ function program3(depth0,data) {
   return buffer;
   }
 
-  buffer += "\n\n<div class=\"list-group-item media\" data-itemid=\"";
+  buffer += "<div class=\"list-group-item media\" data-itemid=\"";
   if (helper = helpers.cid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.cid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -207,10 +207,8 @@ function program3(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.url)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">post info</a>\n  <div class=\"postdata\">\n    <a href=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.url)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">original</a> posted at ";
-  if (helper = helpers.datePosted) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.datePosted); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
+    + "\">original</a> posted at "
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.datePosted)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + " by <a href=\"";
   if (helper = helpers.authorProfileUrl) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.authorProfileUrl); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
@@ -218,7 +216,7 @@ function program3(depth0,data) {
     + "\">"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.authorName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + " ("
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.usernameId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.usernameID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + ")</a> on <a href=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.sourceSiteUrl)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">"
@@ -321,10 +319,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 templates['global/mainNav'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
+  var buffer = "";
 
 
-  return "<ul class=\"nav nav-pills\">\n  <li><a href=\"#\">Home</a></li>\n  <li><a href=\"collect\">Collect</a></li>\n  <li><a href=\"collate\">Collate</a></li>\n  <li><a href=\"webitems\">Web Items</a></li>\n</ul>";
+  buffer += "<ul class=\"nav nav-pills\">\n  <li><a href=\"#\">Home</a></li>\n  <li><a href=\"collect\">Collect</a></li>\n  <li><a href=\"collate\">Collate</a></li>\n  \n</ul>";
+  return buffer;
   });
 templates['webitems/index'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];

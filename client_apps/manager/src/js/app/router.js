@@ -9,7 +9,7 @@ define(['backbone', './events'], function(Backbone, Events) {
 
     routes: {
       '': 'index',
-      'collect': 'collect',
+      'collect(/)': 'collect',
       'collate': 'collate',
       'webitems': 'webitems'
     },

@@ -9,7 +9,7 @@
  */
 function queryFilter(item){
   item.populate('items', 'url title');
-  item.select('title items');
+  // item.select('title items');
 }
 
 

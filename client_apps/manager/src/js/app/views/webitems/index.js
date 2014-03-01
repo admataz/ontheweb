@@ -1,4 +1,4 @@
-define(['app/views/BaseView', 'app/ui/basegrid', 'app/collections/webItems', 'template'], function(BaseView, Backgrid, WebItemsCollection, Template) {
+/*define(['app/views/BaseView', 'app/ui/basegrid', 'app/collections/webItems', 'template'], function(BaseView, Backgrid, WebItemsCollection, Template) {
   var app = {};
 
   var columns = [{
@@ -95,4 +95,4 @@ define(['app/views/BaseView', 'app/ui/basegrid', 'app/collections/webItems', 'te
 
   });
 
-});
+});*/

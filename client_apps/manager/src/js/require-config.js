@@ -31,7 +31,7 @@ require.config({
             }
         }
     },
-    baseUrl: 'js',
+    baseUrl: '/js',
     paths: {
         "lib": "../bower_components",
         "app": "app",
@@ -44,13 +44,6 @@ require.config({
         "layoutmanager": "../bower_components/layoutmanager/backbone.layoutmanager", 
         "backbone-pageable": "../bower_components/backbone-pageable/lib/backbone-pageable",
         "bootstrap": "../bower_components/sass-bootstrap/dist/js/bootstrap",
-        "backgrid": "../bower_components/backgrid/lib/backgrid",
-        "backgrid-filter": "../bower_components/backgrid-filter/backgrid-filter",
-        "backgrid-moment-cell": "../bower_components/backgrid-moment-cell/backgrid-moment-cell",
-        "backgrid-paginator": "../bower_components/backgrid-paginator/backgrid-paginator",
-        "backgrid-select-all": "../bower_components/backgrid-select-all/backgrid-select-all",
-        "backgrid-select2-cell": "../bower_components/backgrid-select2-cell/backgrid-select2-cell",
-        "backgrid-text-cell": "../bower_components/backgrid-text-cell/backgrid-text-cell",
         "schema": "../bower_components/Backbone.Schema/src/backbone/schema",
         "globalize": "../bower_components/globalize/lib/globalize"
     },
@@ -62,34 +55,6 @@ require.config({
         "bootstrap": {
             deps: ["jquery"],
             exports: "$.fn.modal"
-        },
-        "backgrid": {
-            deps: ["backbone", "underscore"],
-            exports: "Backgrid"
-        },
-        "backgrid-filter": {
-            deps: ["backgrid"],
-            exports: "Backgrid.Extension"
-        },
-        "backgrid-moment-cell": {
-            deps: ["backgrid"],
-            exports: "Backgrid.Extension"
-        },
-        "backgrid-paginator": {
-            deps: ["backgrid"],
-            exports: "Backgrid.Extension"
-        },
-        "backgrid-select-all": {
-            deps: ["backgrid"],
-            exports: "Backgrid.Extension"
-        },
-        "backgrid-select2-cell": {
-            deps: ["backgrid"],
-            exports: "Backgrid.Extension"
-        },
-        "backgrid-text-cell": {
-            deps: ["backgrid"],
-            exports: "Backgrid.Extension"
         },
         "schema": {
             deps: ["backbone", "globalize"],
@@ -130,3 +95,46 @@ require.config({
 
     }
 });
+
+/*
+
+"backgrid": "../bower_components/backgrid/lib/backgrid",
+        "backgrid-filter": "../bower_components/backgrid-filter/backgrid-filter",
+        "backgrid-moment-cell": "../bower_components/backgrid-moment-cell/backgrid-moment-cell",
+        "backgrid-paginator": "../bower_components/backgrid-paginator/backgrid-paginator",
+        "backgrid-select-all": "../bower_components/backgrid-select-all/backgrid-select-all",
+        "backgrid-select2-cell": "../bower_components/backgrid-select2-cell/backgrid-select2-cell",
+        "backgrid-text-cell": "../bower_components/backgrid-text-cell/backgrid-text-cell",
+
+
+        
+
+"backgrid": {
+            deps: ["backbone", "underscore"],
+            exports: "Backgrid"
+        },
+        "backgrid-filter": {
+            deps: ["backgrid"],
+            exports: "Backgrid.Extension"
+        },
+        "backgrid-moment-cell": {
+            deps: ["backgrid"],
+            exports: "Backgrid.Extension"
+        },
+        "backgrid-paginator": {
+            deps: ["backgrid"],
+            exports: "Backgrid.Extension"
+        },
+        "backgrid-select-all": {
+            deps: ["backgrid"],
+            exports: "Backgrid.Extension"
+        },
+        "backgrid-select2-cell": {
+            deps: ["backgrid"],
+            exports: "Backgrid.Extension"
+        },
+        "backgrid-text-cell": {
+            deps: ["backgrid"],
+            exports: "Backgrid.Extension"
+        },
+ */

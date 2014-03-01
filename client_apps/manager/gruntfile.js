@@ -118,13 +118,6 @@ module.exports = function(grunt) {
 						"layoutmanager": "../bower_components/layoutmanager/backbone.layoutmanager",
 						"backbone-pageable": "../bower_components/backbone-pageable/lib/backbone-pageable",
 						"bootstrap": "../bower_components/sass-bootstrap/dist/js/bootstrap",
-						"backgrid": "../bower_components/backgrid/lib/backgrid",
-						"backgrid-filter": "../bower_components/backgrid-filter/backgrid-filter",
-						"backgrid-moment-cell": "../bower_components/backgrid-moment-cell/backgrid-moment-cell",
-						"backgrid-paginator": "../bower_components/backgrid-paginator/backgrid-paginator",
-						"backgrid-select-all": "../bower_components/backgrid-select-all/backgrid-select-all",
-						"backgrid-select2-cell": "../bower_components/backgrid-select2-cell/backgrid-select2-cell",
-						"backgrid-text-cell": "../bower_components/backgrid-text-cell/backgrid-text-cell",
 						"schema": "../bower_components/Backbone.Schema/src/backbone/schema",
 						"globalize": "../bower_components/globalize/lib/globalize"
 					},
@@ -155,3 +148,15 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['concurrent:dev']);
 	grunt.registerTask('build', ['requirejs:dist', 'sass:dist', 'copy:dist', 'processhtml:dist', 'copy:server']);
 };
+
+
+/*
+"backgrid": "../bower_components/backgrid/lib/backgrid",
+						"backgrid-filter": "../bower_components/backgrid-filter/backgrid-filter",
+						"backgrid-moment-cell": "../bower_components/backgrid-moment-cell/backgrid-moment-cell",
+						"backgrid-paginator": "../bower_components/backgrid-paginator/backgrid-paginator",
+						"backgrid-select-all": "../bower_components/backgrid-select-all/backgrid-select-all",
+						"backgrid-select2-cell": "../bower_components/backgrid-select2-cell/backgrid-select2-cell",
+						"backgrid-text-cell": "../bower_components/backgrid-text-cell/backgrid-text-cell",
+
+ */

@@ -1,4 +1,4 @@
-define(['app/config', 'backbone', 'underscore', 'app/models/webitem', 'backbone-pageable'], function(config, Backbone, _, model) {
+define(['app/config', 'backbone', 'underscore', 'app/models/webItem', 'backbone-pageable'], function(config, Backbone, _, model) {
 
 
   return Backbone.PageableCollection.extend({

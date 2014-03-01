@@ -8,8 +8,6 @@ define(['backbone', 'app/models/webitem'], function(Backbone, WebItem) {
 
     setURL: function(url){
       this.url = url;
-
-
     }
     
   });

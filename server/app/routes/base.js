@@ -24,6 +24,7 @@ module.exports = function(modelName, resourcePath, app, queryFilter){
     }
   }
 
+
 /**
  * Get a single item
  */
@@ -116,9 +117,12 @@ module.exports = function(modelName, resourcePath, app, queryFilter){
           return next(new restify.InvalidContentError(err.toString()));
         }
         res.header("location",resourcePath+"/"+itm._id);
-        res.send(201);
+       // I know it's not proper to send content back with a POST request, but the client (jquery) can't get the header
+       // and I need the new id
+        res.send(201,itm);
         next();
       });
+
   }
 
   /**
@@ -146,7 +150,7 @@ module.exports = function(modelName, resourcePath, app, queryFilter){
           return next(new restify.RestError(err.toString()));
         }
         res.header("location",resourcePath+"/"+result._id);
-        res.send(200);
+        res.send(200, {});
         next();
       });
   }
@@ -160,7 +164,7 @@ module.exports = function(modelName, resourcePath, app, queryFilter){
       return next(new restify.MissingParameterError("Item id missing - can't make updates"));
     }
     Model.findByIdAndRemove(req.params.id, function(err, result){
-      res.send(200);
+      res.send(200, {});
       next();
     });
 
