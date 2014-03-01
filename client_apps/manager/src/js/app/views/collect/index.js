@@ -21,14 +21,13 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
       initialize: function() {
         this.on('afterRender', _.bind(this.onAfterRender, this));
         this.listenTo(this.pubSub, 'collect:save', _.bind(this.onTriggerSave, this));
+        this.listenTo(this.pubSub, 'webitem:deleted', _.bind(this.onWebItemDeleted, this));
 
         
       },
 
       events: {
         'submit #collectForm': 'onSearchFormSubmitted'
-        // ,
-        // 'submit #resultsForm': 'onSaveFormSubmitted'
       },
 
       views: {
@@ -54,12 +53,39 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         // set up the drag and drop via jquery UI
         $('.selected-panel').sortable({
           connectWith: '.results-panel',
+          receive: _.bind(this.onItemDropSelected,this)
         });
 
         $('.results-panel').sortable({
-          connectWith: '.selected-panel'
+          connectWith: '.selected-panel',
+          receive: _.bind(this.onItemDropDeselected,this)
+
         });
       },
+
+
+
+      onItemDropSelected: function(evt, ui){
+
+        // console.log($(ui.item).data('itemid'));
+
+        this.collection.get($(ui.item).data('itemid')).save();
+
+
+      },
+
+      onItemDropDeselected: function(evt, ui){
+        var model = this.collection.get($(ui.item).data('itemid'));
+        // console.log(model);
+        $(ui.item).addClass('list-group-item-success');
+        $('.save-btn', ui.item).text('Delete');
+      },
+
+
+      onWebItemDeleted: function(model){
+        this.collection.add(model);
+      },
+
 
       saveSelection: function(data, saved_data, cb) {
         var btn = this.$('#save-items-btn');
@@ -160,7 +186,8 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
 
       addItemView: function(model) {
         var view = this.insertView('.results-panel', new SearchResultItem({
-          model: model
+          model: model,
+          el: false
         }));
         view.render();
       }

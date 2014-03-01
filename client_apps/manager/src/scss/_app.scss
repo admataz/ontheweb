@@ -6,7 +6,18 @@
 .dd-panels {
   margin: 10px 0;
 }
-.results-panel{
+.selected-panel{
   height:100%;
   overflow:auto;
+  
+  .save-btn{
+    display:none;
+  }
+
+}
+
+.list-group-item-success {
+  border-color: #d6e9c6;
+  color: #468847;
+  background-color: #dff0d8;
 }
