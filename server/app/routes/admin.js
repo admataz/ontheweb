@@ -30,6 +30,9 @@ module.exports = function(app) {
         toserve = thepath;
       }
 
+
+
+
       fs.readFile(toserve, 'utf8', function(err, data) {
         var contentType = 'text/html';
         if (err) {
@@ -40,11 +43,19 @@ module.exports = function(app) {
           });
         } else {
 
-          if(path.extname(thepath) == '.css'){
+          if(path.extname(thepath) === '.css'){
             contentType = 'text/css';
           }
-          if(path.extname(thepath) == '.js'){
+          if(path.extname(thepath) === '.js'){
             contentType = 'text/javascript';
+          }
+          
+          if(path.extname(thepath) === '.png'){
+            // contentType = 'image/png';
+            // 
+            data = fs.readFileSync(thepath);
+           res.writeHead(200, {'Content-Type': 'image/png' });
+           res.end(data, 'binary');
           }
 
 
@@ -69,3 +80,4 @@ module.exports = function(app) {
   });
 
 };
+

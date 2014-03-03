@@ -5220,15 +5220,27 @@ th.hidden-lg, td.hidden-lg {
 .dd-panels {
   margin: 10px 0; }
 
+.save-btn {
+  background-image: url(../img/star.png);
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+  text-indent: -9999px;
+  display: block;
+  position: absolute;
+  top: 4px;
+  right: 4px; }
+
+.list-group-item-success .save-btn {
+  background-position: bottom; }
+
 .selected-panel {
   height: 100%;
   overflow: auto; }
   .selected-panel .save-btn {
-    display: none; }
+    background-position: bottom; }
 
 .list-group-item-success {
-  border-color: #d6e9c6;
-  color: #468847;
-  background-color: #dff0d8; }
+  border-color: #d6e9c6; }
 
 /*# sourceMappingURL=webitemsmanager.css.map */

@@ -1,25 +1,21 @@
 <form action='#' id="resultsForm">
+  <input type="hidden" name="saveToNewName" id="saveTo-new" value="">
 
 
 <div class="form-group"  id="saveTo-formgroup">
+<label>Item Collection</label>
   <select name="saveTo"   class="form-control" id="saveTo-selector">
-    <option value="">No Item Collection</option>
-    <option value="new">New Item Collection</option>
+    <option value=""></option>
+    {{#each items}}
+      <option value="{{_id}}">{{title}}</option>
+    {{/each}}
   </select>
   </div>
-
-<div class="form-group" id="collectionName-formgroup">
-  <div class="input-group">
-    <input type="text" name="collectionName" value="" class="form-control" placeholder="Collection Name">
-    
-  </div>
-</div>
 
 <div class="form-group">
   <input type="submit" class="btn btn-default" value="Save items" data-loading-text="Saving..." class="btn btn-primary" id="save-items-btn" />
 </div>
-<div id="collect-items-results">
-  
-  
-</div>
+
+<a href="#" id="empty-current-collection">empty the current list</a>
+
 </form>

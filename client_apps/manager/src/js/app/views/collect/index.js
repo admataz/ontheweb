@@ -6,9 +6,11 @@
  */
 
 define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 'app/collections/collectItemResults',
-    './searchResultItem', './searchForm', './resultsForm', 'app/models/itemCollection', 'app/ui/dd'
+    './searchResultItem', './searchForm', './resultsForm', 'app/models/itemCollection', 'app/collections/itemCollections',
+    'app/models/webItem', 'app/ui/bootbox', 'app/ui/dd'
   ],
-  function(config, BaseView, _, $, Template, CollectItemResults, SearchResultItem, SearchForm, SaveForm, ItemCollectionModel) {
+  function(config, BaseView, _, $, Template, CollectItemResults, SearchResultItem, SearchForm, SaveForm, ItemCollectionModel,
+    ItemCollectionCollection, WebItemModel, bootbox) {
     return BaseView.extend({
 
       template: Template['collect/index'],
@@ -16,14 +18,17 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
       // el: '#ontheweb-container',
 
       collection: new CollectItemResults(),
-      collection_tosave: new CollectItemResults(),
+      collection_selected: new CollectItemResults(),
+      itemCollection_collection: new ItemCollectionCollection(),
+      saveForm: false,
 
       initialize: function() {
         this.on('afterRender', _.bind(this.onAfterRender, this));
         this.listenTo(this.pubSub, 'collect:save', _.bind(this.onTriggerSave, this));
         this.listenTo(this.pubSub, 'webitem:deleted', _.bind(this.onWebItemDeleted, this));
+        this.listenTo(this.pubSub, 'itemCollection:selected', _.bind(this.onItemCollectionSelected, this));
+        this.listenTo(this.pubSub, 'itemCollection:empty', _.bind(this.onItemCollectionEmpty, this));
 
-        
       },
 
       events: {
@@ -31,8 +36,7 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
       },
 
       views: {
-        '.search-panel': new SearchForm(),
-        '.save-panel': new SaveForm()
+        '.search-panel': new SearchForm()
       },
 
       /**
@@ -49,118 +53,163 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
       onAfterRender: function(view) {
 
         this.setPanelHeights();
+        if (!this.saveForm) {
+          this.itemCollection_collection.fetch({
+            success: _.bind(this.onItemCollectionsFetched, this)
+          });
+        }
 
         // set up the drag and drop via jquery UI
         $('.selected-panel').sortable({
           connectWith: '.results-panel',
-          receive: _.bind(this.onItemDropSelected,this)
+          receive: _.bind(this.onItemDropSelected, this)
         });
 
         $('.results-panel').sortable({
           connectWith: '.selected-panel',
-          receive: _.bind(this.onItemDropDeselected,this)
+          receive: _.bind(this.onItemDropDeselected, this)
 
         });
       },
 
+      onItemCollectionsFetched: function(collection, response, options) {
+        this.saveForm = this.insertView('.save-panel', new SaveForm({
+          collection: collection
+        }));
 
-
-      onItemDropSelected: function(evt, ui){
-
-        // console.log($(ui.item).data('itemid'));
-
-        this.collection.get($(ui.item).data('itemid')).save();
-
+        this.saveForm.render();
 
       },
 
-      onItemDropDeselected: function(evt, ui){
+      onItemCollectionSelected: function(id) {
+        if (!id) {
+          return;
+        }
+
+         this.$('.selected-panel .status-message').remove();
+       
+
+        if (this.collection_selected.length) {
+
+          var app = this;
+
+          bootbox.dialog({
+            message: "What do you want to do with selected items",
+            title: "Please confim",
+
+            buttons: {
+              danger: {
+                label: "Empty selection",
+                className: "btn-danger",
+                callback: _.bind(function() {
+                  app.onItemCollectionEmpty();
+                  app.loadItemCollection(id);
+                }, app)
+              },
+              main: {
+                label: "Merge with existing",
+                className: "btn-primary",
+                callback: _.bind(function() {
+                  app.loadItemCollection(id);
+                }, app)
+              }
+            }
+          });
+
+        } else {
+          this.loadItemCollection(id);
+        }
+
+      },
+
+      loadItemCollection: function(id) {
+        var c, items;
+        var app = this;
+
+        if(id==='new'){
+          return;
+        }
+
+
+
+        c = this.itemCollection_collection.get(id);
+        c.fetch().done(function(){
+          items = c.get('items');
+          _.each(items, _.bind(function(itm) {
+            app.addItemView2(new WebItemModel(itm));
+          }, app));
+        });
+
+
+        
+      },
+
+
+
+      onItemDropSelected: function(evt, ui) {
+        var model = this.collection.get($(ui.item).data('itemid'));
+        this.collection_selected.add(model);
+        model.save();
+        $(ui.item).removeClass('list-group-item-success');
+
+      },
+
+      onItemDropDeselected: function(evt, ui) {
         var model = this.collection.get($(ui.item).data('itemid'));
         // console.log(model);
         $(ui.item).addClass('list-group-item-success');
         $('.save-btn', ui.item).text('Delete');
       },
 
-
-      onWebItemDeleted: function(model){
+      onWebItemDeleted: function(model) {
         this.collection.add(model);
       },
 
-
-      saveSelection: function(data, saved_data, cb) {
-        var btn = this.$('#save-items-btn');
-        if(!saved_data){
-          saved_data = [];
-        }
-        
-        if(!data.length){
-          btn.button('reset');
-          if(cb){
-            cb(saved_data);
-          }
-          return;
-        }
-
-        var itm = this.collection.get(data.pop());
-
-        var xhr;
-        this.collection.setURL(config.api.url + 'webitem');
-        xhr = itm.save();
-
-        xhr.fail(function( jqXHR, textStatus, errorThrown){
-          console.log('fail');
-          console.log(textStatus);
-          console.log(errorThrown);
-        });
-
-        
-        btn.button('loading');
-        xhr.done(_.bind(function(xhrdata, textStatus, jqXHR){
-          saved_data.push(xhrdata._id);
-          this.saveSelection(data, saved_data, cb);
-        }, this));
-
-      },
-
-
       onTriggerSave: function(data) {
-        var tosave = this.getSelectedItems();
+        console.log(data);
+        var items_tosave = this.getSelectedItems();
+        var itemCollection;
+        this.$('.selected-panel .status-message').remove();
+        if (data.saveTo === '') {
+          itemCollection = this.itemCollection_collection.add({
+            title: data.saveToNewName,
+            items: items_tosave
+          });
+        } else {
+          itemCollection = this.itemCollection_collection.get(data.saveTo);
+          itemCollection.set({
+            items: items_tosave
+          });
+        }
 
-        // ok this is a clever callback, but it smells a little
-        // need to let this perculate... we have to get the model ids post save
-        // plus some other data in closure - a callback makes sense - I think?
-        var cb = function(related_items){
-          if (data.saveTo === 'new') {
-            var itemCollection = new ItemCollectionModel({
-              title: data.collectionName,
-              items: related_items
-            });
-            itemCollection.save().done(_.bind(this.onItemCollectionSaved,this));
-          }
-        };
 
-        this.saveSelection(tosave, [], _.bind(cb, this));
+        itemCollection.save().done(_.bind(this.onItemCollectionSaved, this));
       },
 
-      onItemCollectionSaved: function(xhrdata, textStatus, jqXHR){
-        console.log(xhrdata);
-        // alert('item collection saved');
+      onItemCollectionSaved: function(xhrdata, textStatus, jqXHR) {
+        var confirm = $('<div class="alert alert-success status-message">Item Collection Saved</div>');
+        // confirm.alert
+        this.$('.selected-panel').prepend(confirm);
       },
 
+      onItemCollectionEmpty: function() {
+        this.collection_selected.reset();
+        this.$('.selected-panel').empty();
+      },
+
+      /**
+       * Get the model IDs
+       * we don't have the model - because this state is stored in the DOM - but we do have the view CID stored as a data attribute
+       *
+       */
       getSelectedItems: function() {
         var selected = ($('.selected-panel .list-group-item'));
-        var tosave = _.pluck(selected, function(itm) {
-          return $(itm).data('itemid');
-        });
-
+        var tosave = _.pluck(selected, _.bind(function(itm) {
+          var cid = $(itm).data('itemid');
+          var model = this.collection_selected.get(cid);
+          return model.id;
+        }, this));
         return tosave;
-
-      },
-
-      onSaveFormSubmitted: function(evt) {
-
-        evt.preventDefault();
-        this.saveSelection(tosave);
       },
 
       onSearchFormSubmitted: function(evt) {
@@ -190,8 +239,19 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
           el: false
         }));
         view.render();
-      }
+      },
 
+      addItemView2: function(model) {
+        if(this.collection_selected.get(model.id)){
+          return;
+        }
+        this.collection_selected.add(model);
+        var view = this.insertView('.selected-panel', new SearchResultItem({
+          model: model,
+          el: false
+        }));
+        view.render();
+      }
     });
 
   });

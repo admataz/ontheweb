@@ -5,6 +5,10 @@ define(['app/config', 'backbone', 'underscore', 'app/models/itemCollection', 'ba
       model: model,
       url: config.api.url + 'itemcollection',
 
+      parse: function(response){
+        return response.itemcollection;
+      }
+
     });
 
   });

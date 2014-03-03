@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: 'src',
-					src: ['**/*.html', '!bower_components/**/*'],
+					src: ['**/*.html', 'img/**/*.*', '!bower_components/**/*'],
 					dest: 'dist'
 				}]
 			},

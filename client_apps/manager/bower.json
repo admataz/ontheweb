@@ -37,6 +37,7 @@
     "backbone-pageable": "~1.4.5",
     "jquery-ui": "~1.10.3",
     "jquery.layout": "*",
-    "selectize": "~0.8.5"
+    "selectize": "~0.8.5",
+    "bootbox": "~4.2.0"
   }
 }

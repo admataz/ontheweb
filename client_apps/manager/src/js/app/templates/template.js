@@ -153,10 +153,28 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 templates['collect/saveForm'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
   
+  var buffer = "", stack1, helper;
+  buffer += "\n      <option value=\"";
+  if (helper = helpers._id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0._id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">";
+  if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</option>\n    ";
+  return buffer;
+  }
 
-
-  return "<form action='#' id=\"resultsForm\">\n\n\n<div class=\"form-group\"  id=\"saveTo-formgroup\">\n  <select name=\"saveTo\"   class=\"form-control\" id=\"saveTo-selector\">\n    <option value=\"\">No Item Collection</option>\n    <option value=\"new\">New Item Collection</option>\n  </select>\n  </div>\n\n<div class=\"form-group\" id=\"collectionName-formgroup\">\n  <div class=\"input-group\">\n    <input type=\"text\" name=\"collectionName\" value=\"\" class=\"form-control\" placeholder=\"Collection Name\">\n    \n  </div>\n</div>\n\n<div class=\"form-group\">\n  <input type=\"submit\" class=\"btn btn-default\" value=\"Save items\" data-loading-text=\"Saving...\" class=\"btn btn-primary\" id=\"save-items-btn\" />\n</div>\n<div id=\"collect-items-results\">\n  \n  \n</div>\n</form>";
+  buffer += "<form action='#' id=\"resultsForm\">\n  <input type=\"hidden\" name=\"saveToNewName\" id=\"saveTo-new\" value=\"\">\n\n\n<div class=\"form-group\"  id=\"saveTo-formgroup\">\n<label>Item Collection</label>\n  <select name=\"saveTo\"   class=\"form-control\" id=\"saveTo-selector\">\n    <option value=\"\"></option>\n    ";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n  </select>\n  </div>\n\n<div class=\"form-group\">\n  <input type=\"submit\" class=\"btn btn-default\" value=\"Save items\" data-loading-text=\"Saving...\" class=\"btn btn-primary\" id=\"save-items-btn\" />\n</div>\n\n<a href=\"#\" id=\"empty-current-collection\">empty the current list</a>\n\n</form>";
+  return buffer;
   });
 templates['collect/searchForm'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -207,19 +225,17 @@ function program3(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.url)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">post info</a>\n  <div class=\"postdata\">\n    <a href=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.url)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">original</a> posted at "
+    + "\" target=\"_blank\">original</a> posted at "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.datePosted)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " by <a href=\"";
-  if (helper = helpers.authorProfileUrl) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.authorProfileUrl); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\">"
+    + " by <a href=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.authorProfileUrl)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" target=\"_blank\">"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.authorName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + " ("
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.usernameID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + ")</a> on <a href=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.sourceSiteUrl)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">"
+    + "\"  target=\"_blank\">"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.sourceSiteName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</a>\n  </div>\n\n\n  ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.imageUrl), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});

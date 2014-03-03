@@ -8,7 +8,7 @@
  * optional query filter to apply to get functions
  */
 function queryFilter(item){
-  item.populate('items', 'url title');
+  item.populate('items');
   // item.select('title items');
 }
 
