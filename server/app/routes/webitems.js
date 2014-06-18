@@ -2,41 +2,105 @@
 /**
  * Router and controller functions in the same place - there's not much complexity in the way of routing
  */
-require ('mongoose-pagination');
 
-function queryFilter(item, req){
-  var pg = 1, num = 20, sort_by='updatedAt', order='desc', q, searchfields;
-  var sortobj = {};
-
-  if(req.query.page){
-    pg = req.query.page;
-  }
-  if(req.query.per_page){
-    num = req.query.per_page;
-  }
-  if(req.query.sort_by){
-    sort_by = req.query.sort_by;
-
-    if(req.query.order){
-      order = req.query.order;
-    }
-    
-  }
-
-  sortobj[sort_by] = order;
-  item.sort(sortobj);
+var Model = require('../models/webitem');
+var Base = require('./base');
+var restify = require('restify');
 
 
-  item.paginate(pg,num);
+var controller = new Base(Model);
 
-  // do search query
-  if(req.query.q){
-    q =  new RegExp(req.query.q, "i");
-    item.or([{title:q}, {content:q}, {url:q}, {comment:q}, {tags:q}] );
-  }
-}
 
-module.exports = function(app) {
-  require('./base')('webitem', 'webitem', app, queryFilter);
+controller.getItemsList = function(){
+
+  var c = this;
+  return function(req, res, next) {
+
+    var query = c.getItemsListInitQuery(req);
+    var countquery;
+    c.queryFilter(query, req);
+
+    query.execPagination(function(err, paginationObj) {
+      var results =  paginationObj.results;
+      var ret = {};
+      var itemsdata;
+      if (err) {
+        return next(new restify.RestError("Can't process your request"));
+      }
+
+
+      //store the results in a local var
+      itemsdata = results;
+
+      // //clear the sort options - will break count
+      // query.options = {};
+
+      ret.meta = {};
+      ret.meta.cursors= {};
+      ret.meta.cursors.perPage = paginationObj.perPage;
+      ret.meta.cursors.thisPage = paginationObj.thisPage;
+      ret.meta.cursors.after = paginationObj.after;
+      ret.meta.cursors.before = paginationObj.before;
+      
+      ret[c.model.modelName] = itemsdata;
+
+      //get the count
+      countquery = c.model.count();
+      c.queryFilter(countquery, req);
+
+      countquery.exec(function(err, count) {
+        if (err) {
+          return next(new restify.RestError("Can't process your request"));
+        }
+        ret.meta.cursors.total_items = count;
+        
+
+        res.send(200, ret);
+        return next();
+      });
+
+    });
+  };
 };
+
+
+controller.queryFilter = function(query, req){
+  var q;
+
+  if (req.query.q) {
+    q = new RegExp(req.query.q, "i");
+    query.or([{
+      title: q
+    }, {
+      content: q
+    }, {
+      url: q
+    }, {
+      comment: q
+    }, {
+      tags: q
+    }]);
+  }
+
+
+};
+
+controller.getItemsListInitQuery = function(req){
+  var pgParams = {};
+  if(req.query.before){
+    pgParams.before = req.query.before;
+  }
+  return this.model.paginate(pgParams);
+};
+
+
+module.exports = function(app, cb) {
+  controller.initRoutes('webitem',app, function(err, cb){
+    if(err){
+      return cb(err);
+    }
+  });
+  return cb(null, controller);
+};
+
 

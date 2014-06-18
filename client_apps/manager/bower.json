@@ -38,6 +38,7 @@
     "jquery-ui": "~1.10.3",
     "jquery.layout": "*",
     "selectize": "~0.8.5",
-    "bootbox": "~4.2.0"
+    "bootbox": "~4.2.0",
+    "bootstrap-datepicker": "~1.3.0"
   }
 }

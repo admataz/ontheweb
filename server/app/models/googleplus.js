@@ -4,13 +4,25 @@
 
 var querystring = require('querystring');
 var request = require('request');
+// var async = require('async');
 var config = require('../settings');
 var apiURL = 'https://www.googleapis.com/plus/v1/';
 
-function normaliseResults(itm, i) {
+function normaliseResults(itm, i, cb) {
   var newObj = {};
   var photos = [];
-  newObj.url = itm.url;
+  if(itm.url){
+   newObj.url = itm.url;
+  } else {
+    if(itm.inReplyTo){
+      newObj.url = itm.inReplyTo.url;
+    }
+  }
+
+  if(!itm.url){
+    itm.url = false;
+  }
+
 
   newObj.title = itm.title;
   newObj.content = itm.object.content;
@@ -31,6 +43,7 @@ function normaliseResults(itm, i) {
   // newObj.geotags = itm.geo;
 
   newObj.sourceSiteName = 'Google+';
+  newObj.sourceId = itm.id;
   newObj.sourceSiteUrl = 'http://plus.google.com';
   newObj.sourceSiteLogoUrl = '';
   // newObj.inReplyTo = itm.in_reply_to_status_id;
@@ -40,6 +53,20 @@ function normaliseResults(itm, i) {
   newObj.comment = '';
   newObj.tags = '';
   newObj.status = 0;
+
+   
+  
+// Get replies - 
+  if(itm.object.replies){
+    newObj.hasReplies = itm.object.replies.totalItems;
+  }
+
+
+  function normalisePeopleResults(itm, i){
+
+
+  }
+
 
   if (itm.attachments) {
     photos = itm.attachments.filter(function(att) {
@@ -56,6 +83,27 @@ function normaliseResults(itm, i) {
   return newObj;
 
 }
+
+
+
+
+function getReplies(activityid, cb){
+    request.get({
+      'uri': apiURL + 'activities/'+activityid+'/comments',
+      'qs': {
+        'key': config.google_api_key
+      },
+      'json': true
+    }, function(err, response, body) {
+
+       body.items = body.items.map(normaliseResults);
+        cb(null, body.items);
+    });
+
+}
+
+
+
 
 function getUserPosts(user_id, cb) {
   request.get({
@@ -75,9 +123,9 @@ function getUserPosts(user_id, cb) {
   });
 }
 
-function getSearchResults(query, cb) {
+function getSearchResults(type, query, cb) {
   request.get({
-    'uri': apiURL + 'activities',
+    'uri': apiURL + type,
     'qs': {
       'key': config.google_api_key,
       'query': query,
@@ -91,25 +139,35 @@ function getSearchResults(query, cb) {
       return;
     }
 
-    body.items = body.items.map(normaliseResults);
+    if(type === 'activities'){
+      body.items = body.items.map(normaliseResults);
+    }
+
     cb(null, body.items);
   });
 }
 
 module.exports = {
   query: function(obj, cb) {
-    if (['search', 'user'].indexOf(obj.channel) === -1) {
-      cb(new Error('No valid Google+ channel requested'));
+    if (['search-activities', 'user', 'search-people','activity-comments'].indexOf(obj.channel) === -1) {
+      obj.channel = 'search-activities';
+      // cb(new Error('No valid Google+ channel requested'));
     }
 
     if (obj.channel === 'user') {
       getUserPosts(obj.q, cb);
     }
 
-    if (obj.channel === 'search') {
-      getSearchResults(obj.q, cb);
+    if (obj.channel === 'search-activities') {
+      getSearchResults('activities', obj.q, cb);
+    }
+    if (obj.channel === 'search-people') {
+      getSearchResults('people', obj.q, cb);
     }
 
+     if (obj.channel === 'activity-comments') {
+      getReplies(obj.q, cb);
+    }
   }
 
 };

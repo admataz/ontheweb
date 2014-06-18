@@ -1,7 +1,7 @@
 'use strict';
 
-var restify = require('restify'),
-  config = require('../settings');
+var restify = require('restify');
+var config = require('../settings');
 
 var server = restify.createServer({
   name: "OnTheWeb",
@@ -36,11 +36,13 @@ server.use(restify.jsonp());
 server.use(restify.fullResponse());
 server.use(restify.bodyParser());
 
+// server.get(/\/public?.*/, function(req,res){
+  
+// });
 
-server.get(/\/public?.*/, restify.serveStatic({
-  directory: 'public',
-default:
-  'index.html'
+server.get(/\/bookmarklet?.*/, restify.serveStatic({
+  directory: './public',
+  default:'index.html'
 }));
 
 

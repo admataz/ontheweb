@@ -21,9 +21,9 @@ module.exports = function(grunt) {
 				timestamp: false
 			},
 			dist: {
-				js: ['http://ontheweb.jit.su/public/bookmarklet/bookmarklet.js'],
+				js: ['http://ontheweb.jit.su/bookmarklet/bookmarklet.js'],
 				jsIds: ['webItemBookmarkletScript'],
-				css: ['http://ontheweb.jit.su/public/bookmarklet/bookmarklet.css'],
+				css: ['http://ontheweb.jit.su/bookmarklet/bookmarklet.css'],
 				cssIds: ['webItemBookmarkletStyle'],
 				out: '../../server/public/bookmarklet/bookmarklet.txt',
 				amdify: false,

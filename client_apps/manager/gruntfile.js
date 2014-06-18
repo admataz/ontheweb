@@ -127,7 +127,8 @@ module.exports = function(grunt) {
 					generateSourceMaps: false,
 					preserveLicenseComments: false,
 					findNestedDependencies:true,
-					wrap: true
+					wrap: true,
+					dropDebugger: false
 				}
 			}
 		},

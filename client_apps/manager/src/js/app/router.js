@@ -8,26 +8,26 @@ define(['backbone', './events'], function(Backbone, Events) {
     },
 
     routes: {
-      '': 'index',
+      '': 'collect',
       'collect(/)': 'collect',
       'collate': 'collate',
       'webitems': 'webitems'
     },
 
     index: function() {
-      Events.trigger('nav:loaded','index')
+      Events.trigger('nav:loaded','index');
     },
 
     collect: function(){
-      Events.trigger('nav:loaded','collect')      
+      Events.trigger('nav:loaded','collect');      
     },
 
     webitems: function(){
-      Events.trigger('nav:loaded','webitems')
+      Events.trigger('nav:loaded','webitems');
     },
 
     collate: function(){
-      Events.trigger('nav:loaded','collate')
+      Events.trigger('nav:loaded','collate');
 
     }
 

@@ -39,7 +39,7 @@ require.config({
         "template": "./app/templates/template",
         "helpers": "./app/templates/helpers",
         "jquery": "../bower_components/jquery/jquery",
-        "underscore": "../bower_components/lodash/dist/lodash.underscore",
+        "underscore": "../bower_components/lodash/dist/lodash",
         "backbone": "../bower_components/backbone/backbone",
         "layoutmanager": "../bower_components/layoutmanager/backbone.layoutmanager", 
         "backbone-pageable": "../bower_components/backbone-pageable/lib/backbone-pageable",
@@ -92,6 +92,10 @@ require.config({
         },
         "lib/jquery.layout/dist/jquery.layout-latest": {
             deps: ["jquery", "lib/jquery-ui/ui/jquery.ui.core"],
+            exports: "jQuery"
+        },
+        "lib/bootstrap-datepicker/js/bootstrap-datepicker": {
+            deps: ["jquery"],
             exports: "jQuery"
         }
 

@@ -6,7 +6,8 @@ define(['app/views/BaseView', 'template', 'underscore', 'jquery'], function(Base
 
 
     events: {
-      'click .save-btn': 'onClickSaveButton'
+      'click .save-btn': 'onClickSaveButton',
+      'click .show-replies-btn': 'onClickShowRepliesButton'
 
     },
 
@@ -37,6 +38,8 @@ define(['app/views/BaseView', 'template', 'underscore', 'jquery'], function(Base
       this.$('.postdata').hide();
       this.$('.mediadata').hide();
 
+
+
       // this.$('.add-this-item-button').on('click', _.bind(this.onAddButtonClicked, this));
     },
 
@@ -63,8 +66,13 @@ define(['app/views/BaseView', 'template', 'underscore', 'jquery'], function(Base
       this.pubSub.trigger('webitem:deleted', this.model);
       this.$el.removeClass('list-group-item-success');
       this.$('.save-btn').text('Save');
-    }
+    },
 
+
+    onClickShowRepliesButton: function(evt){
+      this.pubSub.trigger('resultItem:showReplies',this);
+      evt.preventDefault();
+    }
 
 
   });

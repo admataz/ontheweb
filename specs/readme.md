@@ -22,6 +22,8 @@ Here is a list of the features I am looking at developing.
 - Remove an existing ItemCollection
 - Load the WebItems in an existing ItemCollection
 - Edit the contents of an existing ItemCollection
+- Preview an ItemCollection
+- Set publication status of an ItemCollection
 
 ## System 
 - Authenticate against a 3rd party provider

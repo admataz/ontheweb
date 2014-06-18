@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 
 		concurrent: {
 			dev: {
-				tasks: ['nodemon'],
+				tasks: ['nodemon:dev', 'node-inspector:dev'],
 				options: {
 					logConcurrentOutput: true
 				}
@@ -14,6 +14,7 @@ module.exports = function(grunt) {
 		},
 		nodemon: {
 			dev: {
+				script: 'app/index.js',
 				options: {
 					nodeArgs: ['--debug'],
 					env: {
@@ -22,13 +23,16 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-
+	'node-inspector': {
+	  dev: {}
+	}
 
 	});
 
 	// These plugins provide necessary tasks
 	grunt.loadNpmTasks('grunt-nodemon');
 	grunt.loadNpmTasks('grunt-concurrent');
+	grunt.loadNpmTasks('grunt-node-inspector');
 
 	// Default task
 	grunt.registerTask('default', ['concurrent:dev']);

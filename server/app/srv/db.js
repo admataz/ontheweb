@@ -1,6 +1,6 @@
 'use strict';
-var mongoose = require('mongoose'),
-  config = require('../settings');
+var mongoose = require('mongoose');
+var config = require('../settings');
 
 
 var port = (config.db_port.length > 0) ? ":" + config.db_port : '';

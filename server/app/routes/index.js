@@ -7,10 +7,10 @@ module.exports = function (app) {
   });
 
 
-  require('./webitems')(app);
-  require('./itemcollection')(app);
-  require('./admin')(app);
-  require('./feedsource')(app);
+  require('./webitems')(app, function(err, controller){});
+  require('./itemcollection')(app, function(err, controller){});
+  require('./admin')(app, function(err, controller){});
+  require('./feedsource')(app, function(err, controller){});
 
 
 

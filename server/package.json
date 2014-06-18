@@ -1,6 +1,6 @@
 {
   "name": "ontheweb",
-  "version": "0.0.1-22",
+  "version": "0.0.1-27",
   "description": "Web Service to collect, compile and retrieve items with urls from the web ",
   "main": "app/index.js",
   "scripts": {
@@ -10,30 +10,32 @@
   "author": "Adam Davis",
   "license": "MIT",
   "dependencies": {
-    "restify": "~2.6.1",
-    "request": "~2.31.0",
-    "mongoose": "~3.8.4",
-    "nconf": "~0.6.9",
-    "mongoose-timestamp": "~0.1.1",
+    "async": "^0.9.0",
+    "fbgraph": "^0.2.10",
+    "googleapis": "^0.7.0",
+    "lodash": "~2.4.1",
+    "mongoose": "^3.8.12",
+    "mongoose-paginator": "^0.2.3",
+    "mongoose-timestamp": "^0.2.1",
     "mongoose-unique-validator": "~0.3.0",
     "mongoose-validate": "0.0.5",
-    "lodash": "~2.4.1",
-    "mongoose-pagination": "~1.0.0",
-    "fbgraph": "~0.2.9",
-    "googleapis": "~0.6.1",
-    "mtwitter": "~1.5.2"
+    "mtwitter": "^1.5.3",
+    "nconf": "~0.6.9",
+    "request": "^2.31.0",
+    "restify": "^2.8.1"
   },
   "devDependencies": {
+    "grunt": "^0.4.5",
     "grunt-bookmarklet-thingy": "~0.2.0",
-    "grunt": "~0.4.2",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-nodemon": "~0.1.2",
-    "grunt-concurrent": "~0.4.2",
-    "grunt-contrib-uglify": "~0.2.7",
-    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-concurrent": "^0.5.0",
     "grunt-contrib-clean": "~0.5.0",
-    "matchdep": "~0.3.0",
-    "grunt-sass": "~0.10.0"
+    "grunt-contrib-requirejs": "^0.4.4",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-nodemon": "^0.2.1",
+    "grunt-sass": "^0.13.1",
+    "grunt-node-inspector": "^0.1.5",
+    "matchdep": "~0.3.0"
   },
   "subdomain": "ontheweb",
   "engines": {

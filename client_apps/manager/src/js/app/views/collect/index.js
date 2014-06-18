@@ -6,21 +6,20 @@
  */
 
 define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 'app/collections/collectItemResults',
-    './searchResultItem', './searchForm', './resultsForm', 'app/models/itemCollection', 'app/collections/itemCollections',
+    './searchResultItem', './searchResultFacebookPage', './searchResultGoogleplusPeople', './searchForm', './resultsForm', 
+    'app/models/itemCollection', 'app/collections/itemCollections',
     'app/models/webItem', 'app/ui/bootbox', 'app/ui/dd'
   ],
-  function(config, BaseView, _, $, Template, CollectItemResults, SearchResultItem, SearchForm, SaveForm, ItemCollectionModel,
+  function(config, BaseView, _, $, Template, CollectItemResults, SearchResultItem, SearchResultFacebookPage, SearchResultGoogleplusPeople, SearchForm, SaveForm, ItemCollectionModel,
     ItemCollectionCollection, WebItemModel, bootbox) {
+
     return BaseView.extend({
-
       template: Template['collect/index'],
-
-      // el: '#ontheweb-container',
-
       collection: new CollectItemResults(),
       collection_selected: new CollectItemResults(),
       itemCollection_collection: new ItemCollectionCollection(),
       saveForm: false,
+      searchParams: null,
 
       initialize: function() {
         this.on('afterRender', _.bind(this.onAfterRender, this));
@@ -28,15 +27,19 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         this.listenTo(this.pubSub, 'webitem:deleted', _.bind(this.onWebItemDeleted, this));
         this.listenTo(this.pubSub, 'itemCollection:selected', _.bind(this.onItemCollectionSelected, this));
         this.listenTo(this.pubSub, 'itemCollection:empty', _.bind(this.onItemCollectionEmpty, this));
+        this.listenTo(this.pubSub, 'advancedSearch:submitted', _.bind(this.onAdvancedSearchSubmitted, this));
+        this.listenTo(this.pubSub, 'facebookPage:loadPosts', _.bind(this.onLoadFacebookPagePosts, this));
+        this.listenTo(this.pubSub, 'googleplusPeople:loadPosts', _.bind(this.onLoadGoogleplusPeoplePosts, this));
+        this.listenTo(this.pubSub, 'resultItem:showReplies', _.bind(this.onShowReplies, this));
+
+        // doing this explicitly here - as a poperty, views are not always inserted it seems
+        this.searchForm = new SearchForm();
+        this.insertView('.search-panel', this.searchForm);
 
       },
 
       events: {
         'submit #collectForm': 'onSearchFormSubmitted'
-      },
-
-      views: {
-        '.search-panel': new SearchForm()
       },
 
       /**
@@ -50,9 +53,13 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         });
       },
 
+      /**
+       * Do stuff once the view has rendered (i.e. you now have access to the DOM)
+       */
       onAfterRender: function(view) {
-
         this.setPanelHeights();
+
+        // no save form has been added to the view - get the data required for the item selector and generate the form
         if (!this.saveForm) {
           this.itemCollection_collection.fetch({
             success: _.bind(this.onItemCollectionsFetched, this)
@@ -72,31 +79,25 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         });
       },
 
+      // collections have been loaded for the select element in the save form = can now render the save form
       onItemCollectionsFetched: function(collection, response, options) {
         this.saveForm = this.insertView('.save-panel', new SaveForm({
           collection: collection
         }));
-
         this.saveForm.render();
-
       },
 
+      // event handler for when the user selects a new option in the Collection selector on the save form
       onItemCollectionSelected: function(id) {
         if (!id) {
           return;
         }
-
-         this.$('.selected-panel .status-message').remove();
-       
-
+        this.$('.selected-panel .status-message').remove();
         if (this.collection_selected.length) {
-
           var app = this;
-
           bootbox.dialog({
             message: "What do you want to do with selected items",
             title: "Please confim",
-
             buttons: {
               danger: {
                 label: "Empty selection",
@@ -122,38 +123,32 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
 
       },
 
+      // Load an item collection's web items and attach them to the right hand column
       loadItemCollection: function(id) {
         var c, items;
         var app = this;
-
-        if(id==='new'){
+        if (id === 'new') {
           return;
         }
-
-
-
         c = this.itemCollection_collection.get(id);
-        c.fetch().done(function(){
+        c.fetch().done(function() {
           items = c.get('items');
           _.each(items, _.bind(function(itm) {
             app.addItemView2(new WebItemModel(itm));
           }, app));
         });
 
-
-        
       },
 
-
-
+      // User has dragged-and-dropped an item on the RHC to selected 
       onItemDropSelected: function(evt, ui) {
         var model = this.collection.get($(ui.item).data('itemid'));
         this.collection_selected.add(model);
         model.save();
         $(ui.item).removeClass('list-group-item-success');
-
       },
 
+      // User has dragged-and-dropped an item on the LHC to deselected 
       onItemDropDeselected: function(evt, ui) {
         var model = this.collection.get($(ui.item).data('itemid'));
         // console.log(model);
@@ -161,12 +156,13 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         $('.save-btn', ui.item).text('Delete');
       },
 
+      // Event handler for when an item has been deleted (user unselects by clicking the star)
       onWebItemDeleted: function(model) {
         this.collection.add(model);
       },
 
+      // Save the current selection to a new or existing Item Collection
       onTriggerSave: function(data) {
-        console.log(data);
         var items_tosave = this.getSelectedItems();
         var itemCollection;
         this.$('.selected-panel .status-message').remove();
@@ -181,17 +177,17 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
             items: items_tosave
           });
         }
-
-
         itemCollection.save().done(_.bind(this.onItemCollectionSaved, this));
       },
 
+      // Saving is complete
       onItemCollectionSaved: function(xhrdata, textStatus, jqXHR) {
         var confirm = $('<div class="alert alert-success status-message">Item Collection Saved</div>');
         // confirm.alert
         this.$('.selected-panel').prepend(confirm);
       },
 
+      // Empty the collection
       onItemCollectionEmpty: function() {
         this.collection_selected.reset();
         this.$('.selected-panel').empty();
@@ -212,37 +208,126 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         return tosave;
       },
 
+      // Take the user input and start searching the selected platform
       onSearchFormSubmitted: function(evt) {
-
         var data = this.formToData(evt.target);
-
-        this.collection.setURL(config.api.url + 'socialmedia?' + $.param(data));
-        this.collection.reset();
-        this.$('.results-panel').html('<p>fetching content...</p>');
-        this.collection.fetch({
-          success: _.bind(this.onCollectionLoaded, this)
-        });
-
+        this.doPlatformSearch(data);
         this.pubSub.trigger("collectForm:submit", data);
         evt.preventDefault();
       },
 
+
+      onAdvancedSearchSubmitted: function(advanced_data){
+        var normaldata = this.formToData(this.searchForm.$('form'));
+        var data = _.merge(normaldata, advanced_data);
+        var q = this.searchForm.$('input[name=q]');
+        q.attr('value',advanced_data.q);
+        this.doPlatformSearch(data);
+      },
+
+      doPlatformSearch: function(data, cb) {
+        if(!cb){
+          cb = this.onCollectionLoaded;
+        }
+        this.searchParams = data;
+        this.collection.setURL(config.api.url + 'socialmedia?' + $.param(data));
+        this.collection.reset();
+        this.$('.results-panel').html('<p>fetching content...</p>');
+        this.collection.fetch({
+          success: _.bind(cb, this)
+        });
+      },
+
+      // Search data has loaded - show it in the view
       onCollectionLoaded: function(collection, response, options) {
         this.$('.results-panel').empty();
         collection.each(_.bind(this.addItemView, this));
         this.setPanelHeights();
       },
 
-      addItemView: function(model) {
-        var view = this.insertView('.results-panel', new SearchResultItem({
+
+
+      onLoadFacebookPagePosts: function(id){
+        this.doPlatformSearch({
+          'platform': 'facebook',
+          'channel': 'pageposts',
+          'pageid': id
+        });
+
+      },
+
+      onLoadGoogleplusPeoplePosts: function(id){
+        this.doPlatformSearch({
+          'platform': 'googleplus',
+          'channel': 'user',
+          'q': id
+        });
+
+      },
+
+
+      onShowReplies: function(initialItem){
+        var replies = initialItem.model.get('replies'); 
+        var insertReplies = function(replies){
+          var rs = this.collection.add(replies);
+          _.each(rs, function(itm){
+            this.addItemReplyView(initialItem.$el, itm);
+          }, this);
+        };
+        var searchparams;
+        if(!replies){
+          searchparams = $.param({
+            'platform': 'googleplus',
+            'channel': 'activity-comments',
+            'q': initialItem.model.get('sourceId')
+          });
+          $.getJSON(config.api.url + 'socialmedia?' + searchparams, _.bind(function(data, textStatus, jqXHR){
+            _.bind(insertReplies,this)(data);
+          }, this));
+          return;
+        }
+        _.bind(insertReplies,this)(replies);
+      },
+
+
+      addItemReplyView: function(container, model) {
+        var ItemView = SearchResultItem;
+        var view = new ItemView({
           model: model,
-          el: false
+          el: false,
+          searchParams: this.searchParams
+        });
+        view.$el.insertAfter(container);
+        view.render();
+        view.$el.addClass('reply');
+      },
+
+
+
+      // Add item to the DOM LHC (search result)
+      addItemView: function(model) {
+        var ItemView = SearchResultItem;
+
+        if(this.searchParams.platform === 'facebook' && this.searchParams.channel === 'page'){
+          ItemView = SearchResultFacebookPage;
+        }
+
+        if(this.searchParams.platform === 'googleplus' && this.searchParams.channel === 'search-people'){
+          ItemView = SearchResultGoogleplusPeople;
+        }
+
+
+        var view = this.insertView('.results-panel', new ItemView({
+          model: model,
+          el: false,
+          searchParams: this.searchParams
         }));
         view.render();
       },
 
+      // Add item to the DOM RHC (select items into collection)
       addItemView2: function(model) {
-        if(this.collection_selected.get(model.id)){
+        if (this.collection_selected.get(model.id)) {
           return;
         }
         this.collection_selected.add(model);

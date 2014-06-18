@@ -20,7 +20,6 @@ define(['backbone', 'underscore', 'app/events', 'layoutmanager', 'jquery'], func
         acc[field.name] = field.value;
         return acc;
       }, {});
-
       return data;
     }
   });

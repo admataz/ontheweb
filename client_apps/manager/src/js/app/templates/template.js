@@ -27,7 +27,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "";
 
 
-  buffer += "<div id=\"collate-items\">\n\n\n<div class=\"row\">\n  <div class=\"col-md-12\">\n  <p>Find items you have already collected from the web and compile them into groups.</p>\n</div>\n</div>\n\n\n\n<div class=\"row\">\n  <div class=\"col-xs-6 \">\n  \n    \n  <div class=\"search-panel \">\n    \n  </div>\n\n  \n    \n  </div>\n\n  <div class=\"col-xs-6\">\n    \n    <div class=\"save-panel\">\n\n    </div>\n    \n  </div>\n</div>\n\n\n<div class=\"row dd-panels\">\n  <div class=\"col-xs-6\"><div class=\"results-panel  well  well-sm\"></div></div>\n  <div class=\"col-xs-6\"><div class=\"selected-panel well  well-sm\"></div></div>\n</div>\n\n\n\n\n</div>";
+  buffer += "<div id=\"collate-items\">\n\n\n<div class=\"row\">\n  <div class=\"col-md-12\">\n  <p>NOTE: this view is deprecated - and will be removed soon. Keeping it here so you can search existing items until the 'Already Saved' tab is ready in <b>collect</b>.</p>\n</div>\n</div>\n\n\n\n<div class=\"row\">\n  <div class=\"col-xs-6 \">\n  \n    \n  <div class=\"search-panel \">\n    \n  </div>\n\n  \n    \n  </div>\n\n  <div class=\"col-xs-6\">\n    \n    <div class=\"save-panel\">\n\n    </div>\n    \n  </div>\n</div>\n\n\n<div class=\"row dd-panels\">\n  <div class=\"col-xs-6\"><div class=\"results-panel  well  well-sm\"></div></div>\n  <div class=\"col-xs-6\"><div class=\"selected-panel well  well-sm\"></div></div>\n</div>\n\n\n\n\n</div>";
   return buffer;
   });
 templates['collate/saveForm'] = template(function (Handlebars,depth0,helpers,partials,data) {
@@ -116,7 +116,7 @@ function program1(depth0,data) {
     + "</a>\n  </div>\n\n\n  ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.imageUrl), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n\n\n</div>\n\n";
+  buffer += "\n\n  <a href=\"#\" class=\"save-btn\">Save</a>\n</div>\n\n";
   return buffer;
   });
 templates['collate/searchResults'] = template(function (Handlebars,depth0,helpers,partials,data) {
@@ -179,10 +179,126 @@ function program1(depth0,data) {
 templates['collect/searchForm'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "";
+
+
+  buffer += "<form action=\"#\" id=\"collectForm\" role=\"form\" class=\"form-inline\">\n  <ul class=\"nav nav-tabs\">\n    <li class=\"active\"><a href=\"#ontheweb\" data-toggle=\"tab\">On The Web</a></li>\n    <li><a href=\"#alreadysaved\" data-toggle=\"tab\">Already saved</a></li>\n  </ul>\n  <div class=\"tab-content\">\n    <div class=\"tab-pane active\" id=\"ontheweb\">\n      <div class=\"form-group\">\n        <label class=\"radio\">\n          <input type=\"radio\" name=\"platform\" value=\"twitter\" checked=\"checked\"> Twitter\n        </label>\n        <label class=\"radio\">\n          <input type=\"radio\" name=\"platform\" value=\"facebook\"> Facebook\n        </label>\n        <label class=\"radio\">\n          <input type=\"radio\" name=\"platform\" value=\"googleplus\"> Google+\n        </label>\n      </div>\n\n    </div>\n    <div class=\"tab-pane\" id=\"alreadysaved\">\n      [NOTE: this is not yet working!]\n      <div class=\"form-group\">\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" name=\"platform[www]\" value=\"1\" checked=\"checked\"> Web Clips\n        </label>\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" name=\"platform[twitter]\" value=\"1\"> Twitter\n        </label>\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" name=\"platform[facebook]\" value=\"1\"> Facebook\n        </label>\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" name=\"platform[googleplus]\" value=\"1\"> Google+\n        </label>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"form-group search-options\" id=\"search-options-twitter\">\n    <div class=\"checkbox\">\n      <label for=\"channel-twitter-search\">\n        <input type=\"radio\" name=\"channel\" value=\"search\" id=\"channel-twitter-search\" checked=\"checked\"> all tweets\n      </label>\n      <label for=\"channel-twitter-user\">\n        <input type=\"radio\" name=\"channel\" value=\"user\" id=\"channel-twitter-user\"> user's timeline (enter username)\n      </label>\n    </div>\n    <a href=\"#\" id=\"advanced-twitter-search-trigger\" class=\"btn btn-sm btn-link\">Advanced search</a>\n  </div>\n\n\n  <div class=\"form-group search-options\" id=\"search-options-facebook\">\n    <div class=\"checkbox\">\n      <label for=\"channel-facebook-user-posts\">\n        <input type=\"radio\" name=\"channel\" value=\"user\" id=\"channel-facebook-user-posts\" checked=\"checked\"> user's posts\n      </label>\n      <label for=\"channel-search-facebook-pages\">\n        <input type=\"radio\" name=\"channel\" value=\"page\" id=\"channel-search-facebook-pages\"> search for a Facebook page\n      </label>\n       \n    </div>\n  </div>\n\n\n <div class=\"form-group search-options\" id=\"search-options-googleplus\">\n    <div class=\"checkbox\">\n      <label for=\"channel-search-googleplus-user\">\n        <input type=\"radio\" name=\"channel\" value=\"user\" id=\"channel-search-googleplus-user\" checked=\"checked\"> user's posts\n      </label>\n      <label for=\"channel-search-googleplus-people\">\n        <input type=\"radio\" name=\"channel\" value=\"search-people\" id=\"channel-search-googleplus-people\"> search for a profile\n      </label>\n       <label for=\"channel-search-googleplus-activities\">\n        <input type=\"radio\" name=\"channel\" value=\"search-activities\" id=\"channel-search-googleplus-activities\"> all activities\n      </label>\n    </div>\n  </div>\n\n\n<div class=\"form-group\">\n  <div class=\"input-group\">\n    <input type=\"text\" name=\"q\" value=\"\" class=\"form-control\" placeholder=\"search terms\">\n    <span class=\"input-group-btn\">\n    <input type=\"submit\" value=\"Go\" name=\"submitgo\" class=\"btn btn-default\" />\n    </span>\n  </div>\n</div>\n</form>\n<div class=\"form-group\" id=\"advanced-twitter-search-wrapper\">\n</div>\n<div class=\"form-group\" id=\"advanced-facebook-search-wrapper\">\n</div>\n<div class=\"form-group\" id=\"advanced-googleplus-search-wrapper\">\n</div>";
+  return buffer;
+  });
+templates['collect/searchResultFacebookPage'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<li class=\"list-group-page-item media\" data-itemid=\"";
+  if (helper = helpers.cid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.cid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">\n  <h5 class=\"media-heading\">"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</h5>\n  <h6>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.category)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</h6>\n   <div  class=\"pull-left\">  \n    <img src=\"https://graph.facebook.com/"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "/picture?type=square\"  class=\"media-object\">\n  </div>\n\n  <a href=\"#\" data-pageid=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" class=\"show-page-posts\">See page posts</a>\n</li>\n\n";
+  return buffer;
+  });
+templates['collect/searchResultFacebookPost'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, helperMissing=helpers.helperMissing, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
   
+  var buffer = "", stack1, helper, options;
+  buffer += "\n  <div class=\"media-body\">\n    <small>";
+  stack1 = (helper = helpers.linkify || (depth0 && depth0.linkify),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.content), options) : helperMissing.call(depth0, "linkify", ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.content), options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "</small>\n  </div>\n  ";
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n  <a class=\"reveal-media-button\" href=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.imageUrl)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">media</a>\n  <div class=\"mediadata\">\n    <p><img src=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.imageUrl)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" width=\"100%\"></p>\n  </div>\n  ";
+  return buffer;
+  }
+
+function program5(depth0,data) {
+  
+  var buffer = "", stack1, helper;
+  buffer += "\n  <a href=\"#\">view ";
+  if (helper = helpers.pageCommentsCount) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pageCommentsCount); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + " comments</a>\n  ";
+  return buffer;
+  }
+
+  buffer += "<li class=\"list-group-item media\" data-itemid=\"";
+  if (helper = helpers.cid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.cid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">\n\n  <h6 class=\"media-heading\">"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</h6>\n\n  <div  class=\"pull-left\">\n    <img src=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.authorAvatarUrl)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\"  class=\"media-object\">\n  </div>\n\n  ";
+  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.content), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n\n  <a class=\"more-info-button\" href=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.url)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">post info</a>\n  <div class=\"postdata\">\n    <a href=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.url)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" target=\"_blank\">original</a> posted at "
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.datePosted)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + " by <a href=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.authorProfileUrl)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" target=\"_blank\">"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.authorName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + " ("
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.usernameID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + ")</a> on <a href=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.sourceSiteUrl)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\"  target=\"_blank\">"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.sourceSiteName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</a>\n  </div>\n  \n  ";
+  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.imageUrl), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n\n  ";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.pageCommentsCount), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n  <a href=\"#\" class=\"save-btn\">Save</a>\n</li>";
+  return buffer;
+  });
+templates['collect/searchResultGoogleplusPeople'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  return "<form action=\"#\" id=\"collectForm\" role=\"form\" class=\"form-inline\">\n  <div class=\"form-group\">\n    <div class=\"checkbox\">\n      <label for=\"channel-search\">\n        <input type=\"radio\" name=\"channel\" value=\"search\" id=\"channel-search\" checked=\"checked\"> search all ||\n      </label>\n      <label for=\"channel-user\">\n        <input type=\"radio\" name=\"channel\" value=\"user\" id=\"channel-user\"> user's posts\n      </label>\n    </div>\n  </div>\n</div>\n\n<div class=\"form-group\">\n  <select name=\"platform\" id=\"platform\"  class=\"form-control\">\n    <option value=\"twitter\">Twitter</option>\n    <option value=\"facebook\">Facebook</option>\n    <option value=\"googleplus\">Google+</option>\n  </select> \n</div>\n\n\n<div class=\"form-group\">\n\n  <div class=\"input-group\">\n    <input type=\"text\" name=\"q\" value=\"\" class=\"form-control\" placeholder=\"username or search term\">\n    <span class=\"input-group-btn\">\n      <input type=\"submit\" value=\"Go\" name=\"submitgo\" class=\"btn btn-default\" />\n    </span>\n  </div>\n</div>\n\n</form>";
+  buffer += "<li class=\"list-group-page-item media\" data-itemid=\"";
+  if (helper = helpers.cid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.cid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">\n  <h5 class=\"media-heading\">"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.displayName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</h5>\n  <h6>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.category)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</h6>\n   <div class=\"pull-left\">  \n    <img src=\""
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.image)),stack1 == null || stack1 === false ? stack1 : stack1.url)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\"  class=\"media-object\">\n  </div>\n\n  <a href=\"#\" data-personid=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" class=\"show-page-posts\">See profile posts</a>\n</li>\n\n";
+  return buffer;
   });
 templates['collect/searchResultItem'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -207,6 +323,15 @@ function program3(depth0,data) {
     + "\">media</a>\n  <div class=\"mediadata\">\n    <p><img src=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.imageUrl)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" width=\"100%\"></p>\n  </div>\n  ";
+  return buffer;
+  }
+
+function program5(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n  <a href=\"#\" class=\"show-replies-btn\">load "
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.hasReplies)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + " comments/replies</a>\n  ";
   return buffer;
   }
 
@@ -239,6 +364,9 @@ function program3(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.sourceSiteName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</a>\n  </div>\n\n\n  ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.imageUrl), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n\n  ";
+  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.atts)),stack1 == null || stack1 === false ? stack1 : stack1.hasReplies), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n\n  <a href=\"#\" class=\"save-btn\">Save</a>\n</li>\n\n";
   return buffer;
@@ -324,6 +452,14 @@ function program2(depth0,data) {
   buffer += "\n</div>\n</form>\n";
   return buffer;
   });
+templates['collect/searchTwitterAdvanced'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div class=\"modal fade\" id=\"advanced-twitter-search\">\n  <div class=\"modal-dialog\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">Advanced Twitter Search</h4>\n      </div>\n      <div class=\"modal-body\">\n        <form class=\"advanced-searchfields\" id=\"advanced-twitter-search-form\">\n    <fieldset>\n      <legend class=\"t1-legend\"><span>Words</span></legend>\n      <div class=\"txt\">\n        <label class=\"t1-label\">\n          <span class=\"td\">All of these words</span>\n          <input type=\"text\" name=\"ands\">\n        </label>\n      </div>\n      <div class=\"txt\">\n        <label class=\"t1-label\">\n          <span class=\"td\">This exact phrase</span>\n          <input type=\"text\" name=\"phrase\">\n        </label>\n      </div>\n      <div class=\"txt\">\n        <label class=\"t1-label\">\n          <span class=\"td\">Any of these words</span>\n          <input type=\"text\" name=\"ors\">\n        </label>\n      </div>\n      <div class=\"txt\">\n        <label class=\"t1-label\">\n          <span class=\"td\">None of these words</span>\n          <input type=\"text\" name=\"nots\">\n        </label>\n      </div>\n      <div class=\"txt\">\n        <label class=\"t1-label\">\n          <span class=\"td\">These hashtags</span>\n          <input type=\"text\" name=\"tag\">\n        </label>\n      </div>\n      <div class=\"txt\">\n        <label class=\"t1-label\">\n          <span class=\"td\">Written in</span>\n          <select class=\"t1-select\" id=\"lang\" name=\"lang\">\n            <option value=\"all\" selected=\"selected\">Any Language</option>\n              <option value=\"am\">Amharic (አማርኛ)</option>\n              <option value=\"ar\">Arabic (العربية)</option>\n              <option value=\"bg\">Bulgarian (Български)</option>\n              <option value=\"bn\">Bengali (বাংলা)</option>\n              <option value=\"bo\">Tibetan (བོད་སྐད)</option>\n              <option value=\"chr\">Cherokee (ᏣᎳᎩ)</option>\n              <option value=\"da\">Danish (Dansk)</option>\n              <option value=\"de\">German (Deutsch)</option>\n              <option value=\"dv\">Maldivian (ދިވެހި)</option>\n              <option value=\"el\">Greek (Ελληνικά)</option>\n              <option value=\"en\">English (English)</option>\n              <option value=\"es\">Spanish (Español)</option>\n              <option value=\"fa\">Persian (فارسی)</option>\n              <option value=\"fi\">Finnish (Suomi)</option>\n              <option value=\"fr\">French (Français)</option>\n              <option value=\"gu\">Gujarati (ગુજરાતી)</option>\n              <option value=\"iw\">Hebrew (עברית)</option>\n              <option value=\"hi\">Hindi (हिंदी)</option>\n              <option value=\"hu\">Hungarian (Magyar)</option>\n              <option value=\"hy\">Armenian (Հայերեն)</option>\n              <option value=\"in\">Indonesian (Bahasa Indonesia)</option>\n              <option value=\"is\">Icelandic (Íslenska)</option>\n              <option value=\"it\">Italian (Italiano)</option>\n              <option value=\"iu\">Inuktitut (ᐃᓄᒃᑎᑐᑦ)</option>\n              <option value=\"ja\">Japanese (日本語)</option>\n              <option value=\"ka\">Georgian (ქართული)</option>\n              <option value=\"km\">Khmer (ខ្មែរ)</option>\n              <option value=\"kn\">Kannada (ಕನ್ನಡ)</option>\n              <option value=\"ko\">Korean (한국어)</option>\n              <option value=\"lo\">Lao (ລາວ)</option>\n              <option value=\"lt\">Lithuanian (Lietuvių)</option>\n              <option value=\"ml\">Malayalam (മലയാളം)</option>\n              <option value=\"my\">Myanmar (မြန်မာဘာသာ)</option>\n              <option value=\"ne\">Nepali (नेपाली)</option>\n              <option value=\"nl\">Dutch (Nederlands)</option>\n              <option value=\"no\">Norwegian (Norsk)</option>\n              <option value=\"or\">Oriya (ଓଡ଼ିଆ)</option>\n              <option value=\"pa\">Panjabi (ਪੰਜਾਬੀ)</option>\n              <option value=\"pl\">Polish (Polski)</option>\n              <option value=\"pt\">Portuguese (Português)</option>\n              <option value=\"ru\">Russian (Русский)</option>\n              <option value=\"si\">Sinhala (සිංහල)</option>\n              <option value=\"sv\">Swedish (Svenska)</option>\n              <option value=\"ta\">Tamil (தமிழ்)</option>\n              <option value=\"te\">Telugu (తెలుగు)</option>\n              <option value=\"th\">Thai (ไทย)</option>\n              <option value=\"tl\">Tagalog (Tagalog)</option>\n              <option value=\"tr\">Turkish (Türkçe)</option>\n              <option value=\"ur\">Urdu (ﺍﺭﺩﻭ)</option>\n              <option value=\"vi\">Vietnamese (Tiếng Việt)</option>\n              <option value=\"zh\">Chinese (中文)</option>\n          </select>\n        </label>\n      </div>\n    </fieldset>\n\n    <fieldset>\n      <legend class=\"t1-legend\"><span>People</span></legend>\n      <div class=\"txt\">\n        <label class=\"t1-label\">\n          <span class=\"td\">From these accounts</span>\n          <input type=\"text\" name=\"from\">\n        </label>\n      </div>\n      <div class=\"txt\">\n        <label class=\"t1-label\">\n          <span class=\"td\">To these accounts</span>\n          <input type=\"text\" name=\"to\">\n        </label>\n      </div>\n      <div class=\"txt\">\n        <label class=\"t1-label\">\n          <span class=\"td\">Mentioning these accounts</span>\n          <input type=\"text\" name=\"ref\">\n        </label>\n      </div>\n    </fieldset>\n\n    <fieldset class=\"geo\">\n      <legend class=\"t1-legend\"><span>Places</span></legend>\n      <div class=\"txt geo-picker-container\">\n        <label class=\"t1-label\">\n          <span class=\"td\">Near this place</span>\n          <input type=\"text\" name=\"near\">\n        </label>\n      </div>\n      <div class=\"sel\">\n        <label class=\"t1-label\">\n          <span class=\"td\">Within this distance</span>\n          <select class=\"t1-select\" name=\"within\">\n            <option value=\"1\">1</option>\n            <option value=\"5\">5</option>\n            <option value=\"10\">10</option>\n            <option value=\"15\" selected=\"selected\">15</option>\n            <option value=\"25\">25</option>\n            <option value=\"50\">50</option>\n            <option value=\"100\">100</option>\n            <option value=\"500\">500</option>\n            <option value=\"1000\">1000</option>\n          </select>\n        </label>\n        <span class=\"rad\">\n          <label class=\"t1-label\"><input name=\"units\" type=\"radio\" value=\"mi\" checked=\"checked\"><span>miles</span></label>\n          <label class=\"t1-label\"><input name=\"units\" type=\"radio\" value=\"km\"><span>kilometers</span></label>\n        </span>\n      </div>\n    </fieldset>\n\n    <fieldset>\n      <legend class=\"t1-legend\"><span>Dates</span></legend>\n      <div class=\"txt\">\n        <label for=\"since\" class=\"t1-label td\">From this date</label>\n        <div class=\"input-daterange input-group\" id=\"datepicker\">\n          <input type=\"text\" class=\"input-sm form-control input-since\" name=\"since\" id=\"since\">\n          <label for=\"until\" class=\"t1-label input-group-addon\">to</label>\n          <input type=\"text\" class=\"input-sm form-control input-until\" name=\"until\" id=\"until\">\n        </div>\n      </div>\n    </fieldset>\n\n    <fieldset>\n      <legend class=\"t1-legend\"><span>Other</span></legend>\n      <div class=\"chk\">\n        <span class=\"td\">Select:</span>\n        <span class=\"chk-inner\">\n          <label class=\"t1-label\"><input name=\"attd\" type=\"checkbox\" value=\":)\"><span>Positive :)</span></label>\n          <label class=\"t1-label\"><input name=\"attd\" type=\"checkbox\" value=\":(\"><span>Negative :(</span></label>\n          <label class=\"t1-label\"><input name=\"attd\" type=\"checkbox\" value=\"?\"><span>Question ?</span></label>\n          <label class=\"t1-label\"><input name=\"include\" type=\"checkbox\" value=\"retweets\"><span>Include retweets</span></label>\n        </span>\n      </div>\n    </fieldset>\n\n    <input type=\"submit\" name=\"submit-advanced-search\" value=\"search twitter\" />\n\n</form>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n        <button type=\"button\" class=\"btn btn-primary\">Search</button>\n      </div>\n    </div><!-- /.modal-content -->\n  </div><!-- /.modal-dialog -->\n</div><!-- /.modal -->\n\n\n\n\n    \n\n\n";
+  });
 templates['global/layout'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -338,7 +474,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "";
 
 
-  buffer += "<ul class=\"nav nav-pills\">\n  <li><a href=\"#\">Home</a></li>\n  <li><a href=\"collect\">Collect</a></li>\n  <li><a href=\"collate\">Collate</a></li>\n  \n</ul>";
+  buffer += "<ul class=\"nav nav-pills\">\n  \n  <li><a href=\"collect\">Collect</a></li>\n  <li><a href=\"collate\">Collate</a></li>\n  \n</ul>";
   return buffer;
   });
 templates['webitems/index'] = template(function (Handlebars,depth0,helpers,partials,data) {

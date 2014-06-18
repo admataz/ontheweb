@@ -20,6 +20,8 @@ function normaliseResults(itm,i){
       newObj.usernameID = '@'+itm.user.screen_name;
       newObj.authorProfileUrl = 'http://twitter.com/'+itm.user.screen_name;
       newObj.authorAvatarUrl = itm.user.profile_image_url;
+      newObj.sourcePlatform = 'twitter';
+      newObj.sourceId = itm.id_str;
       newObj.sourceSiteName = 'Twitter';
       newObj.sourceSiteUrl = 'http://twitter.com';
       newObj.sourceSiteLogoUrl = '';
@@ -80,7 +82,9 @@ function getSearchResult(query, cb) {
 module.exports = {
   query: function(obj, cb) {
     if(['user','search'].indexOf(obj.channel) === -1){
-      cb(new Error('No valid twitter channel requested'));
+      // cb(new Error('No valid twitter channel requested'));
+      // why throw an error when you can have a default? 
+      obj.channel = 'search';
     }
 
     if (obj.channel === 'user') {
