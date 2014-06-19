@@ -29,12 +29,10 @@ define(['app/views/BaseView', 'template', 'underscore', 'jquery', 'app/views/col
 
     onPlatformChoice: function(evt){
       var currPlatform = $(evt.currentTarget).attr('value');
-
       $('.form-group.search-options').hide();
       $('#search-options-'+currPlatform).show();
       $('input[name="channel"]').prop('checked',false);
       $('#search-options-'+currPlatform+ ' input[name="channel"]').first().prop('checked',true);
-
     }
 
 

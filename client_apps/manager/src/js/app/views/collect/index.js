@@ -29,6 +29,7 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         this.listenTo(this.pubSub, 'itemCollection:empty', _.bind(this.onItemCollectionEmpty, this));
         this.listenTo(this.pubSub, 'advancedSearch:submitted', _.bind(this.onAdvancedSearchSubmitted, this));
         this.listenTo(this.pubSub, 'facebookPage:loadPosts', _.bind(this.onLoadFacebookPagePosts, this));
+        this.listenTo(this.pubSub, 'facebookPage:loadFeed', _.bind(this.onLoadFacebookPageFeed, this));
         this.listenTo(this.pubSub, 'googleplusPeople:loadPosts', _.bind(this.onLoadGoogleplusPeoplePosts, this));
         this.listenTo(this.pubSub, 'resultItem:showReplies', _.bind(this.onShowReplies, this));
 
@@ -39,7 +40,8 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
       },
 
       events: {
-        'submit #collectForm': 'onSearchFormSubmitted'
+        'submit #collectForm': 'onSearchFormSubmitted',
+        'submit #alreadySavedForm': 'onAlreadysavedFormSubmitted'
       },
 
       /**
@@ -208,6 +210,21 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         return tosave;
       },
 
+      onAlreadysavedFormSubmitted: function(evt){
+        var data = this.formToData(evt.target);
+        this.searchParams = data;
+        evt.preventDefault();
+
+        data.platform = 'alreadySaved';
+        this.collection.setURL(config.api.url + 'webitem?' + $.param(data));
+        this.collection.reset();
+        this.$('.results-panel').html('<p>fetching content...</p>');
+        this.collection.fetch({
+          success: _.bind(this.onCollectionLoaded, this)
+        });
+
+      },
+
       // Take the user input and start searching the selected platform
       onSearchFormSubmitted: function(evt) {
         var data = this.formToData(evt.target);
@@ -218,10 +235,13 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
 
 
       onAdvancedSearchSubmitted: function(advanced_data){
-        var normaldata = this.formToData(this.searchForm.$('form'));
-        var data = _.merge(normaldata, advanced_data);
-        var q = this.searchForm.$('input[name=q]');
+        // var normaldata = this.formToData(this.searchForm.$('form'));
+        var data = {};//_.merge(normaldata, advanced_data);
+        var q = this.searchForm.$('#collectForm input[name=q]');
         q.attr('value',advanced_data.q);
+        data.platform = 'twitter';
+        data.channel = 'search';
+        data.q = advanced_data.q;
         this.doPlatformSearch(data);
       },
 
@@ -251,6 +271,14 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         this.doPlatformSearch({
           'platform': 'facebook',
           'channel': 'pageposts',
+          'pageid': id
+        });
+
+      },
+      onLoadFacebookPageFeed: function(id){
+        this.doPlatformSearch({
+          'platform': 'facebook',
+          'channel': 'pagefeed',
           'pageid': id
         });
 

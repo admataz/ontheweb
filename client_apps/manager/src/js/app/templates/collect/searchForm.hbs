@@ -1,10 +1,10 @@
-<form action="#" id="collectForm" role="form" class="form-inline">
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#ontheweb" data-toggle="tab">On The Web</a></li>
-    <li><a href="#alreadysaved" data-toggle="tab">Already saved</a></li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane active" id="ontheweb">
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#ontheweb" data-toggle="tab">On The Web</a></li>
+  <li><a href="#alreadysaved" data-toggle="tab">Already saved</a></li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="ontheweb">
+    <form action="#" id="collectForm" role="form" class="form-inline">
       <div class="form-group">
         <label class="radio">
           <input type="radio" name="platform" value="twitter" checked="checked"> Twitter
@@ -17,8 +17,57 @@
         </label>
       </div>
 
-    </div>
-    <div class="tab-pane" id="alreadysaved">
+      <div class="form-group search-options" id="search-options-twitter">
+        <div class="checkbox">
+          <label for="channel-twitter-search">
+            <input type="radio" name="channel" value="search" id="channel-twitter-search" checked="checked"> all tweets
+          </label>
+          <label for="channel-twitter-user">
+            <input type="radio" name="channel" value="user" id="channel-twitter-user"> user's timeline (enter username)
+          </label>
+        </div>
+        <a href="#" id="advanced-twitter-search-trigger" class="btn btn-sm btn-link">Advanced search</a>
+      </div>
+      <div class="form-group search-options" id="search-options-facebook">
+        <div class="checkbox">
+          <label for="channel-facebook-user-posts">
+            <input type="radio" name="channel" value="user" id="channel-facebook-user-posts" checked="checked"> user's posts
+          </label>
+          <label for="channel-search-facebook-pages">
+            <input type="radio" name="channel" value="page" id="channel-search-facebook-pages"> search for a Facebook page
+          </label>
+          {{!-- <label for="channel-search-page">
+            <input type="radio" name="channel" value="url" id="channel-url"> extract Facebook URL
+          </label> --}}
+        </div>
+      </div>
+      <div class="form-group search-options" id="search-options-googleplus">
+        <div class="checkbox">
+          <label for="channel-search-googleplus-user">
+            <input type="radio" name="channel" value="user" id="channel-search-googleplus-user" checked="checked"> user's posts
+          </label>
+          <label for="channel-search-googleplus-people">
+            <input type="radio" name="channel" value="search-people" id="channel-search-googleplus-people"> search for a profile
+          </label>
+          <label for="channel-search-googleplus-activities">
+            <input type="radio" name="channel" value="search-activities" id="channel-search-googleplus-activities"> all activities
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" name="q" value="" class="form-control" placeholder="search terms">
+          <span class="input-group-btn">
+          <input type="submit" value="Go" name="submitgo" class="btn btn-default" />
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="tab-pane" id="alreadysaved">
+    <form action="#" id="alreadySavedForm" role="form" class="form-inline">
+    <input type="hidden" name="platform" value="webitem" > 
       [NOTE: this is not yet working!]
       <div class="form-group">
         <label class="checkbox">
@@ -34,64 +83,24 @@
           <input type="checkbox" name="platform[googleplus]" value="1"> Google+
         </label>
       </div>
+
+
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" name="q" value="" class="form-control" placeholder="search terms">
+          <span class="input-group-btn">
+          <input type="submit" value="Go" name="submitgo" class="btn btn-default" />
+          </span>
+        </div>
+      </div>
+    </form>
+
+
     </div>
   </div>
-
-  <div class="form-group search-options" id="search-options-twitter">
-    <div class="checkbox">
-      <label for="channel-twitter-search">
-        <input type="radio" name="channel" value="search" id="channel-twitter-search" checked="checked"> all tweets
-      </label>
-      <label for="channel-twitter-user">
-        <input type="radio" name="channel" value="user" id="channel-twitter-user"> user's timeline (enter username)
-      </label>
-    </div>
-    <a href="#" id="advanced-twitter-search-trigger" class="btn btn-sm btn-link">Advanced search</a>
+  <div class="form-group" id="advanced-twitter-search-wrapper">
   </div>
-
-
-  <div class="form-group search-options" id="search-options-facebook">
-    <div class="checkbox">
-      <label for="channel-facebook-user-posts">
-        <input type="radio" name="channel" value="user" id="channel-facebook-user-posts" checked="checked"> user's posts
-      </label>
-      <label for="channel-search-facebook-pages">
-        <input type="radio" name="channel" value="page" id="channel-search-facebook-pages"> search for a Facebook page
-      </label>
-       {{!-- <label for="channel-search-page">
-        <input type="radio" name="channel" value="url" id="channel-url"> extract Facebook URL
-      </label> --}}
-    </div>
+  <div class="form-group" id="advanced-facebook-search-wrapper">
   </div>
-
-
- <div class="form-group search-options" id="search-options-googleplus">
-    <div class="checkbox">
-      <label for="channel-search-googleplus-user">
-        <input type="radio" name="channel" value="user" id="channel-search-googleplus-user" checked="checked"> user's posts
-      </label>
-      <label for="channel-search-googleplus-people">
-        <input type="radio" name="channel" value="search-people" id="channel-search-googleplus-people"> search for a profile
-      </label>
-       <label for="channel-search-googleplus-activities">
-        <input type="radio" name="channel" value="search-activities" id="channel-search-googleplus-activities"> all activities
-      </label>
-    </div>
+  <div class="form-group" id="advanced-googleplus-search-wrapper">
   </div>
-
-
-<div class="form-group">
-  <div class="input-group">
-    <input type="text" name="q" value="" class="form-control" placeholder="search terms">
-    <span class="input-group-btn">
-    <input type="submit" value="Go" name="submitgo" class="btn btn-default" />
-    </span>
-  </div>
-</div>
-</form>
-<div class="form-group" id="advanced-twitter-search-wrapper">
-</div>
-<div class="form-group" id="advanced-facebook-search-wrapper">
-</div>
-<div class="form-group" id="advanced-googleplus-search-wrapper">
-</div>

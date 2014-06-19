@@ -68,9 +68,12 @@ function getUserPosts(user_id, cb) {
 }
 
 
-function getPostsFromPage(page_id, cb){
+function getPostsFromPage(page_id, feedorposts, cb){
+  if(!feedorposts){
+    feedorposts = 'posts';
+  }
 
-  graph.get(page_id + "/posts", function(err, result) {
+  graph.get(page_id + "/"+feedorposts, function(err, result) {
     if (err) {
       cb(err);
       return;
@@ -114,7 +117,7 @@ function getAuthToken() {
 
 module.exports = {
   query: function(obj, cb) {
-    if (['page', 'user', 'url', 'pageposts'].indexOf(obj.channel) === -1) {
+    if (['page', 'user', 'url', 'pageposts', 'pagefeed'].indexOf(obj.channel) === -1) {
       obj.channel = 'page';
     }
 
@@ -126,7 +129,11 @@ module.exports = {
       getSearchResults('page', obj.q, cb);
     }
   if (obj.channel === 'pageposts') {
-      getPostsFromPage(obj.pageid, cb);
+      getPostsFromPage(obj.pageid, 'posts', cb);
+    }
+
+    if (obj.channel === 'pagefeed') {
+      getPostsFromPage(obj.pageid, 'feed', cb);
     }
 
   }
