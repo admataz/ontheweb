@@ -5558,6 +5558,9 @@ th.hidden-lg, td.hidden-lg {
 .list-group-item-success .save-btn {
   background-position: bottom; }
 
+.saved-already-true .save-btn {
+  background-position: bottom; }
+
 .selected-panel {
   height: 100%;
   overflow: auto; }

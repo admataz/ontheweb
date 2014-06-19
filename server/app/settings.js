@@ -12,7 +12,7 @@ var config = {
     'db_port': 27017,
     'http_name': 'OnTheWeb',
     'http_port': 8001,
-    'socialmedia_platforms': ['facebook','twitter','googleplus']
+    'socialmedia_platforms': ['facebook','twitter','googleplus','collected']
   };
 
 

@@ -62,11 +62,6 @@ function normaliseResults(itm, i, cb) {
   }
 
 
-  function normalisePeopleResults(itm, i){
-
-
-  }
-
 
   if (itm.attachments) {
     photos = itm.attachments.filter(function(att) {

@@ -40,8 +40,7 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
       },
 
       events: {
-        'submit #collectForm': 'onSearchFormSubmitted',
-        'submit #alreadySavedForm': 'onAlreadysavedFormSubmitted'
+        'submit #collectForm, #alreadySavedForm': 'onSearchFormSubmitted'
       },
 
       /**
@@ -210,20 +209,7 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         return tosave;
       },
 
-      onAlreadysavedFormSubmitted: function(evt){
-        var data = this.formToData(evt.target);
-        this.searchParams = data;
-        evt.preventDefault();
-
-        data.platform = 'alreadySaved';
-        this.collection.setURL(config.api.url + 'webitem?' + $.param(data));
-        this.collection.reset();
-        this.$('.results-panel').html('<p>fetching content...</p>');
-        this.collection.fetch({
-          success: _.bind(this.onCollectionLoaded, this)
-        });
-
-      },
+      
 
       // Take the user input and start searching the selected platform
       onSearchFormSubmitted: function(evt) {

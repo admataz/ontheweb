@@ -5,6 +5,8 @@
 
 var restify = require('restify');
 var config = require('../settings');
+var _ = require('lodash');
+var webitem = require('../models/webitem');
 
 module.exports = function(app) {
   /**
@@ -27,8 +29,30 @@ module.exports = function(app) {
       if (err) {
         return next(err);
       }
-      res.send(200, result);
-      next();
+
+      var urls = _.pluck(result,'url');
+
+      webitem.find().select('url').in('url',urls).exec(function(err, existing){
+        // debugger;
+        result.forEach(function(itm,i){
+          var exists = _.find(existing,function(ex){
+            return (ex.get('url') === itm.url);
+          });
+          if(exists){
+            // itm.set("alreadyCollected", true);
+            itm.alreadyCollected = true;
+
+          } else  {
+            itm.alreadyCollected = false;
+          }
+        });
+
+        res.send(200, result);
+        next();
+      });
+
+
+      
     });
   });
 };
