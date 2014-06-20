@@ -32,16 +32,14 @@ module.exports = function(app) {
 
       var urls = _.pluck(result,'url');
 
-      webitem.find().select('url').in('url',urls).exec(function(err, existing){
-        // debugger;
+      webitem.find().in('url',urls).exec(function(err, existing){
         result.forEach(function(itm,i){
           var exists = _.find(existing,function(ex){
             return (ex.get('url') === itm.url);
           });
           if(exists){
-            // itm.set("alreadyCollected", true);
-            itm.alreadyCollected = true;
-
+            exists.set("alreadyCollected", true);
+            result[i] = exists;
           } else  {
             itm.alreadyCollected = false;
           }

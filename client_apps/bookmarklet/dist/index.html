@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Test</title>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script type="text/javascript">
+
+    $(function(){
+      $.get('/bookmarklet/bookmarklet.txt', function(data){
+        $('#bookmarkletlink').attr('href',data);
+      },
+      'text');
+    });
+    </script>
+  </head>
+  <body>
+    <h1>On the Web Bookmarklet</h1>
+    <p>Drag the link below to your bookmarks toolbar to start using it as a bookmarklet for capturing URLs and highlighted text excerpts from pages</p>
+    <p> <a id="bookmarkletlink" href="#">On the Web</a></p>
+  </body>
+</html>

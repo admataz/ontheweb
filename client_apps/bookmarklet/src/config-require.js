@@ -1,6 +1,9 @@
 require.config({
-  baseUrl: "/",
+  baseUrl: "/bookmarklet/",
   paths: {
     "lib": "../bower_components",
+    "app": "./src",
   }
+  
+
 });

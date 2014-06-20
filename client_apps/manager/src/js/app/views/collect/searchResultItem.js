@@ -65,6 +65,7 @@ define(['app/views/BaseView', 'template', 'underscore', 'jquery'], function(Base
 
       this.pubSub.trigger('webitem:deleted', this.model);
       this.$el.removeClass('list-group-item-success');
+      this.$el.removeClass('saved-already-true');
       this.$('.save-btn').text('Save');
     },
 

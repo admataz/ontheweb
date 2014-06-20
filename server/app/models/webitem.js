@@ -17,13 +17,16 @@ var fields = {
   sourceSiteName: {type: String},
   sourceSiteUrl: {type: String},
   sourceSiteLogoUrl: {type: String},
+  sourcePlatform: {type: String},
+  sourceId: {type: String},
   inReplyTo: {type: String},
   dateCollected: {type: Date},
   datePosted: {type: Date},
   dateLastValidated: {type: Date},
   comment: {type: String},
   tags: {type: String},
-  status: {type: Boolean, defaut: false}
+  status: {type: Boolean, defaut: false},
+  alreadyCollected: {type: Boolean, defaut: true}
 };
 
 var theSchema = new Schema(fields);

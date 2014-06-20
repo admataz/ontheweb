@@ -6,8 +6,8 @@ var Model = require('../models/itemcollection');
 var Base = require('./base');
 var controller = new Base(Model);
 
-controller.queryFilter = function(query, req){
-  query.populate('items');
+controller.queryFilterItem = function(query, req){
+  return query.populate('items');
 };
 
 module.exports = function(app, cb) {

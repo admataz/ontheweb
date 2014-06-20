@@ -44,9 +44,9 @@ DefaultRoutes.prototype.getItem = function() {
   var c = this;
 
   return function(req, res, next) {
-    var item = c.model.findById(req.params.id);
-
-    item.exec(function(err, result) {
+    var query = c.model.findById(req.params.id);
+    query = c.queryFilterItem(query, req);
+    query.exec(function(err, result) {
       if (err) {
         return next(new restify.ResourceNotFoundError("Can't find that item"));
       }
@@ -68,6 +68,9 @@ DefaultRoutes.prototype.getItem = function() {
  * @return object query the existing query.
  */
 DefaultRoutes.prototype.queryFilter = function(query, req){
+  return query;
+};
+DefaultRoutes.prototype.queryFilterItem = function(query, req){
   return query;
 };
 
@@ -93,7 +96,7 @@ DefaultRoutes.prototype.getItemsList = function() {
 
     var query = c.getItemsListInitQuery(req);
     var countquery;
-    c.queryFilter(query, req);
+    query = c.queryFilter(query, req);
 
     query.exec(function(err, results) {
       var ret = {};
@@ -219,8 +222,6 @@ DefaultRoutes.prototype.del = function() {
  * 
  */
 DefaultRoutes.prototype.initRoutes = function(resourcePath, app) {
-  // console.log(resourcePath);
-
   if (app) {
     app.get(resourcePath + '/:id?', this.getItem());
     app.get(resourcePath + '', this.getItemsList());

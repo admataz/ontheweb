@@ -223,7 +223,7 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
       onAdvancedSearchSubmitted: function(advanced_data){
         // var normaldata = this.formToData(this.searchForm.$('form'));
         var data = {};//_.merge(normaldata, advanced_data);
-        var q = this.searchForm.$('#collectForm input[name=q]');
+        var q = this.searchForm.$('input[name=q]');
         q.attr('value',advanced_data.q);
         data.platform = 'twitter';
         data.channel = 'search';

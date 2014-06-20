@@ -1,7 +1,13 @@
-define(['lib/reqwest/reqwest', 'lib/bonzo/bonzo', 'lib/qwery/qwery', 'lib/bean/bean'], function(reqwest, bonzo, qwery, bean) {
+define(['module', 'lib/reqwest/reqwest', 'lib/bonzo/bonzo', 'lib/qwery/qwery', 'lib/bean/bean'], function(module, reqwest, bonzo, qwery, bean) {
 
-  var webItem = {},
-    saveWebItemOverlay;
+
+// can't seem to get require.js config.config module stuff to work - so remember to change this when publishing to live. 
+  // var hostURL = 'http://ontheweb.jit.su/webitem';
+  var hostURL = 'http://localhost:8001/webitem';
+
+
+  var webItem = {};
+  var saveWebItemOverlay;
 
   // emulate jquery
 
@@ -168,9 +174,10 @@ define(['lib/reqwest/reqwest', 'lib/bonzo/bonzo', 'lib/qwery/qwery', 'lib/bean/b
   function saveItem() {
     webItem.comment = $('#webItemBookmarkletComment').attr('value');
     webItem.tags = $('#webItemBookmarkletTags').attr('value');
+    webItem.sourcePlatform = 'www';
+    webItem.sourceId = '';
     var req = reqwest({
-      url: 'http://ontheweb.jit.su/webitem',
-      // url: 'http://localhost:8001/webitem',
+      url: hostURL,
       method: 'post',
       type: 'json',
       processData: false,

@@ -40,13 +40,12 @@ function normaliseResults(itm, i, cb) {
   }
 
   newObj.imageUrl = '';
-  // newObj.geotags = itm.geo;
 
   newObj.sourceSiteName = 'Google+';
   newObj.sourceId = itm.id;
+  newObj.sourcePlatform = 'googleplus';
   newObj.sourceSiteUrl = 'http://plus.google.com';
   newObj.sourceSiteLogoUrl = '';
-  // newObj.inReplyTo = itm.in_reply_to_status_id;
   newObj.dateCollected = new Date();
   newObj.datePosted = itm.published;
   newObj.dateLastValidated = new Date();
