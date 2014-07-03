@@ -2,8 +2,8 @@ define(['module', 'lib/reqwest/reqwest', 'lib/bonzo/bonzo', 'lib/qwery/qwery', '
 
 
 // can't seem to get require.js config.config module stuff to work - so remember to change this when publishing to live. 
-  // var hostURL = 'http://ontheweb.jit.su/webitem';
-  var hostURL = 'http://localhost:8001/webitem';
+  var hostURL = 'http://ontheweb.jit.su/webitem';
+  // var hostURL = 'http://localhost:8001/webitem';
 
 
   var webItem = {};

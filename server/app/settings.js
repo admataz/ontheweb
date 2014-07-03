@@ -1,9 +1,6 @@
 'use strict'
 var nconf = require('nconf');
 
-// step down the hierarchy - use a local settings file but don't included it in the git repos
-nconf.argv().env().file({ file: './app/settings.local.json' });
-
 var config = {
     'db_name': 'OnTheWeb',
     'db_host': 'localhost',
@@ -14,6 +11,11 @@ var config = {
     'http_port': 8001,
     'socialmedia_platforms': ['facebook','twitter','googleplus','collected']
   };
+
+
+// step down the hierarchy - use a local settings file but don't included it in the git repos
+nconf.argv().env().file({ file: __dirname+'/settings.local.json' });
+
 
 
 nconf.defaults(config);

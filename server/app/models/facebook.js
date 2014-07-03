@@ -1,10 +1,16 @@
 var graph = require('fbgraph');
 var config = require('../settings');
+var url = require('url');
 
 graph.setAccessToken(getAuthToken());
 
 function normalisePosts(itm, i) {
+
   var newObj = {};
+  
+  if(itm === null){
+    return null;
+  }
 
   newObj.url = 'http://facebook.com/' + itm.id.split('_').pop();//itm.id.replace('_', '/posts/');
   newObj.title = itm.name;
@@ -40,15 +46,12 @@ function normalisePosts(itm, i) {
       newObj.hasReplies = newObj.replies.length;
     }
   }
-
-
   return newObj;
 }
 
 
 function normaliseReplies(itm,i){
   var newObj = normalisePosts(itm, i);
-
   newObj.url = 'http://facebook.com/' + itm.id.replace('_', '?comment_id=');
   return newObj;
 }
@@ -60,19 +63,28 @@ function getUserPosts(user_id, cb) {
       cb(err);
       return;
     }
-
     result.data = result.data.map(normalisePosts);
     cb(null, result.data);
-
   });
 }
 
+
+function getPostFromUrl(id, cb){
+    graph.get(id, function(err, result) {
+      if (err) {
+        result = null;
+        // return;
+      }
+      result = normalisePosts(result);
+      cb(null, result);
+
+    });
+}
 
 function getPostsFromPage(page_id, feedorposts, cb){
   if(!feedorposts){
     feedorposts = 'posts';
   }
-
   graph.get(page_id + "/"+feedorposts, function(err, result) {
     if (err) {
       cb(err);
@@ -120,11 +132,9 @@ module.exports = {
     if (['page', 'user', 'url', 'pageposts', 'pagefeed'].indexOf(obj.channel) === -1) {
       obj.channel = 'page';
     }
-
     if (obj.channel === 'user') {
       getUserPosts(obj.q, cb);
     }
-
     if (obj.channel === 'page') {
       getSearchResults('page', obj.q, cb);
     }
@@ -136,6 +146,10 @@ module.exports = {
       getPostsFromPage(obj.pageid, 'feed', cb);
     }
 
+  }, 
+
+  importItem: function(id, cb){
+    getPostFromUrl(id, cb);
   }
 
 };

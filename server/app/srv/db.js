@@ -15,13 +15,16 @@ var mongoOptions = {
 };
 
 // Connect to Database
-mongoose.connect(uristring, mongoOptions, function (err, res) {
+
+
+module.exports = function(cb){
+  mongoose.connect(uristring, mongoOptions, function (err, res) {
   if (err) {
     console.log('ERROR connecting to: ' + uristring + '. ' + err);
+    return cb(err);
   } else {
     console.log('Successfully connected to: ' + uristring);
+    cb();
   }
 });
-
-
-exports.mongoose = mongoose;
+}

@@ -1,8 +1,10 @@
 <ul class="nav nav-tabs">
-  <li class="active"><a href="#ontheweb" data-toggle="tab">On The Web</a></li>
-  <li><a href="#alreadysaved" data-toggle="tab">Already saved</a></li>
+  <li class="active"><a href="#ontheweb" data-toggle="tab">Search Web</a></li>
+  <li><a href="#alreadysaved" data-toggle="tab">Saved Items</a></li>
+  <li><a href="#alreadysaved" data-toggle="tab">Saved Collections</a></li>
 </ul>
 <div class="tab-content">
+  
   <div class="tab-pane active" id="ontheweb">
     <form action="#" id="collectForm" role="form" class="form-inline">
       <div class="form-group">
@@ -16,7 +18,6 @@
           <input type="radio" name="platform" value="googleplus"> Google+
         </label>
       </div>
-
       <div class="form-group search-options" id="search-options-twitter">
         <div class="checkbox">
           <label for="channel-twitter-search">
@@ -26,7 +27,7 @@
             <input type="radio" name="channel" value="user" id="channel-twitter-user"> user's timeline (enter username)
           </label>
         </div>
-        <a href="#" id="advanced-twitter-search-trigger" class="btn btn-sm btn-link">Advanced search</a>
+        <a href="#" id="advanced-twitter-search-trigger" class="btn btn-sm btn-link">advanced search</a>
       </div>
       <div class="form-group search-options" id="search-options-facebook">
         <div class="checkbox">
@@ -41,10 +42,11 @@
           </label> --}}
         </div>
       </div>
+
       <div class="form-group search-options" id="search-options-googleplus">
         <div class="checkbox">
           <label for="channel-search-googleplus-user">
-            <input type="radio" name="channel" value="user" id="channel-search-googleplus-user"> user's posts
+            <input type="radio" name="channel" value="user" id="channel-search-googleplus-user"> user's activities
           </label>
           <label for="channel-search-googleplus-people">
             <input type="radio" name="channel" value="search-people" id="channel-search-googleplus-people"> search for a profile
@@ -54,6 +56,7 @@
           </label>
         </div>
       </div>
+
       <div class="form-group">
         <div class="input-group">
           <input type="text" name="q" value="" class="form-control" placeholder="search terms">
@@ -65,12 +68,13 @@
     </form>
   </div>
 
+
   <div class="tab-pane" id="alreadysaved">
     <form action="#" id="alreadySavedForm" role="form" class="form-inline">
-    <input type="hidden" name="platform" value="collected" > 
+      <input type="hidden" name="platform" value="collected" >
       <div class="form-group">
         <label class="checkbox">
-          <input type="checkbox" name="platform_www" value="1" checked="checked"> Web Clips
+          <input type="checkbox" name="platform_www" value="1"> Web Clips
         </label>
         <label class="checkbox">
           <input type="checkbox" name="platform_twitter" value="1"> Twitter
@@ -82,8 +86,6 @@
           <input type="checkbox" name="platform_googleplus" value="1"> Google+
         </label>
       </div>
-
-
       <div class="form-group">
         <div class="input-group">
           <input type="text" name="q" value="" class="form-control" placeholder="search terms">
@@ -93,13 +95,11 @@
         </div>
       </div>
     </form>
-
-
-    </div>
   </div>
-  <div class="form-group" id="advanced-twitter-search-wrapper">
-  </div>
-  <div class="form-group" id="advanced-facebook-search-wrapper">
-  </div>
-  <div class="form-group" id="advanced-googleplus-search-wrapper">
-  </div>
+</div>
+<div class="form-group" id="advanced-twitter-search-wrapper">
+</div>
+<div class="form-group" id="advanced-facebook-search-wrapper">
+</div>
+<div class="form-group" id="advanced-googleplus-search-wrapper">
+</div>

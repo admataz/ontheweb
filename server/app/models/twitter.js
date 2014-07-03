@@ -1,5 +1,6 @@
 var Twitter = require('mtwitter');
 var config = require('../settings');
+var _ = require('lodash');
 
 var twit = new Twitter({
   consumer_key: config.twitter_consumer_key,
@@ -11,8 +12,12 @@ var twit = new Twitter({
 
 function normaliseResults(itm,i){
       var newObj = {};
+      if(!itm){
+        return null;
+      }
+
       newObj.url = 'http://twitter.com/'+itm.user.screen_name+'/status/'+itm.id_str;
-      newObj.title = 'Tweet by '+itm.user.name +'(@'+itm.user.screen_name+')';
+      newObj.title = 'Tweet by '+itm.user.name +' (@'+itm.user.screen_name+')';
       newObj.content = itm.text;
       newObj.imageUrl = '';
       newObj.geotags = itm.geo;
@@ -96,7 +101,29 @@ module.exports = {
     }
 
 
+  },
+
+  bulkCheck: function(itms, cb){
+    twit.post('statuses/lookup', "id="+itms+"&map=true", 
+    function(err, result){
+      if(err){
+        return cb(err);
+      }
+
+      var ids = Object.keys(result.id);
+      var results = {};
+
+      _.each(result.id, function(itm, i){
+        results[i] = normaliseResults(itm);
+      });
+
+      cb(null, results);
+    }
+    );
+
+
   }
+
 };
 
 

@@ -1,34 +1,32 @@
 /**
- * Main state for compiling existing web items that already collected from the web and in the local database into groups, or ItemCollections
- * Sets up a 2 panel layout, with left for searching  - and drag and drop items into the right to select them and save them as a collection
- *
- *
- * TODO: better touch behaviour - the drag and drop may need to be replaced by a touch
- * TODO: save the ItemCollection
- * TODO: reload saved the ItemCollection
+ * List, load and view existing ItemCollections
+ * 
  * TODO: select from a list of existing ItemCollections
  * TODO: add metadata and comments to an ItemCollection
  * TODO: provide a status for published/unpublished to an ItemCollection
  * TODO: output the public URL 
- * TODO: add the platform filters to the query  
- * 
- * 
+ *  * 
  */
-define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searchResultItem', './searchForm', './saveForm', 'template', 'underscore', 'jquery', 'app/ui/dd'],
-  function(config, BaseView, WebItems, SearchResultsItem, SearchForm, SaveForm, Template, _, $) {
+
+
+define(['app/config', 'app/views/BaseView', 'app/collections/webItems', 'app/collections/collectItemResults', '../collect/searchResultItem', 'app/models/webItem', 'app/models/itemCollection', 
+  'app/collections/itemCollections', './collectionItem', 'template', 'underscore', 'jquery', 'app/ui/dd'],
+  function(config, BaseView, WebItems, CollectItemResults, SearchResultItem, WebItemModel, ItemCollectionModel, ItemCollectionCollection, CollectionItemView, Template, _, $) {
 
     return BaseView.extend({
       template: Template['collate/index'],
-      collection: new WebItems(),
-      collection_selected: new WebItems(),
+
+      itemCollection_collection: new ItemCollectionCollection(),
+      collection_selected: new CollectItemResults(),
 
 
       /**
        * Initialize
        */
       initialize: function() {
-        this.added_items = [];
         this.on('afterRender', _.bind(this.onAfterRender, this));
+
+        this.listenTo(this.pubSub, 'collectionItem:clicked', this.onCollectionClicked);
       },
 
 
@@ -36,8 +34,7 @@ define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searc
        * DOM events
        */
       events: {
-        'submit #searchItems': 'onFormSubmitted',
-        'submit #saveCollection': 'onSaveFormSubmitted'
+      
       },
 
 
@@ -45,8 +42,7 @@ define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searc
        * Layout Manager sub-views
        */
       views: {
-        '.search-panel': new SearchForm(),
-        '.save-panel': new SaveForm()
+      
       },
 
 
@@ -56,7 +52,7 @@ define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searc
       setPanelHeights: function() {
         var pheight = ($(window).height() - this.$('.dd-panels').offset().top);
         var theight = Math.max(this.$('.dd-panels').height(), pheight);
-        $('.selected-panel, .results-panel').css({
+        $('.items-panel, .collections-panel').css({
           'min-height': theight + 'px',
         });
       },
@@ -66,49 +62,36 @@ define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searc
        * Set up some interface stuff once the view is ready
        */
       onAfterRender: function() {
-        // set the panel heights
         this.setPanelHeights();
-
+        this.loadCollections();
         // set up the drag and drop via jquery UI
-        $('.selected-panel').sortable({
-          'connectWith': '.results-panel'
-        });
+        $('.items-panel').sortable();
+      },
 
-        $('.results-panel').sortable({
-          'connectWith': '.selected-panel'
+      loadCollections: function(){
+        this.itemCollection_collection.fetch({
+          success: _.bind(this.onItemCollectionsFetched, this)
         });
       },
 
-
-
-      /**
-       * Capture the search form submission
-       * TODO: split this  -  the event handler into the FormView - and keep the data processing here - via pubsub
-       */
-      onFormSubmitted: function(evt) {
-        var theform = evt.target;
-        var arr = $(theform).serializeArray();
-        var data = _(arr).reduce(function(acc, field) {
-          acc[field.name] = field.value;
-          return acc;
-        }, {});
-        data.page = 1;
-        data.per_page = 100;
-        this.collection.reset();
-        this.$('.results-panel').empty();
-        this.collection.fetch({
-          data: {
-            q: data.q
-          },
-          success: _.bind(this.onSearchResultsLoaded, this)
-        });
-        this.pubSub.trigger("seachForm:submit", data);
-        evt.preventDefault();
+      onCollectionClicked: function(id){
+        this.loadItemCollection(id);
       },
 
+      onItemCollectionsFetched: function(collection, response, options) {
+        collection.each(_.bind(this.addCollectionItemView, this));
+        this.setPanelHeights();
+      },
+
+      addCollectionItemView: function(model, i){
+        var view = this.insertView('.collections-panel', new CollectionItemView({
+          model: model,
+          el: false
+        }));
+        view.render();
+      },
 
       onSaveFormSubmitted: function(evt){
-        alert('sorry - saving collated collection not working yet!');
         evt.preventDefault();
       },
 
@@ -117,23 +100,54 @@ define(['app/config', 'app/views/BaseView', 'app/collections/webItems', './searc
        * we have the results! - display them and set some DOM values
        */
       onSearchResultsLoaded: function(collection, response, options) {
-        collection.each(_.bind(this.addResultItem, this));
-        this.setPanelHeights();
       },
 
+      loadItemCollection: function(id) {
+        var c, items;
+        var app = this;
+
+        this.onItemCollectionEmpty();
+
+        if (id === 'new') {
+          return;
+        }
+
+
+        c = this.itemCollection_collection.get(id);
+        c.fetch().done(function() {
+          items = c.get('items');
+          _.each(items, _.bind(function(itm) {
+            app.addItemView2(new WebItemModel(itm));
+          }, app));
+        });
+
+      },
+
+       // Add item to the DOM RHC (select items into collection)
+      addItemView2: function(model) {
+        if (this.collection_selected.get(model.id)) {
+          return;
+        }
+        this.collection_selected.add(model);
+        var view = this.insertView('.items-panel', new SearchResultItem({
+          model: model,
+          el: false
+        }));
+        view.render();
+      },
 
       /**
        * Render individual elements to the DOM
        * TODO: decouple this from the specific panel so we can reuse it in the loading of the saved collection items
        */
       addResultItem: function(model) {
-        var view = this.insertView('.results-panel', new SearchResultsItem({
-          model: model,
-          el: false
-        }));
-        view.render();
-      }
+      },
 
+      // Empty the collection
+      onItemCollectionEmpty: function() {
+        this.collection_selected.reset();
+        this.$('.items-panel').empty();
+      },
 
     });
 

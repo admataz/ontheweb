@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+// var mongoose = require('../srv/db').mongoose;
 var paginator = require('mongoose-paginator');
 
 var Schema = mongoose.Schema;
@@ -9,6 +10,7 @@ var fields = {
   url: {type: String, required: true, unique:true},
   title: {type: String, required: true},
   content: {type: String},
+  excerpt: {type: String},
   imageUrl: {ty00pe: String},
   geotags: {type: String},
   authorName: {type: String},
@@ -25,7 +27,7 @@ var fields = {
   dateLastValidated: {type: Date},
   comment: {type: String},
   tags: {type: String},
-  status: {type: Boolean, defaut: false},
+  status: {type: String, defaut: 'new'},
   alreadyCollected: {type: Boolean, defaut: true}
 };
 

@@ -1,6 +1,6 @@
 /**
  * Collect items from the web
- *
+ * TODO: better touch behaviour - the drag and drop may need to be replaced by a touch 
  * TODO: check for duplicates based on URL - don't save the same item twice - this should be done server side
  *
  */
@@ -10,10 +10,12 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
     'app/models/itemCollection', 'app/collections/itemCollections',
     'app/models/webItem', 'app/ui/bootbox', 'app/ui/dd'
   ],
-  function(config, BaseView, _, $, Template, CollectItemResults, SearchResultItem, SearchResultFacebookPage, SearchResultGoogleplusPeople, SearchForm, SaveForm, ItemCollectionModel,
-    ItemCollectionCollection, WebItemModel, bootbox) {
+  function(config, BaseView, _, $, Template, CollectItemResults, SearchResultItem, SearchResultFacebookPage, 
+    SearchResultGoogleplusPeople, SearchForm, SaveForm, 
+    ItemCollectionModel, ItemCollectionCollection, WebItemModel, bootbox) {
 
     return BaseView.extend({
+      
       template: Template['collect/index'],
       collection: new CollectItemResults(),
       collection_selected: new CollectItemResults(),
@@ -43,6 +45,10 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         'submit #collectForm, #alreadySavedForm': 'onSearchFormSubmitted'
       },
 
+
+
+
+
       /**
        * Layout the drag and drop panels
        */
@@ -53,6 +59,9 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
           'min-height': theight + 'px',
         });
       },
+
+
+
 
       /**
        * Do stuff once the view has rendered (i.e. you now have access to the DOM)
@@ -73,12 +82,17 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
           receive: _.bind(this.onItemDropSelected, this)
         });
 
+
         $('.results-panel').sortable({
           connectWith: '.selected-panel',
           receive: _.bind(this.onItemDropDeselected, this)
 
         });
       },
+
+
+
+
 
       // collections have been loaded for the select element in the save form = can now render the save form
       onItemCollectionsFetched: function(collection, response, options) {
@@ -87,6 +101,10 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         }));
         this.saveForm.render();
       },
+
+
+
+
 
       // event handler for when the user selects a new option in the Collection selector on the save form
       onItemCollectionSelected: function(id) {
@@ -124,6 +142,10 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
 
       },
 
+
+
+
+
       // Load an item collection's web items and attach them to the right hand column
       loadItemCollection: function(id) {
         var c, items;
@@ -141,6 +163,10 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
 
       },
 
+
+
+
+
       // User has dragged-and-dropped an item on the RHC to selected 
       onItemDropSelected: function(evt, ui) {
         var model = this.collection.get($(ui.item).data('itemid'));
@@ -157,10 +183,16 @@ define(['app/config', 'app/views/BaseView', 'underscore', 'jquery', 'template', 
         $('.save-btn', ui.item).text('Delete');
       },
 
+
+
+
       // Event handler for when an item has been deleted (user unselects by clicking the star)
       onWebItemDeleted: function(model) {
         this.collection.add(model);
       },
+
+
+
 
       // Save the current selection to a new or existing Item Collection
       onTriggerSave: function(data) {
